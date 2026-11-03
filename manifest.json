@@ -1,4 +1,4 @@
-{
+ {
   "background_color": "#ffffff",
   "dir": "ltr",
   "display": "standalone",
@@ -9,5 +9,17 @@
   "start_url": "/",
   "theme_color": "#ffffff",
   "id": "bacheca-scolastica-universale/",
-  "description": "Bacheca scolastica e diario di classe universale"
-} 
+  "description": "Bacheca scolastica e diario di classe universale",
+  "icons": [
+    {
+      "src": "./launchericon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "./launchericon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
