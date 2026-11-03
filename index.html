@@ -90,6 +90,10 @@
                 <button id="configNameBtn" onclick="openConfigModal()" class="admin-only hidden bg-white/10 hover:bg-white/20 border border-white/20 p-2.5 rounded-2xl text-xs sm:text-sm font-bold transition shadow-sm flex items-center justify-center backdrop-blur-sm" title="Imposta Nome App">
                     <i class="fa-solid fa-gear text-indigo-200"></i>
                 </button>
+                <button onclick="shareClassInvite()" class="admin-only hidden bg-emerald-600 hover:bg-emerald-700 border border-emerald-500/40 px-3.5 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition shadow-sm flex items-center space-x-2 text-white" title="Crea Invito Genitori">
+                    <i class="fa-brands fa-whatsapp text-sm"></i>
+                    <span class="hidden sm:inline">Invito</span>
+                </button>
                 <button id="adminBtn" onclick="toggleAdminModal()" class="bg-white/10 hover:bg-white/20 border border-white/20 px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition shadow-sm flex items-center space-x-2 backdrop-blur-sm">
                     <i class="fa-solid fa-lock text-xs text-amber-300" id="adminIcon"></i>
                     <span id="adminText">Area Admin</span>
@@ -686,6 +690,27 @@
         setInterval(updateClock, 1000);
         updateClock();
 
+        // Gestione Token Univoco per Classe
+        function getOrCreateClassToken() {
+            let hash = window.location.hash.replace('#', '');
+            if (!hash || !hash.startsWith('token_')) {
+                const randomToken = 'token_' + Math.random().toString(36).substring(2, 9) + Date.now().toString(36);
+                window.location.hash = randomToken;
+                return randomToken;
+            }
+            return hash;
+        }
+
+        const classToken = getOrCreateClassToken();
+        const firebaseNodePath = 'bacheca_scolastica_' + classToken;
+
+        function shareClassInvite() {
+            const appUrl = window.location.href;
+            const cfg = dbData.appConfig || { name: "Bacheca Scolastica" };
+            const waText = encodeURIComponent(`👋 Buongiorno genitori!\n\nEcco il link ufficiale aggiornato per la nostra bacheca di classe (${cfg.name}) per seguire compiti, orari, menu mensa e fondo cassa:\n\n🔗 ${appUrl}`);
+            window.open(`https://api.whatsapp.com/send?text=${waText}`, '_blank');
+        }
+
         let isAdmin = localStorage.getItem('isAdmin_app') === 'true';
         let dbData = { 
             appConfig: { name: "Bacheca Scolastica", subtitle: "Universale", logo: "App" },
@@ -790,15 +815,15 @@
 
         window.addEventListener('firebase-ready', () => {
             const { db, ref, onValue, runTransaction } = window.fbDB;
-            const dataRef = ref(db, 'bacheca_scolastica');
+            const dataRef = ref(db, firebaseNodePath);
             
-            const visitedKey = sessionStorage.getItem('visited_app');
+            const visitedKey = sessionStorage.getItem('visited_' + classToken);
             if (!visitedKey) {
-                const visitsRef = ref(db, 'bacheca_scolastica/stats/visits');
+                const visitsRef = ref(db, firebaseNodePath + '/stats/visits');
                 runTransaction(visitsRef, (currentVisits) => {
                     return (currentVisits || 0) + 1;
                 }).then(() => {
-                    sessionStorage.setItem('visited_app', 'true');
+                    sessionStorage.setItem('visited_' + classToken, 'true');
                 });
             }
 
@@ -852,7 +877,7 @@
 
             dbData.appConfig = { name, subtitle, logo };
             const { db, ref, set } = window.fbDB;
-            set(ref(db, 'bacheca_scolastica'), dbData).then(() => {
+            set(ref(db, firebaseNodePath), dbData).then(() => {
                 openConfigModal();
                 showAdminNotification("Nome applicazione aggiornato con successo!", "success");
             });
@@ -867,7 +892,7 @@
 
         window.addEventListener('DOMContentLoaded', () => {
             const hash = window.location.hash.replace('#', '');
-            if (hash) switchTab(hash);
+            if (hash && !hash.startsWith('token_')) switchTab(hash);
             initSnakeCanvas();
             checkPlayerSessionUI();
             renderMenuDelGiorno();
@@ -951,7 +976,7 @@
                 document.getElementById('snakeStatusText').innerText = "Game Over! Punteggio: " + score;
                 saveSnakeScoreToFirebase(currentPlayer, score);
 
-                const appUrl = window.location.href.split('#')[0] + '#snake';
+                const appUrl = window.location.href;
                 const waText = encodeURIComponent(`🎮 *Record Snake*\n${currentPlayer} ha totalizzato ${score} punti!\n\n🔗 *Vieni a battere il record qui:* ${appUrl}`);
                 
                 document.getElementById('snakeShareContainer').innerHTML = `
@@ -987,7 +1012,7 @@
                 const newKey = 'player_' + Date.now();
                 dbData.snakeScores[newKey] = { name: name, score: finalScore, date: Date.now() };
             }
-            set(ref(db, 'bacheca_scolastica'), dbData);
+            set(ref(db, firebaseNodePath), dbData);
         }
 
         function renderSnakeLeaderboard() {
@@ -1102,7 +1127,7 @@
             }
             if (hasChanges) {
                 const { db, ref, set } = window.fbDB;
-                set(ref(db, 'bacheca_scolastica'), dbData);
+                set(ref(db, firebaseNodePath), dbData);
             }
         }
 
@@ -1128,6 +1153,7 @@
                 if (adminLoginForm) adminLoginForm.classList.remove('hidden');
                 if (adminLogoutDiv) adminLogoutDiv.classList.add('hidden');
                 localStorage.setItem('isAdmin_app', 'false');
+                requestBrowserNotificationPermission();
             }
             renderAll();
         }
@@ -1158,7 +1184,8 @@
                 activeBtn.classList.add('text-indigo-600', 'bg-indigo-50/80', 'shadow-sm');
                 activeBtn.classList.remove('text-slate-600', 'hover:bg-slate-100/80');
             }
-            history.replaceState(null, '', '#' + tabId);
+            const cleanUrl = window.location.href.split('#')[0];
+            history.replaceState(null, '', cleanUrl + '#' + classToken + ',' + tabId);
             if (tabId === 'fondo') renderFondoChart();
         }
 
@@ -1188,7 +1215,7 @@
             document.getElementById('wheelStatusCount').innerText = "Abbinamenti completati!";
             confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
 
-            const appUrl = window.location.href.split('#')[0] + '#ruota';
+            const appUrl = window.location.href;
             waTextList += `\n🔗 *Gestito tramite la Bacheca:* ${appUrl}`;
             const encodedWA = encodeURIComponent(waTextList.trim());
 
@@ -1213,7 +1240,7 @@
                 if (!isNaN(parsed)) {
                     dbData.fondoIniziale = parsed;
                     const { db, ref, set } = window.fbDB;
-                    set(ref(db, 'bacheca_scolastica'), dbData).then(() => {
+                    set(ref(db, firebaseNodePath), dbData).then(() => {
                         renderFondoChart();
                     });
                 } else {
@@ -1351,7 +1378,7 @@
 
             dbData[section][idToUse] = itemData;
 
-            set(ref(db, 'bacheca_scolastica'), dbData).then(() => {
+            set(ref(db, firebaseNodePath), dbData).then(() => {
                 closeAddModal();
                 saveBtn.innerText = "Pubblica";
                 saveBtn.disabled = false;
@@ -1386,7 +1413,7 @@
             if (!poll.votes[optionIndex]) poll.votes[optionIndex] = [];
             poll.votes[optionIndex].push(childName);
 
-            set(ref(db, 'bacheca_scolastica'), dbData).then(() => { renderAll(); });
+            set(ref(db, firebaseNodePath), dbData).then(() => { renderAll(); });
         }
 
         function showVotersModal(pollId, optionIndex = null) {
@@ -1396,7 +1423,7 @@
             const titleEl = document.getElementById('votersModalTitle');
             const contentEl = document.getElementById('votersListContent');
             const whatsappContainer = document.getElementById('modalWhatsAppContainer');
-            const appUrl = window.location.href.split('#')[0] + '#sondaggi';
+            const appUrl = window.location.href;
 
             let summaryTextForWA = `📊 *Sondaggio: ${poll.title}*\n\n`;
 
@@ -1455,7 +1482,7 @@
             if (confirm("Vuoi davvero eliminare questo elemento?")) {
                 const { db, ref, set } = window.fbDB;
                 delete dbData[section][id];
-                set(ref(db, 'bacheca_scolastica'), dbData).then(() => { renderFondoChart(); });
+                set(ref(db, firebaseNodePath), dbData).then(() => { renderFondoChart(); });
             }
         }
 
@@ -1500,7 +1527,7 @@
         }, 1000);
 
         function renderAll() {
-            const cleanBaseUrl = window.location.href.split('#')[0];
+            const appUrl = window.location.href;
 
             const compitiArr = Object.values(dbData.compiti || {});
             const summaryTextEl = document.getElementById('homeworkSummaryText');
@@ -1537,10 +1564,8 @@
                 }
             }
 
-            // Compiti / Attività (Con etichetta personalizzata)
+            // Compiti / Attività
             renderCustomSection('compiti', 'list-compiti', item => {
-                const appUrl = cleanBaseUrl + '#compiti';
-                
                 let waText = `📚 *Attività (${item.materia || 'Generale'})*\n*${item.title}*\n`;
                 if (item.date) waText += `⏰ Scadenza: ${new Date(item.date).toLocaleString('it-IT')}\n`;
                 if (item.details) waText += `${item.details}\n`;
@@ -1592,7 +1617,6 @@
 
             // Menu Mensa
             renderCustomSection('mensa', 'list-mensa', item => {
-                const appUrl = cleanBaseUrl + '#mensa';
                 let waText = `🍽️ *Menu / Ristorazione (${item.title})*\n${item.details ? item.details + '\n' : ''}`;
                 if (item.fileUrl) {
                     const urls = item.fileUrl.split(/[\s,]+/).filter(u => u.trim().startsWith('http'));
@@ -1617,7 +1641,6 @@
 
             // Libri & Materiale
             renderCustomSection('libri', 'list-libri', item => {
-                const appUrl = cleanBaseUrl + '#libri';
                 let waText = `📚 *Materiale e Documenti*\n*${item.title}*\n${item.details ? item.details + '\n' : ''}`;
                 if (item.fileUrl) {
                     const urls = item.fileUrl.split(/[\s,]+/).filter(u => u.trim().startsWith('http'));
@@ -1700,7 +1723,6 @@
                     `;
                 });
 
-                const appUrl = cleanBaseUrl + '#sondaggi';
                 const waText = encodeURIComponent(`📊 *Sondaggio*\n*${item.title}*\nTotale voti: ${totalVotes}\n\n🔗 *Vota qui:* ${appUrl}`);
 
                 let voterSectionHtml = !currentVoter ? `
@@ -1748,7 +1770,6 @@
 
             // Fondo Cassa
             renderCustomSection('fondo', 'list-fondo', item => {
-                const appUrl = cleanBaseUrl + '#fondo';
                 let waText = `💶 *Fondo Cassa*\n*${item.title}*\n`;
                 if (item.date) waText += `📅 Data: ${new Date(item.date).toLocaleDateString('it-IT')}\n`;
                 if (item.details) waText += `${item.details}\n`;
@@ -1775,7 +1796,6 @@
 
             // Avvisi
             renderCustomSection('avvisi', 'list-avvisi', item => {
-                const appUrl = cleanBaseUrl + '#avvisi';
                 let waText = `⚠️ *Avviso Importante*\n*${item.title}*\n`;
                 if (item.date) waText += `⏰ Data: ${new Date(item.date).toLocaleString('it-IT')}\n`;
                 if (item.details) waText += `${item.details}\n`;
@@ -1806,7 +1826,6 @@
 
             // Galleria
             renderCustomSection('galleria', 'list-galleria', item => {
-                const appUrl = cleanBaseUrl + '#galleria';
                 let waText = `📸 *Galleria Foto*\n*${item.title}*\n${item.details ? item.details + '\n' : ''}`;
                 if (item.fileUrl) {
                     const urls = item.fileUrl.split(/[\s,]+/).filter(u => u.trim().startsWith('http'));
@@ -1832,7 +1851,6 @@
 
             // Link Utili
             renderCustomSection('linkutili', 'list-linkutili', item => {
-                const appUrl = cleanBaseUrl + '#linkutili';
                 let waText = `🔗 *Link Utile*\n*${item.title}*\n${item.details ? item.details + '\n' : ''}`;
                 if (item.fileUrl) waText += `🌐 ${item.fileUrl}\n`;
                 waText += `\n📲 *Accedi dalla Bacheca:* ${appUrl}`;
@@ -1854,7 +1872,6 @@
 
             // Compleanni
             renderCustomSection('compleanni', 'list-compleanni', item => {
-                const appUrl = cleanBaseUrl + '#compleanni';
                 let waText = `🎂 *Ricorrenza / Compleanno*\nFesteggiamo insieme ${item.title}!\n${item.details ? 'Data: ' + item.details + '\n' : ''}\n📲 *Vedi sulla Bacheca:* ${appUrl}`;
                 const encodedWA = encodeURIComponent(waText.trim());
                 return `
@@ -1875,7 +1892,6 @@
 
             // Promemoria
             renderCustomSection('promemoria', 'list-promemoria', item => {
-                const appUrl = cleanBaseUrl + '#promemoria';
                 let waText = `⏰ *Promemoria*\n*${item.title}*\n`;
                 if (item.date) waText += `📅 Data: ${new Date(item.date).toLocaleString('it-IT')}\n`;
                 if (item.details) waText += `${item.details}\n`;
