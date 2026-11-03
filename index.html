@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="it">
 <head>
     <meta charset="UTF-8">
@@ -148,7 +148,7 @@
                         <option value="Scienze">Scienze</option>
                         <option value="Altro">Altro</option>
                     </select>
-                    <button onclick="openInfoModal('compiti')" class="admin-only hidden bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida sezione"><i class="fa-solid fa-circle-info text-base"></i></button>
+                    <button onclick="openInfoModal('compiti')" class="admin-only hidden bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida caricamento file"><i class="fa-solid fa-circle-info text-base"></i></button>
                     <button onclick="openAddModal('compiti')" class="admin-only hidden bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 rounded-2xl text-xs font-bold shadow-lg shadow-indigo-200 transition whitespace-nowrap flex items-center space-x-1.5">
                         <i class="fa-solid fa-plus"></i><span>Nuovo Compito</span>
                     </button>
@@ -170,7 +170,7 @@
                     <p class="text-xs text-slate-500 font-medium mt-0.5">Quadro delle lezioni gestibile dall'Admin</p>
                 </div>
                 <div class="flex items-center gap-2">
-                    <button onclick="openInfoModal('orario')" class="admin-only hidden bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida sezione"><i class="fa-solid fa-circle-info text-base"></i></button>
+                    <button onclick="openInfoModal('orario')" class="admin-only hidden bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida caricamento file"><i class="fa-solid fa-circle-info text-base"></i></button>
                     <button onclick="openAddModal('orario')" class="admin-only hidden bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 rounded-2xl text-xs font-bold shadow-lg shadow-indigo-200 transition flex items-center space-x-1.5">
                         <i class="fa-solid fa-plus"></i><span>Aggiungi Giorno</span>
                     </button>
@@ -187,7 +187,7 @@
                         <span class="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-sm"><i class="fa-solid fa-utensils"></i></span>
                         Menu Mensa Scolastica
                     </h2>
-                    <p class="text-xs text-slate-500 font-medium mt-0.5">Visualizza in tempo reale il menu del giorno (Normale o Leggero)</p>
+                    <p class="text-xs text-slate-500 font-medium mt-0.5">Visualizza in tempo reale il menu del giorno</p>
                 </div>
                 <div>
                     <select id="tipoMenuSelect" onchange="renderMenuDelGiorno()" class="bg-emerald-50 border border-emerald-200 rounded-2xl px-4 py-2.5 text-xs font-black text-emerald-800 focus:outline-none focus:ring-2 focus:ring-emerald-500 shadow-inner">
@@ -208,7 +208,7 @@
                     <p class="text-xs text-slate-500 font-medium mt-0.5">Elenchi e comunicazioni aggiuntive sulla mensa</p>
                 </div>
                 <div class="flex items-center gap-2">
-                    <button onclick="openInfoModal('mensa')" class="admin-only hidden bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida sezione"><i class="fa-solid fa-circle-info text-base"></i></button>
+                    <button onclick="openInfoModal('mensa')" class="admin-only hidden bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida caricamento file"><i class="fa-solid fa-circle-info text-base"></i></button>
                     <button onclick="openAddModal('mensa')" class="admin-only hidden bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 rounded-2xl text-xs font-bold shadow-lg shadow-indigo-200 transition flex items-center space-x-1.5">
                         <i class="fa-solid fa-plus"></i><span>Pubblica Menu / PDF</span>
                     </button>
@@ -228,7 +228,7 @@
                     <p class="text-xs text-slate-500 font-medium mt-0.5">Elenchi libri adottati e materiali consigliati (PDF e link)</p>
                 </div>
                 <div class="flex items-center gap-2">
-                    <button onclick="openInfoModal('libri')" class="admin-only hidden bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida sezione"><i class="fa-solid fa-circle-info text-base"></i></button>
+                    <button onclick="openInfoModal('libri')" class="admin-only hidden bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida caricamento file"><i class="fa-solid fa-circle-info text-base"></i></button>
                     <button onclick="openAddModal('libri')" class="admin-only hidden bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 rounded-2xl text-xs font-bold shadow-lg shadow-indigo-200 transition flex items-center space-x-1.5">
                         <i class="fa-solid fa-plus"></i><span>Aggiungi Libro / Materiale</span>
                     </button>
@@ -248,7 +248,7 @@
                     <p class="text-xs text-slate-500 font-medium mt-0.5">Eventi importanti, gite e fine scuola</p>
                 </div>
                 <div class="flex items-center gap-2">
-                    <button onclick="openInfoModal('countdown')" class="admin-only hidden bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida sezione"><i class="fa-solid fa-circle-info text-base"></i></button>
+                    <button onclick="openInfoModal('countdown')" class="admin-only hidden bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida caricamento file"><i class="fa-solid fa-circle-info text-base"></i></button>
                     <button onclick="openAddModal('countdown')" class="admin-only hidden bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 rounded-2xl text-xs font-bold shadow-lg shadow-indigo-200 transition flex items-center space-x-1.5">
                         <i class="fa-solid fa-plus"></i><span>Nuovo Countdown</span>
                     </button>
@@ -268,7 +268,7 @@
                     <p class="text-xs text-slate-500 font-medium mt-0.5">Inserisci il nome del bambino, confermalo e vota l'opzione desiderata</p>
                 </div>
                 <div class="flex items-center gap-2">
-                    <button onclick="openInfoModal('sondaggi')" class="admin-only hidden bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida sezione"><i class="fa-solid fa-circle-info text-base"></i></button>
+                    <button onclick="openInfoModal('sondaggi')" class="admin-only hidden bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida caricamento file"><i class="fa-solid fa-circle-info text-base"></i></button>
                     <button onclick="openAddModal('sondaggi')" class="admin-only hidden bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 rounded-2xl text-xs font-bold shadow-lg shadow-indigo-200 transition flex items-center space-x-1.5">
                         <i class="fa-solid fa-plus"></i><span>Crea Sondaggio</span>
                     </button>
@@ -287,7 +287,7 @@
                     </h2>
                     <p class="text-xs text-slate-500 font-medium mt-0.5">Associa automaticamente genitori e compiti (es. torte, bibite, decorazioni)</p>
                 </div>
-                <button onclick="openInfoModal('ruota')" class="admin-only hidden bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida sezione"><i class="fa-solid fa-circle-info text-base"></i></button>
+                <button onclick="openInfoModal('ruota')" class="admin-only hidden bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida caricamento file"><i class="fa-solid fa-circle-info text-base"></i></button>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -332,7 +332,7 @@
                     </h2>
                     <p class="text-xs text-slate-500 font-medium mt-0.5">Inserisci il tuo nome, gioca e scala la classifica ufficiale!</p>
                 </div>
-                <button onclick="openInfoModal('snake')" class="admin-only hidden bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida sezione"><i class="fa-solid fa-circle-info text-base"></i></button>
+                <button onclick="openInfoModal('snake')" class="admin-only hidden bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida caricamento file"><i class="fa-solid fa-circle-info text-base"></i></button>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -404,7 +404,7 @@
                     <p class="text-xs text-slate-500 font-medium mt-0.5">Bilancio e grafici di spesa trasparenti</p>
                 </div>
                 <div class="flex items-center gap-2 w-full sm:w-auto">
-                    <button onclick="openInfoModal('fondo')" class="admin-only hidden bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida sezione"><i class="fa-solid fa-circle-info text-base"></i></button>
+                    <button onclick="openInfoModal('fondo')" class="admin-only hidden bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida caricamento file"><i class="fa-solid fa-circle-info text-base"></i></button>
                     <button onclick="promptSetFondoIniziale()" class="admin-only hidden bg-amber-100 hover:bg-amber-200 text-amber-800 px-4 py-2.5 rounded-2xl text-xs font-bold transition flex items-center space-x-1.5 border border-amber-200">
                         <i class="fa-solid fa-coins"></i><span>Totale Raccolto</span>
                     </button>
@@ -455,7 +455,7 @@
                     <p class="text-xs text-slate-500 font-medium mt-0.5">Comunicazioni ufficiali con supporto multi-allegato</p>
                 </div>
                 <div class="flex items-center gap-2">
-                    <button onclick="openInfoModal('avvisi')" class="admin-only hidden bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida sezione"><i class="fa-solid fa-circle-info text-base"></i></button>
+                    <button onclick="openInfoModal('avvisi')" class="admin-only hidden bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida caricamento file"><i class="fa-solid fa-circle-info text-base"></i></button>
                     <button onclick="openAddModal('avvisi')" class="admin-only hidden bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 rounded-2xl text-xs font-bold shadow-lg shadow-indigo-200 transition flex items-center space-x-1.5">
                         <i class="fa-solid fa-plus"></i><span>Pubblica Avviso</span>
                     </button>
@@ -475,7 +475,7 @@
                     <p class="text-xs text-slate-500 font-medium mt-0.5">Ricordi delle gite e dei momenti speciali</p>
                 </div>
                 <div class="flex items-center gap-2">
-                    <button onclick="openInfoModal('galleria')" class="admin-only hidden bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida sezione"><i class="fa-solid fa-circle-info text-base"></i></button>
+                    <button onclick="openInfoModal('galleria')" class="admin-only hidden bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida caricamento file"><i class="fa-solid fa-circle-info text-base"></i></button>
                     <button onclick="openAddModal('galleria')" class="admin-only hidden bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 rounded-2xl text-xs font-bold shadow-lg shadow-indigo-200 transition flex items-center space-x-1.5">
                         <i class="fa-solid fa-plus"></i><span>Carica Foto/Video</span>
                     </button>
@@ -495,7 +495,7 @@
                     <p class="text-xs text-slate-500 font-medium mt-0.5">Accesso rapido a portali e modulistica</p>
                 </div>
                 <div class="flex items-center gap-2">
-                    <button onclick="openInfoModal('linkutili')" class="admin-only hidden bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida sezione"><i class="fa-solid fa-circle-info text-base"></i></button>
+                    <button onclick="openInfoModal('linkutili')" class="admin-only hidden bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida caricamento file"><i class="fa-solid fa-circle-info text-base"></i></button>
                     <button onclick="openAddModal('linkutili')" class="admin-only hidden bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 rounded-2xl text-xs font-bold shadow-lg shadow-indigo-200 transition flex items-center space-x-1.5">
                         <i class="fa-solid fa-plus"></i><span>Aggiungi Link</span>
                     </button>
@@ -515,7 +515,7 @@
                     <p class="text-xs text-slate-500 font-medium mt-0.5">Festeggiamo insieme i nostri bambini</p>
                 </div>
                 <div class="flex items-center gap-2">
-                    <button onclick="openInfoModal('compleanni')" class="admin-only hidden bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida sezione"><i class="fa-solid fa-circle-info text-base"></i></button>
+                    <button onclick="openInfoModal('compleanni')" class="admin-only hidden bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida caricamento file"><i class="fa-solid fa-circle-info text-base"></i></button>
                     <button onclick="openAddModal('compleanni')" class="admin-only hidden bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 rounded-2xl text-xs font-bold shadow-lg shadow-indigo-200 transition flex items-center space-x-1.5">
                         <i class="fa-solid fa-plus"></i><span>Aggiungi Compleanno</span>
                     </button>
@@ -535,7 +535,7 @@
                     <p class="text-xs text-slate-500 font-medium mt-0.5">Eventi e cose da ricordare</p>
                 </div>
                 <div class="flex items-center gap-2">
-                    <button onclick="openInfoModal('promemoria')" class="admin-only hidden bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida sezione"><i class="fa-solid fa-circle-info text-base"></i></button>
+                    <button onclick="openInfoModal('promemoria')" class="admin-only hidden bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida caricamento file"><i class="fa-solid fa-circle-info text-base"></i></button>
                     <button onclick="openAddModal('promemoria')" class="admin-only hidden bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 rounded-2xl text-xs font-bold shadow-lg shadow-indigo-200 transition flex items-center space-x-1.5">
                         <i class="fa-solid fa-plus"></i><span>Aggiungi Promemoria</span>
                     </button>
@@ -604,15 +604,22 @@
         </div>
     </div>
 
-    <!-- Modale Guida Info Admin -->
+    <!-- Modale Guida Info Admin (Con spiegazione caricamento file) -->
     <div id="infoModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md hidden z-50 flex items-center justify-center p-4">
         <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4 border border-slate-100">
             <div class="flex justify-between items-center">
-                <h3 id="infoModalTitle" class="text-lg font-black text-slate-900">Guida Sezione</h3>
+                <h3 id="infoModalTitle" class="text-lg font-black text-slate-900">Guida Caricamento File</h3>
                 <button onclick="closeInfoModal()" class="text-slate-400 hover:text-slate-600 p-1.5 rounded-xl hover:bg-slate-100 transition"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
             <div id="infoModalContent" class="text-xs sm:text-sm text-slate-600 space-y-3 font-medium leading-relaxed">
-                <!-- Contenuto dinamico della guida -->
+                <!-- Spiegazione integrata per l'Admin -->
+                <div class="bg-indigo-50 p-3.5 rounded-2xl border border-indigo-100 text-indigo-950 space-y-2">
+                    <p class="font-black text-xs uppercase tracking-wider text-indigo-700">💡 Come caricare file, PDF o foto:</p>
+                    <p>1. Carica il documento o la foto sul tuo <strong>Google Drive</strong> personale.</p>
+                    <p>2. Imposta la condivisione su <em>"Chiunque abbia il link può visualizzare"</em> e copia il link.</p>
+                    <p>3. Incolla il link nel campo <strong>"Link Web / Link PDF Ufficiale"</strong> quando pubblichi o modifichi un elemento nell'app.</p>
+                </div>
+                <div id="sectionSpecificGuideText"></div>
             </div>
             <button onclick="closeInfoModal()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-2xl text-xs font-bold transition">Ho capito</button>
         </div>
@@ -652,8 +659,8 @@
                     <textarea id="inputDetails" rows="4" placeholder="Note..." class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-inner font-medium"></textarea>
                 </div>
                 <div>
-                    <label class="block text-xs font-black text-slate-700 mb-1.5" id="labelFileUrl">Link Web / Link PDF Ufficiale</label>
-                    <input type="text" id="inputFileUrl" placeholder="https://link-al-pdf.com" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-inner font-medium">
+                    <label class="block text-xs font-black text-slate-700 mb-1.5" id="labelFileUrl">Link Google Drive (PDF o Foto)</label>
+                    <input type="text" id="inputFileUrl" placeholder="https://drive.google.com/..." class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-inner font-medium">
                 </div>
                 <button type="submit" id="saveBtn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3.5 rounded-2xl text-sm font-bold shadow-lg shadow-indigo-200 transition">Pubblica</button>
             </form>
@@ -709,70 +716,26 @@
         let fondoChartInstance = null;
         let previousDataSnapshot = null;
 
-        // Testi Guide Info per Sezione
         const sectionGuides = {
-            compiti: {
-                title: "Guida: Diario dei Compiti",
-                content: "• Inserisci il titolo dell'attività (es. 'Esercizi pag. 15').<br>• Seleziona la materia corretta dal menu a tendina.<br>• Puoi impostare una data e ora di scadenza: i compiti scaduti da oltre 12 ore si archiviano/eliminano automaticamente.<br>• Nel campo link puoi incollare collegamenti web o link a documenti."
-            },
-            orario: {
-                title: "Guida: Orario Scolastico",
-                content: "• Inserisci come titolo il giorno della settimana (es. 'Lunedì').<br>• Nelle note o descrizione elenca le materie ora per ora.<br>• Utile per avere sempre a portata di mano il quadro delle lezioni."
-            },
-            mensa: {
-                title: "Guida: Menu Mensa & PDF",
-                content: "• In questa sezione puoi pubblicare circolari o link ai menu PDF ufficiali forniti dal servizio mensa scolastica.<br>• I genitori potranno visualizzarli o aprirli con un solo tap."
-            },
-            libri: {
-                title: "Guida: Libri & Materiale",
-                content: "• Inserisci l'elenco dei libri di testo adottati o il materiale scolastico richiesto (es. tempere, quaderni specifici).<br>• Puoi allegare link diretti alle piattaforme digitali editoriali o PDF."
-            },
-            countdown: {
-                title: "Guida: Conto alla Rovescia",
-                content: "• Imposta un evento futuro (es. 'Ultimo giorno di scuola' o 'Gita a Roma') inserendo data e ora.<br>• Il sistema calcolerà automaticamente i giorni, le ore ei minuti mancanti."
-            },
-            sondaggi: {
-                title: "Guida: Sondaggi e Votazioni",
-                content: "• Crea un sondaggio inserendo una domanda principale.<br>• Nella descrizione/opzioni inserisci le varie scelte (una per riga).<br>• I genitori inseriranno il nome del bambino e potranno esprimere la loro preferenza in tempo reale."
-            },
-            ruota: {
-                title: "Guida: Ruota delle Assegnazioni",
-                content: "• Inserisci i nomi dei genitori/bambini nella prima casella (uno per riga).<br>• Inserisci le mansioni o cose da portare nella seconda casella (uno per riga).<br>• Clicca sul pulsante per generare gli abbinamenti casuali con tanto di coriandoli e tasto di condivisione WhatsApp!"
-            },
-            snake: {
-                title: "Guida: Snake Game",
-                content: "• Un mini-gioco integrato per intrattenere grandi e piccoli.<br>• Inserendo il proprio nome, il punteggio viene salvato nella classifica ufficiale della classe sincronizzata su Firebase."
-            },
-            fondo: {
-                title: "Guida: Fondo Cassa",
-                content: "• Clicca su 'Totale Raccolto' per impostare la cifra iniziale raccolta dai genitori.<br>• Clicca su 'Movimento' per registrare le spese sostenute (es. regali maestre, pullman gite).<br>• Il grafico a torta calcolerà automaticamente le percentuali di spesa."
-            },
-            avvisi: {
-                title: "Guida: Avvisi Importanti",
-                content: "• Pubblica comunicazioni urgenti o avvisi di rilievo per tutte le famiglie.<br>• Gli avvisi pubblicati nelle ultime 24 ore mostreranno un badge animato 'Nuovo'."
-            },
-            galleria: {
-                title: "Guida: Foto & Video",
-                content: "• Raccogli i ricordi più belli delle gite scolastiche o dei momenti in classe inserendo link a raccolte foto (es. Google Drive o album condivisi)."
-            },
-            linkutili: {
-                title: "Guida: Link Utili",
-                content: "• Inserisci gli accessi rapidi ai portali istituzionali (registro elettronico, portale pagamenti scuola, moduli autorizzazioni)."
-            },
-            compleanni: {
-                title: "Guida: Compleanni",
-                content: "• Inserisci il nome del compagno e la data di compleanno per ricordare a tutti le festività della classe."
-            },
-            promemoria: {
-                title: "Guida: Promemoria",
-                content: "• Segna scadenze o impegni particolari da ricordare nel corso dell'anno scolastico."
-            }
+            compiti: "Inserisci l'attività e sfrutta il campo link per allegare approfondimenti da Google Drive.",
+            orario: "Organizza l'orario scolastico settimanale con le relative note.",
+            mensa: "Pubblica i menu PDF o le comunicazioni ufficiali della mensa.",
+            libri: "Elenca i libri di testo o i materiali consigliati inserendo eventuali link digitali.",
+            countdown: "Imposta la data di eventi importanti o gite scolastiche.",
+            sondaggi: "Crea sondaggi in tempo reale e monitora le votazioni dei genitori.",
+            ruota: "Genera abbinamenti casuali per feste o compiti con un solo clic.",
+            snake: "Mini-gioco con classifica sincronizzata su Firebase.",
+            fondo: "Gestisci il bilancio e monitora le spese di cassa con il grafico interattivo.",
+            avvisi: "Pubblica avvisi importanti con evidenza automatica per le prime 24 ore.",
+            galleria: "Condividi link ad album fotografici delle attività di classe.",
+            linkutili: "Accesso rapido a registri e portali istituzionali.",
+            compleanni: "Memorizza i compleanni dei bambini per festeggiarli insieme.",
+            promemoria: "Segna scadenze e impegni da ricordare."
         };
 
         function openInfoModal(sectionKey) {
-            const guide = sectionGuides[sectionKey] || { title: "Guida", content: "Nessuna guida disponibile per questa sezione." };
-            document.getElementById('infoModalTitle').innerText = guide.title;
-            document.getElementById('infoModalContent').innerHTML = guide.content;
+            document.getElementById('infoModalTitle').innerText = "Guida Sezione";
+            document.getElementById('sectionSpecificGuideText').innerHTML = `<p class="font-semibold text-slate-700">ℹ️ ${sectionGuides[sectionKey] || 'Gestisci i contenuti di questa sezione.'}</p>`;
             document.getElementById('infoModal').classList.remove('hidden');
         }
 
