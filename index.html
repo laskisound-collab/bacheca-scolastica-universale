@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="it">
 <script>
   if ('serviceWorker' in navigator) {
@@ -87,7 +87,7 @@
                 </div>
             </div>
             <div class="flex items-center space-x-2">
-                <!-- Pulsante Invito WhatsApp (Visibile anche ai genitori per condividere la classe) -->
+                <!-- Pulsante Invito WhatsApp -->
                 <button onclick="shareClassInvite()" class="bg-emerald-600 hover:bg-emerald-700 border border-emerald-500/40 px-3.5 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition shadow-sm flex items-center space-x-2 text-white" title="Crea Invito Genitori">
                     <i class="fa-brands fa-whatsapp text-sm"></i>
                     <span class="hidden sm:inline">Invito</span>
@@ -564,7 +564,7 @@
                     <div class="bg-indigo-50/50 p-5 rounded-3xl border border-indigo-100 space-y-2.5">
                         <h3 class="font-black text-sm text-indigo-950 flex items-center gap-2"><i class="fa-solid fa-shield-halved text-indigo-600"></i> 1. Gestione Multi-Classe (Token Univoci)</h3>
                         <p class="text-xs text-slate-600 leading-relaxed font-medium">
-                            Ogni classe ha un suo spazio completamente indipendente e isolato protetto da un <strong>Token univoco</strong> nell'indirizzo (es. <code>#token_abc123</code>). Quando crei o apri l'app, il sistema genera automaticamente il link per la tua classe. Cliccando sul pulsante verde <strong>"Invito"</strong> in alto, potrai inviare direttamente il link esatto su WhatsApp agli altri genitori.
+                            Ogni classe ha un suo spazio completamente indipendente e isolato protetto da un <strong>Token univoco</strong>. Quando crei o apri l'app per la prima volta, il sistema genera automaticamente il codice per la tua classe salvandolo nel dispositivo. Cliccando sul pulsante verde <strong>"Invito"</strong> in alto, potrai inviare il link esatto su WhatsApp agli altri genitori.
                         </p>
                     </div>
 
@@ -660,7 +660,6 @@
             <div id="adminLogoutDiv" class="hidden space-y-3.5">
                 <p class="text-xs text-emerald-600 font-bold flex items-center bg-emerald-50 p-3 rounded-2xl border border-emerald-100"><i class="fa-solid fa-circle-check mr-2 text-base"></i> Autenticato come Amministratore.</p>
                 
-                <!-- Pulsanti riservati all'Admin (Scaricamento APK e Configurazione Nome/Password) -->
                 <div class="space-y-2 pt-2">
                     <a href="./app-release.apk" download onclick="handleDownloadAPK(event)" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3 px-4 rounded-2xl text-xs font-bold transition flex items-center justify-center space-x-2 shadow-md">
                         <i class="fa-brands fa-android text-base"></i>
@@ -792,7 +791,6 @@
         updateClock();
 
         function handleDownloadAPK(e) {
-            // Verifica preventiva se il file APK esiste per evitare errori di link
             fetch('./app-release.apk', { method: 'HEAD' })
                 .then(res => {
                     if (!res.ok) {
@@ -800,29 +798,43 @@
                         alert("⚠️ Il file 'app-release.apk' non è stato ancora caricato nella repository GitHub. Caricalo nella cartella principale per consentire il download!");
                     }
                 })
-                .catch(() => {
-                    // Ignora in locale se non supportato da fetch
-                });
+                .catch(() => {});
         }
 
-        // Gestione Token Univoco per Classe
+        // Gestione Token e pulizia automatica URL (senza mostrare il link nella barra degli indirizzi)
         function getOrCreateClassToken() {
             let hash = window.location.hash.replace('#', '');
-            if (!hash || !hash.startsWith('token_')) {
-                const randomToken = 'token_' + Math.random().toString(36).substring(2, 9) + Date.now().toString(36);
-                window.location.hash = randomToken;
-                return randomToken;
+            let token = '';
+
+            if (hash && hash.startsWith('token_')) {
+                token = hash;
+                localStorage.setItem('active_class_token', token);
+            } else {
+                token = localStorage.getItem('active_class_token');
+                if (!token) {
+                    token = 'token_' + Math.random().toString(36).substring(2, 9) + Date.now().toString(36);
+                    localStorage.setItem('active_class_token', token);
+                }
             }
-            return hash;
+
+            // Pulisce immediatamente l'URL visibile rimuovendo il token dalla barra del browser
+            const cleanUrl = window.location.href.split('#')[0];
+            history.replaceState(null, '', cleanUrl);
+
+            return token;
         }
 
         const classToken = getOrCreateClassToken();
         const firebaseNodePath = 'bacheca_scolastica_' + classToken;
 
         function shareClassInvite() {
-            const appUrl = window.location.href;
+            // Genera il link con il token specifico salvato per questa classe
+            const currentToken = localStorage.getItem('active_class_token') || classToken;
+            const baseUrl = window.location.href.split('#')[0];
+            const inviteUrl = `${baseUrl}#${currentToken}`;
+            
             const cfg = dbData.appConfig || { name: "Bacheca Scolastica" };
-            const waText = encodeURIComponent(`👋 Buongiorno genitori!\n\nEcco il link ufficiale aggiornato per la nostra bacheca di classe (${cfg.name}) per seguire compiti, orari, menu mensa e fondo cassa:\n\n🔗 ${appUrl}`);
+            const waText = encodeURIComponent(`👋 Buongiorno genitori!\n\nEcco il link ufficiale aggiornato per la nostra bacheca di classe (${cfg.name}) per seguire compiti, orari, menu mensa e fondo cassa:\n\n🔗 ${inviteUrl}`);
             window.open(`https://api.whatsapp.com/send?text=${waText}`, '_blank');
         }
 
@@ -1017,8 +1029,6 @@
         }
 
         window.addEventListener('DOMContentLoaded', () => {
-            const hash = window.location.hash.replace('#', '');
-            if (hash && !hash.startsWith('token_')) switchTab(hash);
             initSnakeCanvas();
             checkPlayerSessionUI();
             renderMenuDelGiorno();
@@ -1102,7 +1112,10 @@
                 document.getElementById('snakeStatusText').innerText = "Game Over! Punteggio: " + score;
                 saveSnakeScoreToFirebase(currentPlayer, score);
 
-                const appUrl = window.location.href;
+                const currentToken = localStorage.getItem('active_class_token') || classToken;
+                const baseUrl = window.location.href.split('#')[0];
+                const appUrl = `${baseUrl}#${currentToken}`;
+
                 const waText = encodeURIComponent(`🎮 *Record Snake*\n${currentPlayer} ha totalizzato ${score} punti!\n\n🔗 *Vieni a battere il record qui:* ${appUrl}`);
                 
                 document.getElementById('snakeShareContainer').innerHTML = `
@@ -1340,9 +1353,6 @@
                 activeBtn.classList.add('text-indigo-600', 'bg-indigo-50/80', 'shadow-sm');
                 activeBtn.classList.remove('text-slate-600', 'hover:bg-slate-100/80');
             }
-            const cleanUrl = window.location.href.split('#')[0];
-            history.replaceState(null, '', cleanUrl + '#' + classToken + ',' + tabId);
-            if (tabId === 'fondo') renderFondoChart();
         }
 
         function spinWheel() {
@@ -1371,7 +1381,10 @@
             document.getElementById('wheelStatusCount').innerText = "Abbinamenti completati!";
             confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
 
-            const appUrl = window.location.href;
+            const currentToken = localStorage.getItem('active_class_token') || classToken;
+            const baseUrl = window.location.href.split('#')[0];
+            const appUrl = `${baseUrl}#${currentToken}`;
+
             waTextList += `\n🔗 *Gestito tramite la Bacheca:* ${appUrl}`;
             const encodedWA = encodeURIComponent(waTextList.trim());
 
@@ -1579,7 +1592,10 @@
             const titleEl = document.getElementById('votersModalTitle');
             const contentEl = document.getElementById('votersListContent');
             const whatsappContainer = document.getElementById('modalWhatsAppContainer');
-            const appUrl = window.location.href;
+            
+            const currentToken = localStorage.getItem('active_class_token') || classToken;
+            const baseUrl = window.location.href.split('#')[0];
+            const appUrl = `${baseUrl}#${currentToken}`;
 
             let summaryTextForWA = `📊 *Sondaggio: ${poll.title}*\n\n`;
 
@@ -1683,7 +1699,9 @@
         }, 1000);
 
         function renderAll() {
-            const appUrl = window.location.href;
+            const currentToken = localStorage.getItem('active_class_token') || classToken;
+            const baseUrl = window.location.href.split('#')[0];
+            const appUrl = `${baseUrl}#${currentToken}`;
 
             const compitiArr = Object.values(dbData.compiti || {});
             const summaryTextEl = document.getElementById('homeworkSummaryText');
