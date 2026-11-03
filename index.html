@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="it">
 <script>
   if ('serviceWorker' in navigator) {
@@ -562,9 +562,9 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
                     <div class="bg-indigo-50/50 p-5 rounded-3xl border border-indigo-100 space-y-2.5">
-                        <h3 class="font-black text-sm text-indigo-950 flex items-center gap-2"><i class="fa-solid fa-shield-halved text-indigo-600"></i> 1. Gestione Multi-Classe (Token Univoci)</h3>
+                        <h3 class="font-black text-sm text-indigo-950 flex items-center gap-2"><i class="fa-solid fa-shield-halved text-indigo-600"></i> 1. Gestione App e Installazione APK</h3>
                         <p class="text-xs text-slate-600 leading-relaxed font-medium">
-                            Ogni classe ha un suo spazio completamente indipendente e isolato protetto da un <strong>Token univoco</strong>. Quando crei o apri l'app per la prima volta, il sistema genera automaticamente il codice per la tua classe salvandolo nel dispositivo. Cliccando sul pulsante verde <strong>"Invito"</strong> in alto, potrai inviare il link esatto su WhatsApp agli altri genitori.
+                            Puoi scaricare l'app Android (APK) direttamente dall'Area Admin. Una volta installata sul telefono, la prima volta <strong>basta cliccare sul link d'invito WhatsApp con il token</strong> ricevuto: l'app memorizzerà la classe sul dispositivo e si aprirà sempre pulita, senza link o token visibili nella barra degli indirizzi!
                         </p>
                     </div>
 
@@ -668,6 +668,11 @@
                     <button onclick="toggleAdminModal(); openConfigModal();" class="w-full bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 py-3 px-4 rounded-2xl text-xs font-bold transition flex items-center justify-center space-x-2">
                         <i class="fa-solid fa-gear"></i>
                         <span>Impostazioni Classe & Password</span>
+                    </button>
+                    <!-- Scorciatoia Rapida Guida -->
+                    <button onclick="toggleAdminModal(); switchTab('guida');" class="w-full bg-sky-50 hover:bg-sky-100 text-sky-700 border border-sky-200 py-3 px-4 rounded-2xl text-xs font-bold transition flex items-center justify-center space-x-2">
+                        <i class="fa-solid fa-circle-question"></i>
+                        <span>Apri Guida e Istruzioni App</span>
                     </button>
                 </div>
 
@@ -817,7 +822,6 @@
                 }
             }
 
-            // Pulisce immediatamente l'URL visibile rimuovendo il token dalla barra del browser
             const cleanUrl = window.location.href.split('#')[0];
             history.replaceState(null, '', cleanUrl);
 
@@ -828,13 +832,13 @@
         const firebaseNodePath = 'bacheca_scolastica_' + classToken;
 
         function shareClassInvite() {
-            // Genera il link con il token specifico salvato per questa classe
             const currentToken = localStorage.getItem('active_class_token') || classToken;
             const baseUrl = window.location.href.split('#')[0];
             const inviteUrl = `${baseUrl}#${currentToken}`;
+            const apkUrl = `${baseUrl}app-release.apk`;
             
             const cfg = dbData.appConfig || { name: "Bacheca Scolastica" };
-            const waText = encodeURIComponent(`👋 Buongiorno genitori!\n\nEcco il link ufficiale aggiornato per la nostra bacheca di classe (${cfg.name}) per seguire compiti, orari, menu mensa e fondo cassa:\n\n🔗 ${inviteUrl}`);
+            const waText = encodeURIComponent(`👋 Buongiorno genitori!\n\nEcco il link ufficiale aggiornato per la nostra bacheca di classe (${cfg.name}) per seguire compiti, orari, menu mensa e fondo cassa:\n\n🔗 Apri Bacheca: ${inviteUrl}\n\n🤖 Scarica App Android (APK):\n${apkUrl}`);
             window.open(`https://api.whatsapp.com/send?text=${waText}`, '_blank');
         }
 
@@ -2106,7 +2110,7 @@
 
         function escapeHtml(text) {
             if (!text) return '';
-            return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+            return text.specials ? text : text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
         }
 
         updateAdminUI();
