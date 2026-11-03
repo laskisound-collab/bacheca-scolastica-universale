@@ -87,7 +87,12 @@
                 </div>
             </div>
             <div class="flex items-center space-x-2">
-                <button id="configNameBtn" onclick="openConfigModal()" class="admin-only hidden bg-white/10 hover:bg-white/20 border border-white/20 p-2.5 rounded-2xl text-xs sm:text-sm font-bold transition shadow-sm flex items-center justify-center backdrop-blur-sm" title="Imposta Nome App">
+                <!-- Pulsante Download APK -->
+                <a href="./app-release.apk" download class="bg-emerald-600 hover:bg-emerald-700 border border-emerald-500/40 px-3.5 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition shadow-sm flex items-center space-x-2 text-white" title="Scarica App Android APK">
+                    <i class="fa-brands fa-android text-sm"></i>
+                    <span class="hidden sm:inline">Scarica APK</span>
+                </a>
+                <button id="configNameBtn" onclick="openConfigModal()" class="admin-only hidden bg-white/10 hover:bg-white/20 border border-white/20 p-2.5 rounded-2xl text-xs sm:text-sm font-bold transition shadow-sm flex items-center justify-center backdrop-blur-sm" title="Imposta Nome App & Password">
                     <i class="fa-solid fa-gear text-indigo-200"></i>
                 </button>
                 <button onclick="shareClassInvite()" class="admin-only hidden bg-emerald-600 hover:bg-emerald-700 border border-emerald-500/40 px-3.5 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition shadow-sm flex items-center space-x-2 text-white" title="Crea Invito Genitori">
@@ -119,6 +124,7 @@
             <button onclick="switchTab('linkutili')" class="tab-btn py-2 px-3.5 text-xs sm:text-sm font-bold rounded-2xl text-slate-600 hover:bg-slate-100/80 whitespace-nowrap transition flex items-center space-x-2" data-tab="linkutili"><i class="fa-solid fa-link"></i><span>Link Utili</span></button>
             <button onclick="switchTab('compleanni')" class="tab-btn py-2 px-3.5 text-xs sm:text-sm font-bold rounded-2xl text-slate-600 hover:bg-slate-100/80 whitespace-nowrap transition flex items-center space-x-2" data-tab="compleanni"><i class="fa-solid fa-cake-candles"></i><span>Compleanni</span></button>
             <button onclick="switchTab('promemoria')" class="tab-btn py-2 px-3.5 text-xs sm:text-sm font-bold rounded-2xl text-slate-600 hover:bg-slate-100/80 whitespace-nowrap transition flex items-center space-x-2" data-tab="promemoria"><i class="fa-solid fa-clock"></i><span>Promemoria</span></button>
+            <button onclick="switchTab('guida')" class="tab-btn py-2 px-3.5 text-xs sm:text-sm font-bold rounded-2xl text-slate-600 hover:bg-slate-100/80 whitespace-nowrap transition flex items-center space-x-2" data-tab="guida"><i class="fa-solid fa-circle-question text-sky-500"></i><span>Guida & Info</span></button>
         </div>
     </nav>
 
@@ -549,6 +555,75 @@
             <div id="list-promemoria" class="space-y-3.5"></div>
         </section>
 
+        <!-- SEZIONE GUIDA E SPIEGAZIONE -->
+        <section id="guida" class="tab-content space-y-6">
+            <div class="bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-200/80 space-y-6">
+                <div>
+                    <span class="bg-indigo-50 text-indigo-700 text-[10px] font-black px-3.5 py-1.5 rounded-full uppercase tracking-wider border border-indigo-100">Manuale d'Uso Ufficiale</span>
+                    <h2 class="text-2xl font-black text-slate-900 tracking-tight mt-2 flex items-center gap-2.5">
+                        <i class="fa-solid fa-circle-question text-indigo-600"></i> Come funziona la Bacheca Universale
+                    </h2>
+                    <p class="text-xs sm:text-sm text-slate-500 font-medium mt-1">Tutto quello che c'è da sapere per amministratori e genitori.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+                    <div class="bg-indigo-50/50 p-5 rounded-3xl border border-indigo-100 space-y-2.5">
+                        <h3 class="font-black text-sm text-indigo-950 flex items-center gap-2"><i class="fa-solid fa-shield-halved text-indigo-600"></i> 1. Gestione Multi-Classe (Token Univoci)</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed font-medium">
+                            Ogni classe ha un suo spazio completamente indipendente e isolato protetto da un <strong>Token univoco</strong> nell'indirizzo (es. <code>#token_abc123</code>). Quando crei o apri l'app, il sistema genera automaticamente il link per la tua classe. Cliccando sul pulsante verde <strong>"Invito"</strong> in alto, potrai inviare direttamente il link esatto su WhatsApp agli altri genitori.
+                        </p>
+                    </div>
+
+                    <div class="bg-emerald-50/50 p-5 rounded-3xl border border-emerald-100 space-y-2.5">
+                        <h3 class="font-black text-sm text-emerald-950 flex items-center gap-2"><i class="fa-solid fa-key text-emerald-600"></i> 2. Area Admin e Password</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed font-medium">
+                            L'amministratore (rappresentante o docente) sblocca i pulsanti di inserimento/modifica cliccando su <strong>Area Admin</strong> (password iniziale di default: <code>3e</code>). Nelle impostazioni (icona ingranaggio) l'Admin può personalizzare la password di classe e inserire un codice di recupero in caso di smarrimento.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="space-y-4 pt-4 border-t border-slate-100">
+                    <h3 class="font-black text-base text-slate-900">📚 A cosa servono le varie Sezioni:</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200/70 space-y-1">
+                            <h4 class="font-black text-xs text-indigo-900 uppercase">Diario / Attività</h4>
+                            <p class="text-xs text-slate-600">Compiti giornalieri, verifiche e consegne con etichetta materia personalizzabile e auto-cancellazione dopo 12h dalla scadenza.</p>
+                        </div>
+                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200/70 space-y-1">
+                            <h4 class="font-black text-xs text-indigo-900 uppercase">Orario</h4>
+                            <p class="text-xs text-slate-600">Quadro delle lezioni o delle attività settimanali suddiviso per giorni.</p>
+                        </div>
+                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200/70 space-y-1">
+                            <h4 class="font-black text-xs text-indigo-900 uppercase">Menu Mensa</h4>
+                            <p class="text-xs text-slate-600">Visualizzazione opzioni del giorno (principale o leggera) e pubblicazione PDF ufficiali.</p>
+                        </div>
+                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200/70 space-y-1">
+                            <h4 class="font-black text-xs text-indigo-900 uppercase">Sondaggi</h4>
+                            <p class="text-xs text-slate-600">Votazioni in tempo reale con inserimento nominativo e condivisione esito su WhatsApp.</p>
+                        </div>
+                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200/70 space-y-1">
+                            <h4 class="font-black text-xs text-indigo-900 uppercase">Fondo Cassa</h4>
+                            <p class="text-xs text-slate-600">Gestione trasparente del bilancio con grafico interattivo delle spese e saldo in tempo reale.</p>
+                        </div>
+                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200/70 space-y-1">
+                            <h4 class="font-black text-xs text-indigo-900 uppercase">Ruota & Snake</h4>
+                            <p class="text-xs text-slate-600">Strumento per estrazioni casuali di compiti/mansioni e mini-gioco con classifica sincronizzata.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-amber-50/80 p-5 rounded-3xl border border-amber-200 space-y-3">
+                    <h3 class="font-black text-sm text-amber-950 flex items-center gap-2"><i class="fa-solid fa-cloud-arrow-up text-amber-600"></i> Come caricare file, PDF o foto</h3>
+                    <ol class="list-decimal list-inside text-xs text-amber-900 space-y-1.5 font-medium leading-relaxed">
+                        <li>Carica il documento o la foto sul tuo <strong>Google Drive</strong> personale.</li>
+                        <li>Imposta la condivisione del file su <em>"Chiunque abbia il link può visualizzare"</em> e copia il link.</li>
+                        <li>Quando pubblichi un elemento in qualsiasi sezione, incolla il link nel campo <strong>"Link Google Drive"</strong>.</li>
+                        <li>I genitori potranno aprire o visualizzare direttamente l'allegato con un solo tap!</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+
     </main>
 
     <!-- Footer con Contatore Visite in tempo reale e POWER_laski -->
@@ -565,7 +640,7 @@
         </div>
     </footer>
 
-    <!-- Modale Login Admin -->
+    <!-- Modale Login Admin con Recupero -->
     <div id="adminModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md hidden z-50 flex items-center justify-center p-4">
         <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl space-y-4 border border-slate-100">
             <div class="flex justify-between items-center">
@@ -576,6 +651,17 @@
                 <p class="text-xs text-slate-500 font-medium">Inserisci la password amministratore per sbloccare i comandi.</p>
                 <input type="password" id="adminPasswordInput" placeholder="Password" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-inner">
                 <button onclick="checkAdminPassword()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-2xl text-sm font-bold shadow-lg shadow-indigo-200 transition">Accedi</button>
+                <div class="text-center pt-2">
+                    <button onclick="showRecoveryView()" class="text-xs text-indigo-600 hover:underline font-bold">Password dimenticata?</button>
+                </div>
+            </div>
+            <div id="adminRecoveryForm" class="hidden space-y-3.5">
+                <p class="text-xs text-slate-500 font-medium" id="recoveryHintText">Inserisci il codice di recupero impostato per questa classe:</p>
+                <input type="text" id="adminRecoveryInput" placeholder="Codice di recupero" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-inner">
+                <button onclick="verifyRecoveryCode()" class="w-full bg-amber-600 hover:bg-amber-700 text-white py-3 rounded-2xl text-sm font-bold shadow-lg shadow-amber-200 transition">Verifica Codice</button>
+                <div class="text-center pt-2">
+                    <button onclick="hideRecoveryView()" class="text-xs text-slate-500 hover:underline font-bold">Torna al login</button>
+                </div>
             </div>
             <div id="adminLogoutDiv" class="hidden space-y-3.5">
                 <p class="text-xs text-emerald-600 font-bold flex items-center bg-emerald-50 p-3 rounded-2xl border border-emerald-100"><i class="fa-solid fa-circle-check mr-2 text-base"></i> Autenticato come Amministratore.</p>
@@ -584,11 +670,11 @@
         </div>
     </div>
 
-    <!-- Modale Configurazione Nome App -->
+    <!-- Modale Configurazione Nome App & Password -->
     <div id="configModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md hidden z-50 flex items-center justify-center p-4">
         <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4 border border-slate-100">
             <div class="flex justify-between items-center">
-                <h3 class="text-lg font-black text-slate-900">Personalizza Nome Applicazione</h3>
+                <h3 class="text-lg font-black text-slate-900">Impostazioni Classe & Admin</h3>
                 <button onclick="openConfigModal()" class="text-slate-400 hover:text-slate-600 p-1.5 rounded-xl hover:bg-slate-100 transition"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
             <div class="space-y-3.5">
@@ -604,7 +690,15 @@
                     <label class="block text-xs font-black text-slate-700 mb-1">Sigla Logo (2 o 3 caratteri, es. 1B)</label>
                     <input type="text" id="configInputLogo" placeholder="Es. 1B" maxlength="4" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-inner">
                 </div>
-                <button onclick="saveAppConfig()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-2xl text-sm font-bold shadow-lg shadow-indigo-200 transition">Salva Nome App</button>
+                <div class="pt-2 border-t border-slate-100">
+                    <label class="block text-xs font-black text-slate-700 mb-1">Nuova Password Admin (lascia vuota per mantenere)</label>
+                    <input type="password" id="configInputPassword" placeholder="Nuova password" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-inner">
+                </div>
+                <div>
+                    <label class="block text-xs font-black text-slate-700 mb-1">Codice di Recupero Password</label>
+                    <input type="text" id="configInputRecovery" placeholder="Es. Nome animale o parola segreta" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-inner">
+                </div>
+                <button onclick="saveAppConfig()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-2xl text-sm font-bold shadow-lg shadow-indigo-200 transition">Salva Impostazioni</button>
             </div>
         </div>
     </div>
@@ -713,7 +807,7 @@
 
         let isAdmin = localStorage.getItem('isAdmin_app') === 'true';
         let dbData = { 
-            appConfig: { name: "Bacheca Scolastica", subtitle: "Universale", logo: "App" },
+            appConfig: { name: "Bacheca Scolastica", subtitle: "Universale", logo: "App", adminPassword: "3e", recoveryCode: "segreto" },
             compiti: {}, 
             orario: {}, 
             mensa: {}, 
@@ -832,6 +926,9 @@
                 if (val) {
                     previousDataSnapshot = JSON.parse(JSON.stringify(val));
                     dbData = { ...dbData, ...val };
+                    if (!dbData.appConfig) dbData.appConfig = { name: "Bacheca Scolastica", subtitle: "Universale", logo: "App", adminPassword: "3e", recoveryCode: "segreto" };
+                    if (!dbData.appConfig.adminPassword) dbData.appConfig.adminPassword = "3e";
+                    if (!dbData.appConfig.recoveryCode) dbData.appConfig.recoveryCode = "segreto";
                     updateAppBranding();
                     checkAndCleanExpiredCompiti();
                 }
@@ -863,10 +960,12 @@
         }
 
         function openConfigModal() {
-            const cfg = dbData.appConfig || { name: "Bacheca Scolastica", subtitle: "Universale", logo: "App" };
+            const cfg = dbData.appConfig || { name: "Bacheca Scolastica", subtitle: "Universale", logo: "App", adminPassword: "3e", recoveryCode: "segreto" };
             document.getElementById('configInputName').value = cfg.name || '';
             document.getElementById('configInputSubtitle').value = cfg.subtitle || '';
             document.getElementById('configInputLogo').value = cfg.logo || '';
+            document.getElementById('configInputPassword').value = '';
+            document.getElementById('configInputRecovery').value = cfg.recoveryCode || '';
             document.getElementById('configModal').classList.toggle('hidden');
         }
 
@@ -874,12 +973,20 @@
             const name = document.getElementById('configInputName').value.trim() || "Bacheca Scolastica";
             const subtitle = document.getElementById('configInputSubtitle').value.trim();
             const logo = document.getElementById('configInputLogo').value.trim() || "App";
+            const newPass = document.getElementById('configInputPassword').value.trim();
+            const newRecovery = document.getElementById('configInputRecovery').value.trim();
 
-            dbData.appConfig = { name, subtitle, logo };
+            if (!dbData.appConfig) dbData.appConfig = {};
+            dbData.appConfig.name = name;
+            dbData.appConfig.subtitle = subtitle;
+            dbData.appConfig.logo = logo;
+            if (newPass) dbData.appConfig.adminPassword = newPass;
+            if (newRecovery) dbData.appConfig.recoveryCode = newRecovery;
+
             const { db, ref, set } = window.fbDB;
             set(ref(db, firebaseNodePath), dbData).then(() => {
                 openConfigModal();
-                showAdminNotification("Nome applicazione aggiornato con successo!", "success");
+                showAdminNotification("Impostazioni aggiornate con successo!", "success");
             });
         }
 
@@ -1136,6 +1243,7 @@
             const adminIcon = document.getElementById('adminIcon');
             const adminText = document.getElementById('adminText');
             const adminLoginForm = document.getElementById('adminLoginForm');
+            const adminRecoveryForm = document.getElementById('adminRecoveryForm');
             const adminLogoutDiv = document.getElementById('adminLogoutDiv');
 
             if (isAdmin) {
@@ -1143,6 +1251,7 @@
                 if (adminIcon) adminIcon.className = "fa-solid fa-lock-open text-xs text-emerald-300";
                 if (adminText) adminText.innerText = "Admin attivo";
                 if (adminLoginForm) adminLoginForm.classList.add('hidden');
+                if (adminRecoveryForm) adminRecoveryForm.classList.add('hidden');
                 if (adminLogoutDiv) adminLogoutDiv.classList.remove('hidden');
                 localStorage.setItem('isAdmin_app', 'true');
                 requestBrowserNotificationPermission();
@@ -1151,6 +1260,7 @@
                 if (adminIcon) adminIcon.className = "fa-solid fa-lock text-xs text-amber-300";
                 if (adminText) adminText.innerText = "Area Admin";
                 if (adminLoginForm) adminLoginForm.classList.remove('hidden');
+                if (adminRecoveryForm) adminRecoveryForm.classList.add('hidden');
                 if (adminLogoutDiv) adminLogoutDiv.classList.add('hidden');
                 localStorage.setItem('isAdmin_app', 'false');
                 requestBrowserNotificationPermission();
@@ -1159,14 +1269,41 @@
         }
 
         function toggleAdminModal() { document.getElementById('adminModal').classList.toggle('hidden'); }
+        
+        function showRecoveryView() {
+            document.getElementById('adminLoginForm').classList.add('hidden');
+            document.getElementById('adminRecoveryForm').classList.remove('hidden');
+        }
+
+        function hideRecoveryView() {
+            document.getElementById('adminRecoveryForm').classList.add('hidden');
+            document.getElementById('adminLoginForm').classList.remove('hidden');
+        }
+
         function checkAdminPassword() {
-            if (document.getElementById('adminPasswordInput').value === '3e') {
+            const inputVal = document.getElementById('adminPasswordInput').value;
+            const correctPass = (dbData.appConfig && dbData.appConfig.adminPassword) ? dbData.appConfig.adminPassword : '3e';
+            if (inputVal === correctPass) {
                 isAdmin = true;
                 updateAdminUI();
                 toggleAdminModal();
                 document.getElementById('adminPasswordInput').value = '';
             } else { alert('Password errata!'); }
         }
+
+        function verifyRecoveryCode() {
+            const inputVal = document.getElementById('adminRecoveryInput').value.trim();
+            const correctRec = (dbData.appConfig && dbData.appConfig.recoveryCode) ? dbData.appConfig.recoveryCode : 'segreto';
+            if (inputVal.toLowerCase() === correctRec.toLowerCase()) {
+                isAdmin = true;
+                updateAdminUI();
+                toggleAdminModal();
+                document.getElementById('adminRecoveryInput').value = '';
+                hideRecoveryView();
+                alert('Codice di recupero corretto! Sei entrato come Admin. Puoi modificare la password nelle impostazioni.');
+            } else { alert('Codice di recupero errato!'); }
+        }
+
         function logoutAdmin() { isAdmin = false; updateAdminUI(); toggleAdminModal(); }
 
         function switchTab(tabId) {
