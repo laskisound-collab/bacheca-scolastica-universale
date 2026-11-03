@@ -63,12 +63,12 @@
         <div class="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center">
             <div class="flex items-center space-x-3.5">
                 <div id="headerAppLogo" class="bg-gradient-to-br from-indigo-500 to-indigo-700 text-white p-2.5 rounded-2xl font-black text-xl shadow-lg shadow-indigo-900/40 flex items-center justify-center w-12 h-12 border border-white/25">
-                    1B
+                    App
                 </div>
                 <div>
                     <h1 class="text-base sm:text-lg font-black tracking-tight leading-tight text-white flex items-center gap-2">
-                        <span id="displayAppName">Classe 1B</span> 
-                        <span id="displayAppSubtitle" class="text-xs font-semibold px-2 py-0.5 rounded-full bg-white/10 text-indigo-200 border border-white/10 hidden sm:inline-block">Scuola Primaria</span>
+                        <span id="displayAppName">Bacheca Scolastica</span> 
+                        <span id="displayAppSubtitle" class="text-xs font-semibold px-2 py-0.5 rounded-full bg-white/10 text-indigo-200 border border-white/10 hidden sm:inline-block">Universale</span>
                     </h1>
                     <div class="flex items-center space-x-2 text-xs text-indigo-200 mt-1">
                         <span class="live-clock inline-block w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-sm shadow-emerald-400"></span>
@@ -91,7 +91,7 @@
     <!-- Navigation Tabs -->
     <nav class="bg-white/90 backdrop-blur-md shadow-sm border-b border-slate-200/80 sticky top-[77px] z-40 overflow-x-auto">
         <div class="max-w-4xl mx-auto flex space-x-1.5 px-3 py-2.5">
-            <button onclick="switchTab('compiti')" class="tab-btn py-2 px-3.5 text-xs sm:text-sm font-bold rounded-2xl text-indigo-600 bg-indigo-50/80 shadow-sm whitespace-nowrap transition flex items-center space-x-2" data-tab="compiti"><i class="fa-solid fa-book-open"></i><span>Compiti</span></button>
+            <button onclick="switchTab('compiti')" class="tab-btn py-2 px-3.5 text-xs sm:text-sm font-bold rounded-2xl text-indigo-600 bg-indigo-50/80 shadow-sm whitespace-nowrap transition flex items-center space-x-2" data-tab="compiti"><i class="fa-solid fa-book-open"></i><span>Diario / Attività</span></button>
             <button onclick="switchTab('orario')" class="tab-btn py-2 px-3.5 text-xs sm:text-sm font-bold rounded-2xl text-slate-600 hover:bg-slate-100/80 whitespace-nowrap transition flex items-center space-x-2" data-tab="orario"><i class="fa-solid fa-calendar-days"></i><span>Orario</span></button>
             <button onclick="switchTab('mensa')" class="tab-btn py-2 px-3.5 text-xs sm:text-sm font-bold rounded-2xl text-slate-600 hover:bg-slate-100/80 whitespace-nowrap transition flex items-center space-x-2" data-tab="mensa"><i class="fa-solid fa-utensils"></i><span>Menu Mensa</span></button>
             <button onclick="switchTab('libri')" class="tab-btn py-2 px-3.5 text-xs sm:text-sm font-bold rounded-2xl text-slate-600 hover:bg-slate-100/80 whitespace-nowrap transition flex items-center space-x-2" data-tab="libri"><i class="fa-solid fa-book"></i><span>Libri & Materiale</span></button>
@@ -111,7 +111,7 @@
     <!-- Main Container -->
     <main class="max-w-4xl mx-auto px-4 py-6 flex-1 w-full pb-20 space-y-6">
         
-        <!-- SEZIONE COMPITI (HOME) -->
+        <!-- SEZIONE COMPITI / ATTIVITA -->
         <section id="compiti" class="tab-content active space-y-4">
             <div id="homeCountdownBox"></div>
 
@@ -121,7 +121,7 @@
                         <i class="fa-solid fa-clipboard-list text-xl"></i>
                     </div>
                     <div>
-                        <h4 class="font-black text-sm tracking-tight text-white">Riepilogo Compiti Attivi</h4>
+                        <h4 class="font-black text-sm tracking-tight text-white">Riepilogo Attività Attive</h4>
                         <p class="text-xs text-indigo-200 font-medium mt-0.5" id="homeworkSummaryText">Caricamento stato...</p>
                     </div>
                 </div>
@@ -134,23 +134,14 @@
                 <div>
                     <h2 class="text-xl font-black text-slate-900 tracking-tight flex items-center gap-2">
                         <span class="w-8 h-8 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-sm"><i class="fa-solid fa-book-open"></i></span>
-                        Diario dei Compiti
+                        Diario Attività & Compiti
                     </h2>
-                    <p class="text-xs text-slate-500 font-medium mt-0.5">Attività e consegne con supporto multi-allegato</p>
+                    <p class="text-xs text-slate-500 font-medium mt-0.5">Gestione universale con etichetta materia/categoria personalizzabile</p>
                 </div>
-                <div class="flex items-center gap-2.5 w-full sm:w-auto">
-                    <select id="filterMateria" onchange="renderAll()" class="bg-slate-50 border border-slate-200 rounded-2xl px-3.5 py-2.5 text-xs font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-inner">
-                        <option value="tutte">Tutte le materie</option>
-                        <option value="Italiano">Italiano</option>
-                        <option value="Matematica">Matematica</option>
-                        <option value="Inglese">Inglese</option>
-                        <option value="Storia/Geografia">Storia / Geografia</option>
-                        <option value="Scienze">Scienze</option>
-                        <option value="Altro">Altro</option>
-                    </select>
+                <div class="flex items-center gap-2.5">
                     <button onclick="openInfoModal('compiti')" class="admin-only hidden bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida caricamento file"><i class="fa-solid fa-circle-info text-base"></i></button>
                     <button onclick="openAddModal('compiti')" class="admin-only hidden bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 rounded-2xl text-xs font-bold shadow-lg shadow-indigo-200 transition whitespace-nowrap flex items-center space-x-1.5">
-                        <i class="fa-solid fa-plus"></i><span>Nuovo Compito</span>
+                        <i class="fa-solid fa-plus"></i><span>Nuova Attività</span>
                     </button>
                 </div>
             </div>
@@ -165,9 +156,9 @@
                 <div>
                     <h2 class="text-xl font-black text-slate-900 tracking-tight flex items-center gap-2">
                         <span class="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-sm"><i class="fa-solid fa-calendar-days"></i></span>
-                        Orario Scolastico Settimanale
+                        Orario Settimanale
                     </h2>
-                    <p class="text-xs text-slate-500 font-medium mt-0.5">Quadro delle lezioni gestibile dall'Admin</p>
+                    <p class="text-xs text-slate-500 font-medium mt-0.5">Quadro delle lezioni o attività gestibile dall'Admin</p>
                 </div>
                 <div class="flex items-center gap-2">
                     <button onclick="openInfoModal('orario')" class="admin-only hidden bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida caricamento file"><i class="fa-solid fa-circle-info text-base"></i></button>
@@ -185,14 +176,14 @@
                 <div>
                     <h2 class="text-xl font-black text-slate-900 tracking-tight flex items-center gap-2">
                         <span class="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-sm"><i class="fa-solid fa-utensils"></i></span>
-                        Menu Mensa Scolastica
+                        Menu Mensa / Ristorazione
                     </h2>
-                    <p class="text-xs text-slate-500 font-medium mt-0.5">Visualizza in tempo reale il menu del giorno</p>
+                    <p class="text-xs text-slate-500 font-medium mt-0.5">Visualizza in tempo reale le opzioni del giorno</p>
                 </div>
                 <div>
                     <select id="tipoMenuSelect" onchange="renderMenuDelGiorno()" class="bg-emerald-50 border border-emerald-200 rounded-2xl px-4 py-2.5 text-xs font-black text-emerald-800 focus:outline-none focus:ring-2 focus:ring-emerald-500 shadow-inner">
-                        <option value="normale">🟢 Menu Normale</option>
-                        <option value="leggero">🥗 Menu Leggero</option>
+                        <option value="normale">🟢 Opzione Principale</option>
+                        <option value="leggero">🥗 Opzione Alternativa / Leggera</option>
                     </select>
                 </div>
             </div>
@@ -205,7 +196,7 @@
                         <span class="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-sm"><i class="fa-solid fa-file-pdf"></i></span>
                         Pubblicazioni & PDF Ufficiali
                     </h2>
-                    <p class="text-xs text-slate-500 font-medium mt-0.5">Elenchi e comunicazioni aggiuntive sulla mensa</p>
+                    <p class="text-xs text-slate-500 font-medium mt-0.5">Elenchi e comunicazioni aggiuntive</p>
                 </div>
                 <div class="flex items-center gap-2">
                     <button onclick="openInfoModal('mensa')" class="admin-only hidden bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida caricamento file"><i class="fa-solid fa-circle-info text-base"></i></button>
@@ -223,14 +214,14 @@
                 <div>
                     <h2 class="text-xl font-black text-slate-900 tracking-tight flex items-center gap-2">
                         <span class="w-8 h-8 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center text-sm"><i class="fa-solid fa-book"></i></span>
-                        Libri di Testo & Materiale Scolastico
+                        Materiale & Documenti Consigliati
                     </h2>
-                    <p class="text-xs text-slate-500 font-medium mt-0.5">Elenchi libri adottati e materiali consigliati (PDF e link)</p>
+                    <p class="text-xs text-slate-500 font-medium mt-0.5">Elenchi e materiali (PDF e link)</p>
                 </div>
                 <div class="flex items-center gap-2">
                     <button onclick="openInfoModal('libri')" class="admin-only hidden bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida caricamento file"><i class="fa-solid fa-circle-info text-base"></i></button>
                     <button onclick="openAddModal('libri')" class="admin-only hidden bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 rounded-2xl text-xs font-bold shadow-lg shadow-indigo-200 transition flex items-center space-x-1.5">
-                        <i class="fa-solid fa-plus"></i><span>Aggiungi Libro / Materiale</span>
+                        <i class="fa-solid fa-plus"></i><span>Aggiungi Materiale</span>
                     </button>
                 </div>
             </div>
@@ -245,7 +236,7 @@
                         <span class="w-8 h-8 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center text-sm"><i class="fa-solid fa-hourglass-half"></i></span>
                         Conto alla Rovescia
                     </h2>
-                    <p class="text-xs text-slate-500 font-medium mt-0.5">Eventi importanti, gite e fine scuola</p>
+                    <p class="text-xs text-slate-500 font-medium mt-0.5">Eventi importanti e scadenze</p>
                 </div>
                 <div class="flex items-center gap-2">
                     <button onclick="openInfoModal('countdown')" class="admin-only hidden bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida caricamento file"><i class="fa-solid fa-circle-info text-base"></i></button>
@@ -265,7 +256,7 @@
                         <span class="w-8 h-8 rounded-xl bg-violet-50 text-violet-600 flex items-center justify-center text-sm"><i class="fa-solid fa-square-poll-vertical"></i></span>
                         Sondaggi e Votazioni
                     </h2>
-                    <p class="text-xs text-slate-500 font-medium mt-0.5">Inserisci il nome del bambino, confermalo e vota l'opzione desiderata</p>
+                    <p class="text-xs text-slate-500 font-medium mt-0.5">Inserisci il nome, confermalo e vota l'opzione desiderata</p>
                 </div>
                 <div class="flex items-center gap-2">
                     <button onclick="openInfoModal('sondaggi')" class="admin-only hidden bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida caricamento file"><i class="fa-solid fa-circle-info text-base"></i></button>
@@ -283,9 +274,9 @@
                 <div>
                     <h2 class="text-xl font-black text-slate-900 tracking-tight flex items-center gap-2">
                         <span class="w-8 h-8 rounded-xl bg-pink-50 text-pink-600 flex items-center justify-center text-sm"><i class="fa-solid fa-dharmachakra"></i></span>
-                        Ruota delle Assegnazioni e Feste
+                        Ruota delle Assegnazioni
                     </h2>
-                    <p class="text-xs text-slate-500 font-medium mt-0.5">Associa automaticamente genitori e compiti (es. torte, bibite, decorazioni)</p>
+                    <p class="text-xs text-slate-500 font-medium mt-0.5">Associa automaticamente partecipanti e compiti/mansioni</p>
                 </div>
                 <button onclick="openInfoModal('ruota')" class="admin-only hidden bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida caricamento file"><i class="fa-solid fa-circle-info text-base"></i></button>
             </div>
@@ -294,12 +285,12 @@
                 <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-200/80 space-y-4">
                     <h3 class="font-black text-sm text-slate-900 uppercase tracking-wide">1. Inserisci elenchi</h3>
                     <div>
-                        <label class="block text-xs font-bold text-slate-700 mb-1">Nomi Genitori / Bambini (uno per riga)</label>
-                        <textarea id="wheelNames" rows="4" class="w-full bg-slate-50 border border-slate-200 rounded-2xl p-3 text-xs font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-inner" placeholder="Mamma Giulia&#10;Papà Marco&#10;Mamma Sara"></textarea>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Nomi Partecipanti (uno per riga)</label>
+                        <textarea id="wheelNames" rows="4" class="w-full bg-slate-50 border border-slate-200 rounded-2xl p-3 text-xs font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-inner" placeholder="Mario&#10;Anna&#10;Luigi"></textarea>
                     </div>
                     <div>
                         <label class="block text-xs font-bold text-slate-700 mb-1">Mansioni / Cose da portare (una per riga)</label>
-                        <textarea id="wheelTasks" rows="4" class="w-full bg-slate-50 border border-slate-200 rounded-2xl p-3 text-xs font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-inner" placeholder="Torta al cioccolato&#10;Bibite e bicchieri&#10;Piatti e tovaglioli"></textarea>
+                        <textarea id="wheelTasks" rows="4" class="w-full bg-slate-50 border border-slate-200 rounded-2xl p-3 text-xs font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-inner" placeholder="Compito A&#10;Compito B&#10;Compito C"></textarea>
                     </div>
                     <button onclick="spinWheel()" class="w-full bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-700 hover:to-rose-700 text-white py-3.5 rounded-2xl text-xs font-black uppercase tracking-wider transition shadow-lg shadow-pink-200 flex items-center justify-center space-x-2">
                         <i class="fa-solid fa-dharmachakra text-base animate-spin"></i><span>Gira la Ruota e Assegna!</span>
@@ -338,9 +329,9 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div class="md:col-span-2 bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 p-6 rounded-3xl shadow-2xl border border-white/10 flex flex-col items-center justify-center relative overflow-hidden">
                     <div id="snakePlayerBox" class="w-full max-w-[320px] mb-4 bg-white/10 backdrop-blur-md p-3.5 rounded-2xl border border-white/20 space-y-2">
-                        <label class="block text-[11px] font-bold text-indigo-200">Il tuo nome o del genitore/bambino:</label>
+                        <label class="block text-[11px] font-bold text-indigo-200">Il tuo nome:</label>
                         <div class="flex gap-2">
-                            <input type="text" id="snakePlayerName" placeholder="Es. Mamma Giulia" class="w-full bg-slate-900 border border-white/20 rounded-xl px-3 py-2 text-xs font-bold text-white focus:outline-none focus:ring-2 focus:ring-emerald-400">
+                            <input type="text" id="snakePlayerName" placeholder="Es. Mario" class="w-full bg-slate-900 border border-white/20 rounded-xl px-3 py-2 text-xs font-bold text-white focus:outline-none focus:ring-2 focus:ring-emerald-400">
                             <button onclick="confirmSnakePlayer()" class="bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-xl text-xs font-bold transition shadow-md whitespace-nowrap">Salva</button>
                         </div>
                     </div>
@@ -399,7 +390,7 @@
                 <div>
                     <h2 class="text-xl font-black text-slate-900 tracking-tight flex items-center gap-2">
                         <span class="w-8 h-8 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-sm"><i class="fa-solid fa-wallet"></i></span>
-                        Fondo Cassa di Classe
+                        Fondo Cassa / Bilancio
                     </h2>
                     <p class="text-xs text-slate-500 font-medium mt-0.5">Bilancio e grafici di spesa trasparenti</p>
                 </div>
@@ -434,7 +425,7 @@
                 <div class="md:col-span-1 flex flex-col justify-center space-y-3">
                     <span class="bg-amber-50 text-amber-700 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider border border-amber-100 self-start">Trasparenza Finanziaria</span>
                     <h3 class="font-black text-slate-900 text-base">Riepilogo Spese</h3>
-                    <p class="text-xs text-slate-500 font-medium leading-relaxed">Suddivisione visiva delle spese sostenute prelevate dal fondo cassa.</p>
+                    <p class="text-xs text-slate-500 font-medium leading-relaxed">Suddivisione visiva delle spese sostenute prelevate dal fondo.</p>
                 </div>
                 <div class="md:col-span-2 flex justify-center h-56">
                     <canvas id="fondoChart"></canvas>
@@ -472,7 +463,7 @@
                         <span class="w-8 h-8 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center text-sm"><i class="fa-solid fa-images"></i></span>
                         Galleria Foto & Video
                     </h2>
-                    <p class="text-xs text-slate-500 font-medium mt-0.5">Ricordi delle gite e dei momenti speciali</p>
+                    <p class="text-xs text-slate-500 font-medium mt-0.5">Ricordi delle attività e dei momenti speciali</p>
                 </div>
                 <div class="flex items-center gap-2">
                     <button onclick="openInfoModal('galleria')" class="admin-only hidden bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida caricamento file"><i class="fa-solid fa-circle-info text-base"></i></button>
@@ -490,9 +481,9 @@
                 <div>
                     <h2 class="text-xl font-black text-slate-900 tracking-tight flex items-center gap-2">
                         <span class="w-8 h-8 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center text-sm"><i class="fa-solid fa-link"></i></span>
-                        Link Utili della Scuola
+                        Link Utili & Portali
                     </h2>
-                    <p class="text-xs text-slate-500 font-medium mt-0.5">Accesso rapido a portali e modulistica</p>
+                    <p class="text-xs text-slate-500 font-medium mt-0.5">Accesso rapido a collegamenti e modulistica</p>
                 </div>
                 <div class="flex items-center gap-2">
                     <button onclick="openInfoModal('linkutili')" class="admin-only hidden bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida caricamento file"><i class="fa-solid fa-circle-info text-base"></i></button>
@@ -510,9 +501,9 @@
                 <div>
                     <h2 class="text-xl font-black text-slate-900 tracking-tight flex items-center gap-2">
                         <span class="w-8 h-8 rounded-xl bg-pink-50 text-pink-600 flex items-center justify-center text-sm"><i class="fa-solid fa-cake-candles"></i></span>
-                        Compleanni Compagni
+                        Compleanni / Ricorrenze
                     </h2>
-                    <p class="text-xs text-slate-500 font-medium mt-0.5">Festeggiamo insieme i nostri bambini</p>
+                    <p class="text-xs text-slate-500 font-medium mt-0.5">Festeggiamo insieme le date importanti</p>
                 </div>
                 <div class="flex items-center gap-2">
                     <button onclick="openInfoModal('compleanni')" class="admin-only hidden bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida caricamento file"><i class="fa-solid fa-circle-info text-base"></i></button>
@@ -549,7 +540,7 @@
     <!-- Footer con Contatore Visite in tempo reale e POWER_laski -->
     <footer class="bg-white/80 backdrop-blur-md border-t border-slate-200/80 py-4 mt-auto">
         <div class="max-w-4xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-2 text-xs text-slate-500 font-medium">
-            <span id="footerAppInfo">Bacheca & Diario Scolastico</span>
+            <span id="footerAppInfo">Bacheca Scolastica Universale</span>
             <div class="flex items-center space-x-3">
                 <span class="text-indigo-600 font-black tracking-wider bg-indigo-50 border border-indigo-100 px-3 py-1.5 rounded-xl text-[11px]">POWER_laski</span>
                 <div class="flex items-center space-x-2 bg-indigo-50 border border-indigo-100 px-3.5 py-1.5 rounded-xl text-indigo-900 font-bold shadow-2xs">
@@ -604,7 +595,7 @@
         </div>
     </div>
 
-    <!-- Modale Guida Info Admin (Con spiegazione caricamento file) -->
+    <!-- Modale Guida Info Admin -->
     <div id="infoModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md hidden z-50 flex items-center justify-center p-4">
         <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4 border border-slate-100">
             <div class="flex justify-between items-center">
@@ -612,12 +603,11 @@
                 <button onclick="closeInfoModal()" class="text-slate-400 hover:text-slate-600 p-1.5 rounded-xl hover:bg-slate-100 transition"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
             <div id="infoModalContent" class="text-xs sm:text-sm text-slate-600 space-y-3 font-medium leading-relaxed">
-                <!-- Spiegazione integrata per l'Admin -->
                 <div class="bg-indigo-50 p-3.5 rounded-2xl border border-indigo-100 text-indigo-950 space-y-2">
                     <p class="font-black text-xs uppercase tracking-wider text-indigo-700">💡 Come caricare file, PDF o foto:</p>
                     <p>1. Carica il documento o la foto sul tuo <strong>Google Drive</strong> personale.</p>
                     <p>2. Imposta la condivisione su <em>"Chiunque abbia il link può visualizzare"</em> e copia il link.</p>
-                    <p>3. Incolla il link nel campo <strong>"Link Web / Link PDF Ufficiale"</strong> quando pubblichi o modifichi un elemento nell'app.</p>
+                    <p>3. Incolla il link nel campo <strong>"Link Google Drive (PDF o Foto)"</strong> quando pubblichi o modifichi un elemento.</p>
                 </div>
                 <div id="sectionSpecificGuideText"></div>
             </div>
@@ -637,18 +627,11 @@
                 <input type="hidden" id="editItemId">
                 <div id="titleWrapper">
                     <label class="block text-xs font-black text-slate-700 mb-1.5" id="labelTitle">Titolo / Argomento</label>
-                    <input type="text" id="inputTitle" placeholder="Es. Compiti di Matematica" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-inner font-medium">
+                    <input type="text" id="inputTitle" placeholder="Es. Esercizi di Matematica" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-inner font-medium">
                 </div>
                 <div id="materiaWrapper">
-                    <label class="block text-xs font-black text-slate-700 mb-1.5">Materia</label>
-                    <select id="inputMateria" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-inner font-medium">
-                        <option value="Italiano">Italiano</option>
-                        <option value="Matematica">Matematica</option>
-                        <option value="Inglese">Inglese</option>
-                        <option value="Storia/Geografia">Storia / Geografia</option>
-                        <option value="Scienze">Scienze</option>
-                        <option value="Altro">Altro</option>
-                    </select>
+                    <label class="block text-xs font-black text-slate-700 mb-1.5">Materia / Categoria Personalizzata</label>
+                    <input type="text" id="inputMateria" placeholder="Es. Matematica, Progetto, Evento..." class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-inner font-medium">
                 </div>
                 <div id="dateWrapper">
                     <label class="block text-xs font-black text-slate-700 mb-1.5" id="labelDate">Data e Ora Scadenza (Opzionale)</label>
@@ -656,7 +639,7 @@
                 </div>
                 <div>
                     <label class="block text-xs font-black text-slate-700 mb-1.5" id="labelDetails">Descrizione / Note (Opzionale)</label>
-                    <textarea id="inputDetails" rows="4" placeholder="Note..." class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-inner font-medium"></textarea>
+                    <textarea id="inputDetails" rows="4" placeholder="Note o istruzioni..." class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-inner font-medium"></textarea>
                 </div>
                 <div>
                     <label class="block text-xs font-black text-slate-700 mb-1.5" id="labelFileUrl">Link Google Drive (PDF o Foto)</label>
@@ -695,7 +678,7 @@
 
         let isAdmin = localStorage.getItem('isAdmin_app') === 'true';
         let dbData = { 
-            appConfig: { name: "Classe 1B", subtitle: "Scuola Primaria", logo: "1B" },
+            appConfig: { name: "Bacheca Scolastica", subtitle: "Universale", logo: "App" },
             compiti: {}, 
             orario: {}, 
             mensa: {}, 
@@ -717,19 +700,19 @@
         let previousDataSnapshot = null;
 
         const sectionGuides = {
-            compiti: "Inserisci l'attività e sfrutta il campo link per allegare approfondimenti da Google Drive.",
-            orario: "Organizza l'orario scolastico settimanale con le relative note.",
-            mensa: "Pubblica i menu PDF o le comunicazioni ufficiali della mensa.",
-            libri: "Elenca i libri di testo o i materiali consigliati inserendo eventuali link digitali.",
-            countdown: "Imposta la data di eventi importanti o gite scolastiche.",
-            sondaggi: "Crea sondaggi in tempo reale e monitora le votazioni dei genitori.",
-            ruota: "Genera abbinamenti casuali per feste o compiti con un solo clic.",
+            compiti: "Inserisci l'attività e scrivi liberamente la materia o la categoria (es. Matematica, Progetto, ecc.).",
+            orario: "Organizza l'orario settimanale inserendo le attività ora per ora.",
+            mensa: "Pubblica i menu PDF o le opzioni di ristorazione.",
+            libri: "Elenca i libri o i materiali consigliati inserendo eventuali link digitali.",
+            countdown: "Imposta la data di eventi importanti o scadenze.",
+            sondaggi: "Crea sondaggi in tempo reale e monitora le votazioni.",
+            ruota: "Genera abbinamenti casuali per feste o compiti.",
             snake: "Mini-gioco con classifica sincronizzata su Firebase.",
             fondo: "Gestisci il bilancio e monitora le spese di cassa con il grafico interattivo.",
             avvisi: "Pubblica avvisi importanti con evidenza automatica per le prime 24 ore.",
-            galleria: "Condividi link ad album fotografici delle attività di classe.",
-            linkutili: "Accesso rapido a registri e portali istituzionali.",
-            compleanni: "Memorizza i compleanni dei bambini per festeggiarli insieme.",
+            galleria: "Condividi link ad album fotografici delle attività.",
+            linkutili: "Accesso rapido a collegamenti e portali utili.",
+            compleanni: "Memorizza le date importanti per festeggiarle insieme.",
             promemoria: "Segna scadenze e impegni da ricordare."
         };
 
@@ -749,10 +732,10 @@
             container.innerHTML = `
                 <div class="bg-gradient-to-r from-emerald-700 via-teal-800 to-emerald-900 text-white p-5 rounded-3xl shadow-lg border border-emerald-500/30">
                     <div class="flex justify-between items-center mb-2">
-                        <span class="bg-white/20 text-emerald-200 border border-white/10 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider">Menu Scolastico</span>
-                        <span class="text-xs text-emerald-200 font-bold">Gestione Giornaliera</span>
+                        <span class="bg-white/20 text-emerald-200 border border-white/10 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider">Opzione Attiva</span>
+                        <span class="text-xs text-emerald-200 font-bold">Gestione Universale</span>
                     </div>
-                    <p class="text-xs sm:text-sm font-medium mt-2">Consulta i PDF pubblicati in basso o richiedi il menu attivo alla segreteria/rappresentante.</p>
+                    <p class="text-xs sm:text-sm font-medium mt-2">Consulta i PDF pubblicati in basso o verifica il menu del giorno.</p>
                 </div>
             `;
         }
@@ -825,7 +808,7 @@
         });
 
         function updateAppBranding() {
-            const cfg = dbData.appConfig || { name: "Classe 1B", subtitle: "Scuola Primaria", logo: "1B" };
+            const cfg = dbData.appConfig || { name: "Bacheca Scolastica", subtitle: "Universale", logo: "App" };
             const nameEl = document.getElementById('displayAppName');
             const subEl = document.getElementById('displayAppSubtitle');
             const logoEl = document.getElementById('headerAppLogo');
@@ -840,12 +823,12 @@
             }
             if (logoEl) logoEl.innerText = cfg.logo || "App";
             if (titleEl) titleEl.innerText = cfg.name + (cfg.subtitle ? ' - ' + cfg.subtitle : '');
-            if (footerEl) footerEl.innerText = `Bacheca & Diario Scolastico • ${cfg.name}`;
+            if (footerEl) footerEl.innerText = `Bacheca Scolastica • ${cfg.name}`;
             if (snakeTitle) snakeTitle.innerText = `Snake (${cfg.name})`;
         }
 
         function openConfigModal() {
-            const cfg = dbData.appConfig || { name: "Classe 1B", subtitle: "Scuola Primaria", logo: "1B" };
+            const cfg = dbData.appConfig || { name: "Bacheca Scolastica", subtitle: "Universale", logo: "App" };
             document.getElementById('configInputName').value = cfg.name || '';
             document.getElementById('configInputSubtitle').value = cfg.subtitle || '';
             document.getElementById('configInputLogo').value = cfg.logo || '';
@@ -1178,7 +1161,7 @@
             if (names.length === 0 || tasks.length === 0) { alert('Inserisci almeno un nome e un compito!'); return; }
 
             const shuffledNames = [...names].sort(() => Math.random() - 0.5);
-            let outputHtml = '', waTextList = `🎉 *Assegnazioni Festa / Attività*\n\n`;
+            let outputHtml = '', waTextList = `🎉 *Assegnazioni / Estrazione*\n\n`;
 
             tasks.forEach((task, index) => {
                 const assignedName = shuffledNames[index % shuffledNames.length];
@@ -1196,12 +1179,12 @@
             confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
 
             const appUrl = window.location.href.split('#')[0] + '#ruota';
-            waTextList += `\n🔗 *Gestito tramite la Web App:* ${appUrl}`;
+            waTextList += `\n🔗 *Gestito tramite la Bacheca:* ${appUrl}`;
             const encodedWA = encodeURIComponent(waTextList.trim());
 
             document.getElementById('wheelWhatsAppContainer').innerHTML = `
                 <a href="https://api.whatsapp.com/send?text=${encodedWA}" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3 px-4 rounded-2xl text-xs font-bold transition flex items-center justify-center space-x-2 shadow-md">
-                    <i class="fa-brands fa-whatsapp text-base"></i><span>Condividi Assegnazioni su WhatsApp</span>
+                    <i class="fa-brands fa-whatsapp text-base"></i><span>Condividi su WhatsApp</span>
                 </a>
             `;
         }
@@ -1232,7 +1215,7 @@
         function renderFondoChart() {
             const ctx = document.getElementById('fondoChart');
             const fondoData = dbData.fondo ? Object.values(dbData.fondo) : [];
-            let categorie = { 'Regali Maestri': 0, 'Gite & Trasporti': 0, 'Materiale Didattico': 0, 'Eventi Festa': 0 };
+            let categorie = { 'Uscite Generali': 0, 'Eventi & Attività': 0, 'Materiale': 0, 'Varie': 0 };
             let totaleSpese = 0;
             
             fondoData.forEach(item => {
@@ -1240,14 +1223,14 @@
                 let amount = extractAmount(item.title);
                 totaleSpese += amount;
                 
-                if (text.includes('regal') || text.includes('maestr') || text.includes('buono')) {
-                    categorie['Regali Maestri'] += amount;
-                } else if (text.includes('gita') || text.includes('bus') || text.includes('pullman') || text.includes('stiffe')) {
-                    categorie['Gite & Trasporti'] += amount;
-                } else if (text.includes('materiale') || text.includes('cancelleria') || text.includes('foggi') || text.includes('colla')) {
-                    categorie['Materiale Didattico'] += amount;
+                if (text.includes('regal') || text.includes('buono')) {
+                    categorie['Uscite Generali'] += amount;
+                } else if (text.includes('gita') || text.includes('bus') || text.includes('festa')) {
+                    categorie['Eventi & Attività'] += amount;
+                } else if (text.includes('materiale') || text.includes('cancelleria')) {
+                    categorie['Materiale'] += amount;
                 } else {
-                    categorie['Eventi Festa'] += amount;
+                    categorie['Varie'] += amount;
                 }
             });
 
@@ -1309,7 +1292,7 @@
                 modalTitle.innerText = "Modifica " + section.toUpperCase();
                 saveBtn.innerText = "Salva Modifiche";
                 document.getElementById('inputTitle').value = item.title || '';
-                if (section === 'compiti') document.getElementById('inputMateria').value = item.materia || 'Italiano';
+                if (section === 'compiti') document.getElementById('inputMateria').value = item.materia || '';
                 document.getElementById('inputDate').value = item.date || '';
                 document.getElementById('inputDetails').value = section === 'sondaggi' && item.options ? item.options.join('\n') : (item.details || '');
                 document.getElementById('inputFileUrl').value = item.fileUrl || '';
@@ -1417,7 +1400,7 @@
                 } else {
                     contentEl.innerHTML = namesList.map(name => {
                         summaryTextForWA += `- ${name}\n`;
-                        return `<div class="flex items-center space-x-2.5 bg-indigo-50/80 p-3 rounded-2xl text-xs font-bold text-indigo-900 border border-indigo-100"><span class="w-6 h-6 rounded-lg bg-indigo-600 text-white flex items-center justify-center text-[10px]"><i class="fa-solid fa-child"></i></span><span>${escapeHtml(name)}</span></div>`;
+                        return `<div class="flex items-center space-x-2.5 bg-indigo-50/80 p-3 rounded-2xl text-xs font-bold text-indigo-900 border border-indigo-100"><span class="w-6 h-6 rounded-lg bg-indigo-600 text-white flex items-center justify-center text-[10px]"><i class="fa-solid fa-user"></i></span><span>${escapeHtml(name)}</span></div>`;
                     }).join('');
                 }
             } else {
@@ -1437,7 +1420,7 @@
                             <div class="flex flex-wrap gap-1.5 pt-1">
                                 ${count === 0 ? '<span class="text-xs text-slate-400 italic">Nessun voto</span>' : namesList.map(n => {
                                     summaryTextForWA += `  - ${n}\n`;
-                                    return `<span class="inline-flex items-center bg-white border border-slate-200 text-slate-700 px-2.5 py-1 rounded-xl text-xs font-bold"><i class="fa-solid fa-child mr-1.5 text-indigo-600"></i>${escapeHtml(n)}</span>`;
+                                    return `<span class="inline-flex items-center bg-white border border-slate-200 text-slate-700 px-2.5 py-1 rounded-xl text-xs font-bold"><i class="fa-solid fa-user mr-1.5 text-indigo-600"></i>${escapeHtml(n)}</span>`;
                                 }).join('')}
                             </div>
                         </div>
@@ -1507,12 +1490,11 @@
         }, 1000);
 
         function renderAll() {
-            const selectedMateria = document.getElementById('filterMateria') ? document.getElementById('filterMateria').value : 'tutte';
             const cleanBaseUrl = window.location.href.split('#')[0];
 
             const compitiArr = Object.values(dbData.compiti || {});
             const summaryTextEl = document.getElementById('homeworkSummaryText');
-            if (summaryTextEl) summaryTextEl.innerText = compitiArr.length === 0 ? "Nessun compito registrato al momento." : `Ci sono ${compitiArr.length} attività/compiti attivi nel diario.`;
+            if (summaryTextEl) summaryTextEl.innerText = compitiArr.length === 0 ? "Nessuna attività registrata al momento." : `Ci sono ${compitiArr.length} attività attive nel diario.`;
 
             const homeCountdownContainer = document.getElementById('homeCountdownBox');
             const countdownData = dbData.countdown ? Object.values(dbData.countdown) : [];
@@ -1545,18 +1527,17 @@
                 }
             }
 
-            // Compiti
+            // Compiti / Attività (Con etichetta personalizzata)
             renderCustomSection('compiti', 'list-compiti', item => {
-                if (selectedMateria !== 'tutte' && item.materia !== selectedMateria) return '';
                 const appUrl = cleanBaseUrl + '#compiti';
                 
-                let waText = `📚 *Compito (${item.materia || 'Generale'})*\n*${item.title}*\n`;
+                let waText = `📚 *Attività (${item.materia || 'Generale'})*\n*${item.title}*\n`;
                 if (item.date) waText += `⏰ Scadenza: ${new Date(item.date).toLocaleString('it-IT')}\n`;
                 if (item.details) waText += `${item.details}\n`;
                 
                 if (item.fileUrl) {
                     const urls = item.fileUrl.split(/[\s,]+/).filter(u => u.trim().startsWith('http'));
-                    if (urls.length === 1) waText += `🔗 *Link 1:* ${urls[0]}\n`;
+                    if (urls.length === 1) waText += `🔗 *Link:* ${urls[0]}\n`;
                     else if (urls.length > 1) {
                         urls.forEach((u, idx) => { waText += `Link ${idx + 1}: ${u}\n`; });
                     }
@@ -1564,12 +1545,13 @@
                 waText += `\n📲 *Verifica sulla Bacheca:* ${appUrl}`;
                 const encodedWA = encodeURIComponent(waText.trim());
                 const badgeNew = isNewItem(item.createdAt) ? `<span class="bg-emerald-500 text-white text-[9px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider ml-2 animate-pulse">Nuovo</span>` : '';
+                const materiaBadge = item.materia ? `<span class="inline-flex items-center gap-1.5 bg-indigo-50 text-indigo-700 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider border border-indigo-100"><i class="fa-solid fa-bookmark text-indigo-500"></i>${escapeHtml(item.materia)}</span>` : '';
                 
                 return `
                 <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-200/80 flex justify-between items-start space-x-3 transition hover:shadow-md">
                     <div class="space-y-2.5 flex-1">
                         <div class="flex items-center flex-wrap gap-2">
-                            <span class="inline-flex items-center gap-1.5 bg-indigo-50 text-indigo-700 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider border border-indigo-100"><i class="fa-solid fa-bookmark text-indigo-500"></i>${escapeHtml(item.materia || 'Compito')}</span>
+                            ${materiaBadge}
                             ${badgeNew}
                         </div>
                         <h3 class="font-black text-slate-900 text-base">${escapeHtml(item.title)}</h3>
@@ -1601,7 +1583,7 @@
             // Menu Mensa
             renderCustomSection('mensa', 'list-mensa', item => {
                 const appUrl = cleanBaseUrl + '#mensa';
-                let waText = `🍽️ *Menu Mensa (${item.title})*\n${item.details ? item.details + '\n' : ''}`;
+                let waText = `🍽️ *Menu / Ristorazione (${item.title})*\n${item.details ? item.details + '\n' : ''}`;
                 if (item.fileUrl) {
                     const urls = item.fileUrl.split(/[\s,]+/).filter(u => u.trim().startsWith('http'));
                     if (urls.length > 0) waText += `🔗 *PDF Ufficiale:* ${urls[0]}\n`;
@@ -1611,7 +1593,7 @@
                 return `
                 <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-200/80 flex justify-between items-start space-x-3 transition hover:shadow-md">
                     <div class="space-y-2.5 flex-1">
-                        <span class="inline-flex items-center gap-1.5 bg-emerald-50 text-emerald-700 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider border border-emerald-100"><i class="fa-solid fa-file-pdf"></i> Pubblicazione Mensa</span>
+                        <span class="inline-flex items-center gap-1.5 bg-emerald-50 text-emerald-700 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider border border-emerald-100"><i class="fa-solid fa-file-pdf"></i> Documento Ufficiale</span>
                         <h3 class="font-black text-slate-900 text-base">${escapeHtml(item.title)}</h3>
                         ${item.details ? `<p class="text-sm text-slate-600 font-medium leading-relaxed">${escapeHtml(item.details)}</p>` : ''}
                         ${renderMultipleLinks(item.fileUrl)}
@@ -1626,7 +1608,7 @@
             // Libri & Materiale
             renderCustomSection('libri', 'list-libri', item => {
                 const appUrl = cleanBaseUrl + '#libri';
-                let waText = `📚 *Libri e Materiale*\n*${item.title}*\n${item.details ? item.details + '\n' : ''}`;
+                let waText = `📚 *Materiale e Documenti*\n*${item.title}*\n${item.details ? item.details + '\n' : ''}`;
                 if (item.fileUrl) {
                     const urls = item.fileUrl.split(/[\s,]+/).filter(u => u.trim().startsWith('http'));
                     if (urls.length > 0) waText += `🔗 *Link / Allegato:* ${urls[0]}\n`;
@@ -1636,7 +1618,7 @@
                 return `
                 <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-200/80 flex justify-between items-start space-x-3 transition hover:shadow-md">
                     <div class="space-y-2.5 flex-1">
-                        <span class="inline-flex items-center gap-1.5 bg-sky-50 text-sky-700 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider border border-sky-100"><i class="fa-solid fa-book"></i> Libri & Materiale</span>
+                        <span class="inline-flex items-center gap-1.5 bg-sky-50 text-sky-700 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider border border-sky-100"><i class="fa-solid fa-book"></i> Materiale</span>
                         <h3 class="font-black text-slate-900 text-base">${escapeHtml(item.title)}</h3>
                         ${item.details ? `<p class="text-sm text-slate-600 font-medium leading-relaxed">${escapeHtml(item.details)}</p>` : ''}
                         ${renderMultipleLinks(item.fileUrl)}
@@ -1714,8 +1696,8 @@
                 let voterSectionHtml = !currentVoter ? `
                     <div class="bg-gradient-to-r from-indigo-50 to-blue-50 p-4 rounded-2xl border border-indigo-100 flex flex-col sm:flex-row items-center gap-3">
                         <div class="flex items-center space-x-3 w-full">
-                            <div class="bg-indigo-600 text-white w-9 h-9 rounded-xl flex items-center justify-center font-bold text-xs shrink-0 shadow-md"><i class="fa-solid fa-child"></i></div>
-                            <input type="text" id="voterInput_${item.id}" placeholder="Nome e cognome..." class="w-full bg-white border border-indigo-200 rounded-xl px-4 py-2.5 text-xs font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-inner">
+                            <div class="bg-indigo-600 text-white w-9 h-9 rounded-xl flex items-center justify-center font-bold text-xs shrink-0 shadow-md"><i class="fa-solid fa-user"></i></div>
+                            <input type="text" id="voterInput_${item.id}" placeholder="Il tuo nome..." class="w-full bg-white border border-indigo-200 rounded-xl px-4 py-2.5 text-xs font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-inner">
                         </div>
                         <button onclick="validateVoter('${item.id}')" class="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2.5 rounded-xl text-xs font-bold transition shadow-md whitespace-nowrap flex items-center justify-center"><i class="fa-solid fa-check-to-slot mr-1.5"></i> Conferma Nome</button>
                     </div>
@@ -1724,7 +1706,7 @@
                         <div class="flex items-center space-x-3">
                             <div class="bg-emerald-600 text-white w-9 h-9 rounded-xl flex items-center justify-center font-bold text-xs shrink-0 shadow-md"><i class="fa-solid fa-check"></i></div>
                             <div class="text-xs">
-                                <span class="text-slate-500 block font-medium">Stai votando per:</span>
+                                <span class="text-slate-500 block font-medium">Stai votando come:</span>
                                 <span class="font-black text-emerald-950 text-sm">${escapeHtml(currentVoter)}</span>
                             </div>
                         </div>
@@ -1863,7 +1845,7 @@
             // Compleanni
             renderCustomSection('compleanni', 'list-compleanni', item => {
                 const appUrl = cleanBaseUrl + '#compleanni';
-                let waText = `🎂 *Compleanno*\nFesteggiamo insieme ${item.title}!\n${item.details ? 'Data: ' + item.details + '\n' : ''}\n📲 *Vedi sulla Bacheca:* ${appUrl}`;
+                let waText = `🎂 *Ricorrenza / Compleanno*\nFesteggiamo insieme ${item.title}!\n${item.details ? 'Data: ' + item.details + '\n' : ''}\n📲 *Vedi sulla Bacheca:* ${appUrl}`;
                 const encodedWA = encodeURIComponent(waText.trim());
                 return `
                 <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-200/80 flex justify-between items-center transition hover:shadow-md">
