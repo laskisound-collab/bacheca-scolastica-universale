@@ -68,7 +68,7 @@
     <!-- Container Notifiche Admin -->
     <div id="adminNotificationContainer" class="fixed top-20 right-4 z-50 space-y-2 pointer-events-none max-w-sm w-full px-4"></div>
 
-    <!-- Header con Orologio in Tempo Reale -->
+    <!-- Header Pulito e Ordinato -->
     <header class="bg-gradient-to-r from-indigo-950 via-indigo-900 to-blue-950 text-white shadow-xl sticky top-0 z-50 backdrop-blur-md bg-opacity-95 border-b border-white/10">
         <div class="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center">
             <div class="flex items-center space-x-3.5">
@@ -87,18 +87,12 @@
                 </div>
             </div>
             <div class="flex items-center space-x-2">
-                <!-- Pulsante Download APK -->
-                <a href="./app-release.apk" download class="bg-emerald-600 hover:bg-emerald-700 border border-emerald-500/40 px-3.5 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition shadow-sm flex items-center space-x-2 text-white" title="Scarica App Android APK">
-                    <i class="fa-brands fa-android text-sm"></i>
-                    <span class="hidden sm:inline">Scarica APK</span>
-                </a>
-                <button id="configNameBtn" onclick="openConfigModal()" class="admin-only hidden bg-white/10 hover:bg-white/20 border border-white/20 p-2.5 rounded-2xl text-xs sm:text-sm font-bold transition shadow-sm flex items-center justify-center backdrop-blur-sm" title="Imposta Nome App & Password">
-                    <i class="fa-solid fa-gear text-indigo-200"></i>
-                </button>
-                <button onclick="shareClassInvite()" class="admin-only hidden bg-emerald-600 hover:bg-emerald-700 border border-emerald-500/40 px-3.5 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition shadow-sm flex items-center space-x-2 text-white" title="Crea Invito Genitori">
+                <!-- Pulsante Invito WhatsApp (Visibile anche ai genitori per condividere la classe) -->
+                <button onclick="shareClassInvite()" class="bg-emerald-600 hover:bg-emerald-700 border border-emerald-500/40 px-3.5 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition shadow-sm flex items-center space-x-2 text-white" title="Crea Invito Genitori">
                     <i class="fa-brands fa-whatsapp text-sm"></i>
                     <span class="hidden sm:inline">Invito</span>
                 </button>
+                <!-- Pulsante Area Admin -->
                 <button id="adminBtn" onclick="toggleAdminModal()" class="bg-white/10 hover:bg-white/20 border border-white/20 px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition shadow-sm flex items-center space-x-2 backdrop-blur-sm">
                     <i class="fa-solid fa-lock text-xs text-amber-300" id="adminIcon"></i>
                     <span id="adminText">Area Admin</span>
@@ -577,7 +571,7 @@
                     <div class="bg-emerald-50/50 p-5 rounded-3xl border border-emerald-100 space-y-2.5">
                         <h3 class="font-black text-sm text-emerald-950 flex items-center gap-2"><i class="fa-solid fa-key text-emerald-600"></i> 2. Area Admin e Password</h3>
                         <p class="text-xs text-slate-600 leading-relaxed font-medium">
-                            L'amministratore (rappresentante o docente) sblocca i pulsanti di inserimento/modifica cliccando su <strong>Area Admin</strong> (password iniziale di default: <code>3e</code>). Nelle impostazioni (icona ingranaggio) l'Admin può personalizzare la password di classe e inserire un codice di recupero in caso di smarrimento.
+                            L'amministratore sblocca i pulsanti di inserimento cliccando su <strong>Area Admin</strong> (password iniziale di default: <code>3e</code>). All'interno dell'Area Admin sbloccata troverai il pulsante per scaricare l'APK Android e l'icona ingranaggio per personalizzare nome e password di classe.
                         </p>
                     </div>
                 </div>
@@ -644,7 +638,7 @@
     <div id="adminModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md hidden z-50 flex items-center justify-center p-4">
         <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl space-y-4 border border-slate-100">
             <div class="flex justify-between items-center">
-                <h3 class="text-lg font-black text-slate-900">Accesso Area Admin</h3>
+                <h3 class="text-lg font-black text-slate-900">Area Amministratore</h3>
                 <button onclick="toggleAdminModal()" class="text-slate-400 hover:text-slate-600 p-1.5 rounded-xl hover:bg-slate-100 transition"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
             <div id="adminLoginForm" class="space-y-3.5">
@@ -665,7 +659,20 @@
             </div>
             <div id="adminLogoutDiv" class="hidden space-y-3.5">
                 <p class="text-xs text-emerald-600 font-bold flex items-center bg-emerald-50 p-3 rounded-2xl border border-emerald-100"><i class="fa-solid fa-circle-check mr-2 text-base"></i> Autenticato come Amministratore.</p>
-                <button onclick="logoutAdmin()" class="w-full bg-red-50 hover:bg-red-100 text-red-600 py-3 rounded-2xl text-sm font-bold transition">Esci dall'Area Admin</button>
+                
+                <!-- Pulsanti riservati all'Admin (Scaricamento APK e Configurazione Nome/Password) -->
+                <div class="space-y-2 pt-2">
+                    <a href="./app-release.apk" download onclick="handleDownloadAPK(event)" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3 px-4 rounded-2xl text-xs font-bold transition flex items-center justify-center space-x-2 shadow-md">
+                        <i class="fa-brands fa-android text-base"></i>
+                        <span>Scarica App Android (APK)</span>
+                    </a>
+                    <button onclick="toggleAdminModal(); openConfigModal();" class="w-full bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 py-3 px-4 rounded-2xl text-xs font-bold transition flex items-center justify-center space-x-2">
+                        <i class="fa-solid fa-gear"></i>
+                        <span>Impostazioni Classe & Password</span>
+                    </button>
+                </div>
+
+                <button onclick="logoutAdmin()" class="w-full bg-red-50 hover:bg-red-100 text-red-600 py-3 rounded-2xl text-xs font-bold transition mt-3">Esci dall'Area Admin</button>
             </div>
         </div>
     </div>
@@ -784,6 +791,20 @@
         setInterval(updateClock, 1000);
         updateClock();
 
+        function handleDownloadAPK(e) {
+            // Verifica preventiva se il file APK esiste per evitare errori di link
+            fetch('./app-release.apk', { method: 'HEAD' })
+                .then(res => {
+                    if (!res.ok) {
+                        e.preventDefault();
+                        alert("⚠️ Il file 'app-release.apk' non è stato ancora caricato nella repository GitHub. Caricalo nella cartella principale per consentire il download!");
+                    }
+                })
+                .catch(() => {
+                    // Ignora in locale se non supportato da fetch
+                });
+        }
+
         // Gestione Token Univoco per Classe
         function getOrCreateClassToken() {
             let hash = window.location.hash.replace('#', '');
@@ -826,7 +847,6 @@
         };
         let activeVoterSession = {}; 
         let fondoChartInstance = null;
-        let previousDataSnapshot = null;
 
         const sectionGuides = {
             compiti: "Inserisci l'attività e scrivi liberamente la materia o la categoria (es. Matematica, Progetto, ecc.).",
@@ -924,7 +944,6 @@
             onValue(dataRef, (snapshot) => {
                 const val = snapshot.val();
                 if (val) {
-                    previousDataSnapshot = JSON.parse(JSON.stringify(val));
                     dbData = { ...dbData, ...val };
                     if (!dbData.appConfig) dbData.appConfig = { name: "Bacheca Scolastica", subtitle: "Universale", logo: "App", adminPassword: "3e", recoveryCode: "segreto" };
                     if (!dbData.appConfig.adminPassword) dbData.appConfig.adminPassword = "3e";
