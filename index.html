@@ -525,7 +525,7 @@
                     <div class="bg-slate-900 text-white p-5 rounded-3xl border border-slate-800 space-y-2">
                         <h4 class="font-black text-xs text-slate-100 uppercase flex items-center gap-2"><i class="fa-brands fa-apple text-base text-white"></i> Installazione su Apple iOS (iPhone / iPad)</h4>
                         <ol class="list-decimal list-inside text-xs text-slate-300 space-y-1 font-medium leading-relaxed">
-                            <li>I dispositivi Apple non supportano file APK. Apri il link della bacheca contenente il token direttamente in <strong>Safari</strong>.</li>
+                            <li>I dispositivi Apple non supportano file APK. Apri il link della bacheca contenente il token direttamente in <strong>Safari</strong> (puoi usare il tasto "Apri Bacheca Apple").</li>
                             <li>Tocca il tasto <strong>Condividi</strong> (il quadratino con la freccia) e seleziona <strong>"Aggiungi alla schermata Home"</strong>.</li>
                             <li>Per visualizzare correttamente PDF e documenti scolastici, assicurati di installare l'app gratuita <strong>Google Drive</strong> da App Store.</li>
                         </ol>
@@ -561,7 +561,7 @@
 
     </main>
 
-    <!-- Footer con Contatore Visite, POWER_laski, Download Android, Guida Apple e PayPal.Me -->
+    <!-- Footer con Contatore Visite, POWER_laski, Download Android, Apri Apple, Guida Apple e PayPal.Me -->
     <footer class="bg-white/80 backdrop-blur-md border-t border-slate-200/80 py-4 mt-auto">
         <div class="max-w-4xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-slate-500 font-medium">
             
@@ -574,10 +574,15 @@
                     <i class="fa-brands fa-android text-sm"></i>
                     <span>Scarica Android</span>
                 </button>
+                <!-- Pulsante Diretto Apple con Token -->
+                <button onclick="openAppleDirectWithToken()" class="bg-slate-900 hover:bg-black text-white px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center space-x-2 shadow-sm" title="Apri bacheca direttamente per Apple iOS">
+                    <i class="fa-brands fa-apple text-sm"></i>
+                    <span>Apri Bacheca Apple</span>
+                </button>
                 <!-- Pulsante Guida Safari / Apple iOS con Token -->
                 <button onclick="openAppleGuideWithToken()" class="bg-slate-800 hover:bg-slate-900 text-white px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center space-x-2 shadow-sm" title="Guida installazione su Safari per Apple iOS">
-                    <i class="fa-brands fa-apple text-sm"></i>
-                    <span>Guida Safari / Apple</span>
+                    <i class="fa-solid fa-circle-question text-sm"></i>
+                    <span>Guida Apple</span>
                 </button>
                 <!-- Pulsante Donazione PayPal.Me -->
                 <a href="https://paypal.me/bachecascolastica" target="_blank" class="bg-amber-500 hover:bg-amber-600 text-white px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center space-x-2 shadow-sm" title="Supporto sviluppo">
@@ -613,7 +618,7 @@
                 </div>
                 <div class="bg-indigo-50 p-3.5 rounded-2xl border border-indigo-100 text-indigo-950 space-y-1.5">
                     <p class="font-black text-xs uppercase tracking-wider text-indigo-700"><i class="fa-brands fa-apple mr-1"></i> Consigli per dispositivi Apple (iPhone/iPad):</p>
-                    <p>Consiglia ai genitori con iPhone di aprire il link in <strong>Safari</strong>, toccare il tasto di condivisione e selezionare <strong>"Aggiungi alla schermata Home"</strong>. Per aprire facilmente i PDF, si consiglia di installare l'app gratuita <strong>Google Drive</strong> dall'App Store.</p>
+                    <p>Consiglia ai genitori con iPhone di aprire il link in <strong>Safari</strong> (o usare il tasto dedicato "Apri Bacheca Apple"), toccare il tasto di condivisione e selezionare <strong>"Aggiungi alla schermata Home"</strong>. Per aprire facilmente i PDF, si consiglia di installare l'app gratuita <strong>Google Drive</strong> dall'App Store.</p>
                 </div>
             </div>
             <button onclick="closeTokenInfoModal()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-2xl text-xs font-bold transition">Ho capito</button>
@@ -848,6 +853,13 @@
                 });
         }
 
+        // Funzione per aprire direttamente la bacheca con il token per gli utenti Apple
+        function openAppleDirectWithToken() {
+            const currentToken = localStorage.getItem('active_class_token') || classToken;
+            const baseUrl = window.location.href.split('#')[0];
+            window.location.href = `${baseUrl}#${currentToken}`;
+        }
+
         // Funzione dedicata per aprire la guida Apple mantenendo il token della classe
         function openAppleGuideWithToken() {
             const currentToken = localStorage.getItem('active_class_token') || classToken;
@@ -890,7 +902,7 @@
             
             const cfg = dbData.appConfig || { name: "Bacheca Scolastica" };
             
-            const waText = encodeURIComponent(`👋 Buongiorno genitori!\n\nEcco il link ufficiale aggiornato per la nostra bacheca di classe (${cfg.name}) per seguire compiti, orari, menu mensa e fondo cassa:\n\n📱 *Come installare l'app sul telefono:*\n\n🤖 *Per Android:*\n1. Clicca sul link per scaricare l'app:\n${apkUrl}\n2. Installa l'applicazione sul telefono.\n3. Una volta installata, *rimpremi il link della classe qui sotto* per agganciare il token e sincronizzare i dati:\n${inviteUrl}\n\n🍏 *Per Apple (iPhone / iPad):*\n1. Apri questo link direttamente in *Safari*:\n${inviteUrl}\n2. Tocca il tasto *Condividi* (quadretto con freccia).\n3. Seleziona *"Aggiungi alla schermata Home"*.\n4. *(Nota: per aprire correttamente i PDF e documenti, scarica l'app gratuita Google Drive da App Store)*.`);
+            const waText = encodeURIComponent(`👋 Buongiorno genitori!\n\nEcco il link ufficiale aggiornato per la nostra bacheca di classe (${cfg.name}) per seguire compiti, orari, menu mensa e fondo cassa:\n\n📱 *Come installare l'app sul telefono:*\n\n🤖 *Per Android:*\n1. Clicca sul link per scaricare l'app:\n${apkUrl}\n2. Installa l'applicazione sul telefono.\n3. Una volta installata, *rimpremi il link della classe qui sotto* per agganciare il token e sincronizzare i dati:\n${inviteUrl}\n\n🍏 *Per Apple (iPhone / iPad):*\n1. Apri questo link direttamente in *Safari* (puoi usare anche il tasto dedicato "Apri Bacheca Apple"):\n${inviteUrl}\n2. Tocca il tasto *Condividi* (quadretto con freccia).\n3. Seleziona *"Aggiungi alla schermata Home"*.\n4. *(Nota: per aprire correttamente i PDF e documenti, scarica l'app gratuita Google Drive da App Store)*.`);
             
             window.open(`https://api.whatsapp.com/send?text=${waText}`, '_blank');
         }
@@ -1018,7 +1030,6 @@
         }
 
         function showAdminNotification(message, type = 'success') {
-            // Esegue sempre il segnale audio e la notifica visiva quando viene pubblicato qualcosa
             playAdminNotificationSound();
             
             const container = document.getElementById('adminNotificationContainer');
@@ -1787,7 +1798,6 @@
                 saveBtn.innerText = "Pubblica";
                 saveBtn.disabled = false;
                 renderFondoSummary();
-                // Attiva la notifica sonora e visiva ogni volta che l'admin pubblica un contenuto
                 showAdminNotification(`Nuovo elemento pubblicato in ${sectionNames[section] || section}!`, 'success');
             });
         }
