@@ -555,7 +555,7 @@
 
     </main>
 
-    <!-- Footer con Contatore Visite, POWER_laski, Download APK e Pulsante PayPal.Me Personale -->
+    <!-- Footer con Contatore Visite, POWER_laski, Download APK, Download Apple iOS e PayPal.Me -->
     <footer class="bg-white/80 backdrop-blur-md border-t border-slate-200/80 py-4 mt-auto">
         <div class="max-w-4xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-slate-500 font-medium">
             
@@ -566,7 +566,11 @@
                 </button>
                 <a href="./app-release.apk" download onclick="handleDownloadAPK(event)" class="bg-indigo-600 hover:bg-indigo-700 text-white px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center space-x-2 shadow-sm" title="Scarica App Android APK">
                     <i class="fa-brands fa-android text-sm"></i>
-                    <span>Scarica APK</span>
+                    <span>Scarica Android</span>
+                </a>
+                <a href="./ios-next-steps.html" target="_blank" class="bg-slate-800 hover:bg-slate-900 text-white px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center space-x-2 shadow-sm" title="Istruzioni e pacchetto App Apple iOS">
+                    <i class="fa-brands fa-apple text-sm"></i>
+                    <span>Scarica Apple iOS</span>
                 </a>
                 <!-- Pulsante Donazione PayPal.Me -->
                 <a href="https://paypal.me/bachecascolastica" target="_blank" class="bg-amber-500 hover:bg-amber-600 text-white px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center space-x-2 shadow-sm" title="Supporto sviluppo">
@@ -592,7 +596,7 @@
     <div id="tokenInfoModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md hidden z-50 flex items-center justify-center p-4">
         <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4 border border-slate-100">
             <div class="flex justify-between items-center">
-                <h3 class="text-lg font-black text-slate-900">Token Univoco & App APK</h3>
+                <h3 class="text-lg font-black text-slate-900">Token Univoco & App Mobile</h3>
                 <button onclick="closeTokenInfoModal()" class="text-slate-400 hover:text-slate-600 p-1.5 rounded-xl hover:bg-slate-100 transition"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
             <div class="text-xs sm:text-sm text-slate-600 space-y-3 font-medium leading-relaxed">
@@ -602,7 +606,7 @@
                 </div>
                 <div class="bg-indigo-50 p-3.5 rounded-2xl border border-indigo-100 text-indigo-950 space-y-1.5">
                     <p class="font-black text-xs uppercase tracking-wider text-indigo-700"><i class="fa-brands fa-android mr-1"></i> Istruzioni per i Genitori:</p>
-                    <p>Consiglia ai genitori di installare prima l'app Android (APK) o aprire la pagina, e poi cliccare nuovamente sul link d'invito con il token per sincronizzarla stabilmente con la bacheca di classe.</p>
+                    <p>Consiglia ai genitori di installare l'app Android (tramite APK) o seguire la guida per Apple iOS, e poi cliccare sul link d'invito con il token per sincronizzarla stabilmente.</p>
                 </div>
             </div>
             <button onclick="closeTokenInfoModal()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-2xl text-xs font-bold transition">Ho capito</button>
@@ -652,7 +656,6 @@
             <div id="adminLogoutDiv" class="hidden space-y-3.5">
                 <p class="text-xs text-emerald-600 font-bold flex items-center bg-emerald-50 p-3 rounded-2xl border border-emerald-100"><i class="fa-solid fa-circle-check mr-2 text-base"></i> Autenticato come Amministratore.</p>
                 
-                <!-- Avviso invitante a cambiare password se è ancora quella predefinita -->
                 <div id="defaultPasswordWarning" class="hidden bg-amber-50 border border-amber-200 p-3 rounded-2xl space-y-2">
                     <p class="text-xs text-amber-800 font-bold flex items-center gap-1.5"><i class="fa-solid fa-triangle-exclamation"></i> Stai usando la password predefinita (3e)!</p>
                     <p class="text-[11px] text-amber-700">Ti consigliamo di cambiarla subito per motivi di sicurezza.</p>
@@ -700,7 +703,6 @@
                     <input type="text" id="configInputRecovery" placeholder="Es. Parola segreta" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-inner">
                 </div>
 
-                <!-- Toggle Sezioni con 1 click -->
                 <div class="pt-3 border-t border-slate-100 space-y-2">
                     <label class="block text-xs font-black text-slate-900 uppercase tracking-wider">Visibilità Sezioni (Attiva/Disattiva con un click)</label>
                     <div id="sectionTogglesContainer" class="grid grid-cols-2 gap-2 pt-1"></div>
@@ -833,10 +835,11 @@
             const baseUrl = window.location.href.split('#')[0];
             const inviteUrl = `${baseUrl}#${currentToken}`;
             const apkUrl = `${baseUrl}app-release.apk`;
+            const iosUrl = `${baseUrl}ios-next-steps.html`;
             
             const cfg = dbData.appConfig || { name: "Bacheca Scolastica" };
             
-            const waText = encodeURIComponent(`👋 Buongiorno genitori!\n\nEcco il link ufficiale aggiornato per la nostra bacheca di classe (${cfg.name}) per seguire compiti, orari, menu mensa e fondo cassa:\n\n📱 *Istruzioni:* Se non hai ancora installato l'app, scarica prima l'APK qui sotto, poi torna su questo messaggio e clicca sul link d'invito per sincronizzarti automaticamente con la classe.\n\n🤖 *Scarica App Android (APK):*\n${apkUrl}\n\n🔗 *Apri Bacheca (Sincronizza Classe):*\n${inviteUrl}`);
+            const waText = encodeURIComponent(`👋 Buongiorno genitori!\n\nEcco il link ufficiale aggiornato per la nostra bacheca di classe (${cfg.name}) per seguire compiti, orari, menu mensa e fondo cassa:\n\n📱 *Istruzioni per l'installazione:*\n- *Android:* Scarica l'APK direttamente dal tasto in bacheca.\n- *Apple / iPhone:* Segui le istruzioni e il pacchetto iOS guidato.\n\n🤖 *Scarica App Android:* ${apkUrl}\n🍏 *Istruzioni App Apple:* ${iosUrl}\n\n🔗 *Apri Bacheca (Sincronizza Classe):*\n${inviteUrl}`);
             
             window.open(`https://api.whatsapp.com/send?text=${waText}`, '_blank');
         }
