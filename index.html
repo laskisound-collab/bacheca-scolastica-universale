@@ -173,25 +173,7 @@
                         <span class="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-sm"><i class="fa-solid fa-utensils"></i></span>
                         Menu Mensa / Ristorazione
                     </h2>
-                    <p class="text-xs text-slate-500 font-medium mt-0.5">Visualizza in tempo reale le opzioni del giorno</p>
-                </div>
-                <div class="flex items-center gap-2">
-                    <select id="tipoMenuSelect" onchange="renderMenuDelGiorno()" class="bg-emerald-50 border border-emerald-200 rounded-2xl px-4 py-2.5 text-xs font-black text-emerald-800 focus:outline-none focus:ring-2 focus:ring-emerald-500 shadow-inner">
-                        <option value="normale">🟢 Opzione Principale</option>
-                        <option value="leggero">🥗 Opzione Alternativa / Leggera</option>
-                    </select>
-                </div>
-            </div>
-
-            <div id="menuDelGiornoContainer"></div>
-
-            <div class="flex justify-between items-center bg-white p-5 rounded-3xl shadow-sm border border-slate-200/80">
-                <div>
-                    <h2 class="text-xl font-black text-slate-900 tracking-tight flex items-center gap-2">
-                        <span class="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-sm"><i class="fa-solid fa-file-pdf"></i></span>
-                        Pubblicazioni & PDF Ufficiali
-                    </h2>
-                    <p class="text-xs text-slate-500 font-medium mt-0.5">Elenchi e comunicazioni aggiuntive</p>
+                    <p class="text-xs text-slate-500 font-medium mt-0.5">Pubblicazione e consultazione dei menu ufficiali</p>
                 </div>
                 <div class="flex items-center gap-2">
                     <button onclick="openInfoModal('mensa')" class="bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida sezione"><i class="fa-solid fa-circle-info text-base"></i></button>
@@ -542,7 +524,7 @@
                         </div>
                         <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200/70 space-y-1">
                             <h4 class="font-black text-xs text-indigo-900 uppercase">Menu Mensa</h4>
-                            <p class="text-xs text-slate-600">Visualizza in tempo reale le opzioni del giorno (principale o leggera) e pubblica i PDF ufficiali della ristorazione scolastica.</p>
+                            <p class="text-xs text-slate-600">Pubblica e consulta i PDF ufficiali e le comunicazioni relative alla ristorazione scolastica.</p>
                         </div>
                         <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200/70 space-y-1">
                             <h4 class="font-black text-xs text-indigo-900 uppercase">Sondaggi</h4>
@@ -648,7 +630,7 @@
             </div>
             <div id="adminLoginForm" class="space-y-3.5">
                 <p class="text-xs text-slate-500 font-medium">Inserisci la password amministratore per sbloccare i comandi.</p>
-                <input type="password" id="adminPasswordInput" placeholder="Password" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-inner">
+                <input type="password" id="adminPasswordInput" placeholder="Password (default: 3e)" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-inner">
                 <button onclick="checkAdminPassword()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-2xl text-sm font-bold shadow-lg shadow-indigo-200 transition">Accedi</button>
                 <div class="text-center pt-2">
                     <button onclick="showRecoveryView()" class="text-xs text-indigo-600 hover:underline font-bold">Password dimenticata?</button>
@@ -667,7 +649,7 @@
                 
                 <!-- Avviso invitante a cambiare password se è ancora quella predefinita -->
                 <div id="defaultPasswordWarning" class="hidden bg-amber-50 border border-amber-200 p-3 rounded-2xl space-y-2">
-                    <p class="text-xs text-amber-800 font-bold flex items-center gap-1.5"><i class="fa-solid fa-triangle-exclamation"></i> Stai usando la password predefinita!</p>
+                    <p class="text-xs text-amber-800 font-bold flex items-center gap-1.5"><i class="fa-solid fa-triangle-exclamation"></i> Stai usando la password predefinita (3e)!</p>
                     <p class="text-[11px] text-amber-700">Ti consigliamo di cambiarla subito per motivi di sicurezza.</p>
                     <button onclick="toggleAdminModal(); openConfigModal();" class="w-full bg-amber-600 hover:bg-amber-700 text-white py-2 rounded-xl text-xs font-bold transition shadow-sm">Cambia Password Ora</button>
                 </div>
@@ -756,7 +738,7 @@
                 <input type="hidden" id="editItemId">
                 <div id="titleWrapper">
                     <label class="block text-xs font-black text-slate-700 mb-1.5" id="labelTitle">Titolo / Argomento</label>
-                    <input type="text" id="inputTitle" placeholder="Es. Esercizi di Matematica" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-inner font-medium">
+                    <input type="text" id="inputTitle" placeholder="Es. Menu della Settimana" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-inner font-medium">
                 </div>
                 <div id="materiaWrapper">
                     <label class="block text-xs font-black text-slate-700 mb-1.5">Materia / Categoria</label>
@@ -849,7 +831,6 @@
             
             const cfg = dbData.appConfig || { name: "Bacheca Scolastica" };
             
-            // Testo dettagliato per WhatsApp con spiegazione chiara (installare prima APK/app e poi premere il link)
             const waText = encodeURIComponent(`👋 Buongiorno genitori!\n\nEcco il link ufficiale aggiornato per la nostra bacheca di classe (${cfg.name}) per seguire compiti, orari, menu mensa e fondo cassa:\n\n📱 *Istruzioni:* Se non hai ancora installato l'app, scarica prima l'APK qui sotto, poi torna su questo messaggio e clicca sul link d'invito per sincronizzarti automaticamente con la classe.\n\n🤖 *Scarica App Android (APK):*\n${apkUrl}\n\n🔗 *Apri Bacheca (Sincronizza Classe):*\n${inviteUrl}`);
             
             window.open(`https://api.whatsapp.com/send?text=${waText}`, '_blank');
@@ -946,7 +927,7 @@
         const sectionGuides = {
             compiti: "Gestisce i compiti giornalieri e le verifiche suddivise per materia con supporto multi-allegato Google Drive e auto-cancellazione dopo 12h dalla scadenza.",
             orario: "Mostra il quadro delle lezioni o delle attività settimanali organizzate giorno per giorno.",
-            mensa: "Consente di visualizzare in tempo reale l'opzione principale o leggera del giorno e di pubblicare i PDF ufficiali della mensa.",
+            mensa: "Consente di pubblicare e consultare i PDF ufficiali e le comunicazioni relative alla ristorazione scolastica.",
             libri: "Raccoglie i libri di testo, i materiali didattici e i documenti consigliati con link diretti.",
             countdown: "Imposta scadenze e conti alla rovescia per eventi importanti, gite o verifiche.",
             sondaggi: "Crea votazioni in tempo reale con inserimento nominativo, monitoraggio delle percentuali e condivisione esito su WhatsApp.",
@@ -969,20 +950,6 @@
 
         function closeInfoModal() {
             document.getElementById('infoModal').classList.add('hidden');
-        }
-
-        function renderMenuDelGiorno() {
-            const container = document.getElementById('menuDelGiornoContainer');
-            if (!container) return;
-            container.innerHTML = `
-                <div class="bg-gradient-to-r from-emerald-700 via-teal-800 to-emerald-900 text-white p-5 rounded-3xl shadow-lg border border-emerald-500/30">
-                    <div class="flex justify-between items-center mb-2">
-                        <span class="bg-white/20 text-emerald-200 border border-white/10 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider">Opzione Attiva</span>
-                        <span class="text-xs text-emerald-200 font-bold">Gestione Universale</span>
-                    </div>
-                    <p class="text-xs sm:text-sm font-medium mt-2">Consulta i PDF pubblicati in basso o verifica il menu del giorno.</p>
-                </div>
-            `;
         }
 
         function requestBrowserNotificationPermission() {
@@ -1236,7 +1203,6 @@
         window.addEventListener('DOMContentLoaded', () => {
             initSnakeCanvas();
             checkPlayerSessionUI();
-            renderMenuDelGiorno();
             renderFondoSummary();
             updateAppBranding();
             if (isAdmin) requestBrowserNotificationPermission();
@@ -1687,6 +1653,14 @@
                 materiaWrapper.classList.remove('hidden');
                 dateWrapper.classList.remove('hidden');
                 populateMaterieSelects();
+            } else if (section === 'mensa') {
+                modalTitle.innerText = itemId ? "Modifica Menu / PDF" : "Pubblica Menu / PDF";
+                labelTitle.innerText = "Titolo del Menu / Comunicazione";
+                inputTitle.placeholder = "Es. Menu Mensa Settimana X";
+                labelDetails.innerText = "Descrizione / Note (Opzionale)";
+                inputDetails.placeholder = "Note aggiuntive...";
+                materiaWrapper.classList.add('hidden');
+                dateWrapper.classList.add('hidden');
             } else {
                 modalTitle.innerText = "Aggiungi a " + section.toUpperCase();
                 labelTitle.innerText = "Titolo / Argomento";
@@ -1694,7 +1668,7 @@
                 labelDetails.innerText = "Descrizione / Note (Opzionale)";
                 inputDetails.placeholder = "Note o istruzioni...";
                 materiaWrapper.classList.add('hidden');
-                dateWrapper.classList.toggle('hidden', section === 'mensa' || section === 'libri' || section === 'sondaggi' || section === 'compleanni');
+                dateWrapper.classList.toggle('hidden', section === 'libri' || section === 'sondaggi' || section === 'compleanni');
             }
 
             if (itemId && dbData[section] && dbData[section][itemId]) {
@@ -2006,7 +1980,7 @@
                 return `
                 <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-200/80 flex justify-between items-start space-x-3 transition hover:shadow-md">
                     <div class="space-y-2.5 flex-1">
-                        <span class="inline-flex items-center gap-1.5 bg-emerald-50 text-emerald-700 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider border border-emerald-100"><i class="fa-solid fa-file-pdf"></i> Documento Ufficiale</span>
+                        <span class="inline-flex items-center gap-1.5 bg-emerald-50 text-emerald-700 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider border border-emerald-100"><i class="fa-solid fa-file-pdf"></i> Menu Mensa Ufficiale</span>
                         <h3 class="font-black text-slate-900 text-base">${escapeHtml(item.title)}</h3>
                         ${item.details ? `<p class="text-sm text-slate-600 font-medium leading-relaxed">${escapeHtml(item.details)}</p>` : ''}
                         ${renderMultipleLinks(item.fileUrl)}
