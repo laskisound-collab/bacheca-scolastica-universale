@@ -66,7 +66,7 @@
     <!-- Container Notifiche Admin -->
     <div id="adminNotificationContainer" class="fixed top-20 right-4 z-50 space-y-2 pointer-events-none max-w-sm w-full px-4"></div>
 
-    <!-- Header Pulito e Ordinato -->
+    <!-- Header Pulito e Ordinato (Senza pulsante WhatsApp in alto) -->
     <header class="bg-gradient-to-r from-indigo-950 via-indigo-900 to-blue-950 text-white shadow-xl sticky top-0 z-50 backdrop-blur-md bg-opacity-95 border-b border-white/10">
         <div class="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center">
             <div class="flex items-center space-x-3.5">
@@ -85,11 +85,6 @@
                 </div>
             </div>
             <div class="flex items-center space-x-2">
-                <!-- Pulsante Invito WhatsApp -->
-                <button onclick="shareClassInvite()" class="bg-emerald-600 hover:bg-emerald-700 border border-emerald-500/40 px-3.5 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition shadow-sm flex items-center space-x-2 text-white" title="Crea Invito Genitori">
-                    <i class="fa-brands fa-whatsapp text-sm"></i>
-                    <span class="hidden sm:inline">Invito</span>
-                </button>
                 <!-- Pulsante Area Admin -->
                 <button id="adminBtn" onclick="toggleAdminModal()" class="bg-white/10 hover:bg-white/20 border border-white/20 px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition shadow-sm flex items-center space-x-2 backdrop-blur-sm">
                     <i class="fa-solid fa-lock text-xs text-amber-300" id="adminIcon"></i>
@@ -99,7 +94,7 @@
         </div>
     </header>
 
-    <!-- Navigation Tabs (Dinamiche in base alle preferenze Admin) -->
+    <!-- Navigation Tabs -->
     <nav class="bg-white/90 backdrop-blur-md shadow-sm border-b border-slate-200/80 sticky top-[77px] z-40 overflow-x-auto">
         <div id="navTabsContainer" class="max-w-4xl mx-auto flex space-x-1.5 px-3 py-2.5"></div>
     </nav>
@@ -136,20 +131,10 @@
                 </div>
                 <div class="flex items-center gap-2.5 flex-wrap">
                     <select id="materiaFilterSelect" onchange="renderAll()" class="bg-slate-50 border border-slate-200 rounded-2xl px-3.5 py-2.5 text-xs font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-inner">
-                        <option value="Tutte">Tutte le materie</option>
-                        <option value="Italiano">Italiano</option>
-                        <option value="Matematica">Matematica</option>
-                        <option value="Inglese">Inglese</option>
-                        <option value="Storia">Storia</option>
-                        <option value="Geografia">Geografia</option>
-                        <option value="Scienze">Scienze</option>
-                        <option value="Tecnologia">Tecnologia</option>
-                        <option value="Arte e Immagine">Arte e Immagine</option>
-                        <option value="Musica">Musica</option>
-                        <option value="Religione / Alternativa">Religione / Alternativa</option>
-                        <option value="Educazione Fisica">Educazione Fisica</option>
-                        <option value="Altro">Altro</option>
+                        <!-- Popolato dinamicamente -->
                     </select>
+                    <!-- Pulsante Admin per gestire l'elenco materie -->
+                    <button onclick="openManageMaterieModal()" class="admin-only hidden bg-slate-100 hover:bg-slate-200 text-slate-700 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-slate-300" title="Gestisci / Aggiungi Materie"><i class="fa-solid fa-list-check text-sm"></i></button>
                     <button onclick="openInfoModal('compiti')" class="bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida sezione"><i class="fa-solid fa-circle-info text-base"></i></button>
                     <button onclick="openAddModal('compiti')" class="admin-only hidden bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 rounded-2xl text-xs font-bold shadow-lg shadow-indigo-200 transition whitespace-nowrap flex items-center space-x-1.5">
                         <i class="fa-solid fa-plus"></i><span>Nuovo Compito</span>
@@ -535,41 +520,18 @@
             <div id="list-promemoria" class="space-y-3.5"></div>
         </section>
 
-        <!-- SEZIONE GUIDA E CONDIVISIONE TOKEN / APK -->
+        <!-- SEZIONE GUIDA E INFO SEZIONI -->
         <section id="guida" class="tab-content space-y-6">
             <div class="bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-200/80 space-y-6">
                 <div>
-                    <span class="bg-emerald-50 text-emerald-700 text-[10px] font-black px-3.5 py-1.5 rounded-full uppercase tracking-wider border border-emerald-100">Area Condivisione & Invito Classe</span>
+                    <span class="bg-emerald-50 text-emerald-700 text-[10px] font-black px-3.5 py-1.5 rounded-full uppercase tracking-wider border border-emerald-100">Manuale d'Uso della Bacheca</span>
                     <h2 class="text-2xl font-black text-slate-900 tracking-tight mt-2 flex items-center gap-2.5">
-                        <i class="fa-solid fa-share-nodes text-emerald-600"></i> Token Univoco, Invito WhatsApp & App APK
+                        <i class="fa-solid fa-circle-question text-indigo-600"></i> Guida Completa alle Sezioni
                     </h2>
-                    <p class="text-xs sm:text-sm text-slate-500 font-medium mt-1">Gestione completa della condivisione per i genitori.</p>
+                    <p class="text-xs sm:text-sm text-slate-500 font-medium mt-1">Scopri a cosa serve ciascuna sezione e come gestirla al meglio.</p>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
-                    <div class="bg-emerald-50/50 p-5 rounded-3xl border border-emerald-100 space-y-3">
-                        <h3 class="font-black text-sm text-emerald-950 flex items-center gap-2"><i class="fa-solid fa-key text-emerald-600"></i> A cosa serve il Token Univoco e l'Invito</h3>
-                        <p class="text-xs text-slate-600 leading-relaxed font-medium">
-                            Il pulsante <strong>"Invito"</strong> in alto genera e condivide un <strong>codice token univoco</strong> associato esclusivamente alla vostra classe (es. `#token_xyz...`). Quando un genitore riceve il messaggio WhatsApp e clicca sul link, la bacheca riconosce automaticamente la classe e sincronizza tutti i dati tramite Firebase. La barra degli indirizzi resta pulita perché il token viene memorizzato in automatico sul dispositivo.
-                        </p>
-                        <button onclick="shareClassInvite()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2.5 rounded-2xl text-xs font-bold transition flex items-center space-x-2 shadow-md">
-                            <i class="fa-brands fa-whatsapp text-sm"></i><span>Genera e Condividi Invito WhatsApp</span>
-                        </button>
-                    </div>
-
-                    <div class="bg-indigo-50/50 p-5 rounded-3xl border border-indigo-100 space-y-3">
-                        <h3 class="font-black text-sm text-indigo-950 flex items-center gap-2"><i class="fa-brands fa-android text-indigo-600"></i> Come funziona l'App Android (APK)</h3>
-                        <p class="text-xs text-slate-600 leading-relaxed font-medium">
-                            Il file `app-release.apk` è il pacchetto di installazione dell'applicazione per i telefoni Android. Una volta scaricato e installato sul telefono, l'app funge da comodo contenitore rapido. La prima volta che si apre, basta cliccare sul link d'invito WhatsApp con il token per agganciarla per sempre alla classe corretta.
-                        </p>
-                        <a href="./app-release.apk" download onclick="handleDownloadAPK(event)" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center space-x-2 shadow-md">
-                            <i class="fa-brands fa-android text-base"></i><span>Scarica App Android (APK)</span>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="space-y-4 pt-4 border-t border-slate-100">
-                    <h3 class="font-black text-base text-slate-900">📚 A cosa servono le varie Sezioni e come gestirle:</h3>
+                <div class="space-y-4 pt-2">
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                         <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200/70 space-y-1">
                             <h4 class="font-black text-xs text-indigo-900 uppercase">Diario / Compiti</h4>
@@ -612,19 +574,74 @@
 
     </main>
 
-    <!-- Footer con Contatore Visite in tempo reale e POWER_laski -->
+    <!-- Footer con Contatore Visite, POWER_laski e Condivisione Token/APK spostata in basso -->
     <footer class="bg-white/80 backdrop-blur-md border-t border-slate-200/80 py-4 mt-auto">
-        <div class="max-w-4xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-2 text-xs text-slate-500 font-medium">
-            <span id="footerAppInfo">Bacheca Scolastica Universale</span>
+        <div class="max-w-4xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-slate-500 font-medium">
+            
+            <!-- Area Condivisione WhatsApp Token & APK in basso con icona info -->
+            <div class="flex items-center space-x-2">
+                <button onclick="shareClassInvite()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center space-x-2 shadow-sm" title="Genera invito WhatsApp con token univoco">
+                    <i class="fa-brands fa-whatsapp text-sm"></i>
+                    <span>Invito WhatsApp (Token)</span>
+                </button>
+                <a href="./app-release.apk" download onclick="handleDownloadAPK(event)" class="bg-indigo-600 hover:bg-indigo-700 text-white px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center space-x-2 shadow-sm" title="Scarica App Android APK">
+                    <i class="fa-brands fa-android text-sm"></i>
+                    <span>Scarica APK</span>
+                </a>
+                <button onclick="openTokenInfoModal()" class="bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-xl transition border border-sky-200 flex items-center justify-center" title="A cosa serve?">
+                    <i class="fa-solid fa-circle-info text-sm"></i>
+                </button>
+            </div>
+
             <div class="flex items-center space-x-3">
                 <span class="text-indigo-600 font-black tracking-wider bg-indigo-50 border border-indigo-100 px-3 py-1.5 rounded-xl text-[11px]">POWER_laski</span>
                 <div class="flex items-center space-x-2 bg-indigo-50 border border-indigo-100 px-3.5 py-1.5 rounded-xl text-indigo-900 font-bold shadow-2xs">
                     <i class="fa-solid fa-eye text-indigo-600"></i>
-                    <span>Visite totali: <strong id="totalVisitsCounter" class="text-indigo-700">...</strong></span>
+                    <span>Visite: <strong id="totalVisitsCounter" class="text-indigo-700">...</strong></span>
                 </div>
             </div>
         </div>
     </footer>
+
+    <!-- Modale Spiegazione Token e APK (richiesto dal pulsante info in basso) -->
+    <div id="tokenInfoModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4 border border-slate-100">
+            <div class="flex justify-between items-center">
+                <h3 class="text-lg font-black text-slate-900">Token Univoco & App APK</h3>
+                <button onclick="closeTokenInfoModal()" class="text-slate-400 hover:text-slate-600 p-1.5 rounded-xl hover:bg-slate-100 transition"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <div class="text-xs sm:text-sm text-slate-600 space-y-3 font-medium leading-relaxed">
+                <div class="bg-emerald-50 p-3.5 rounded-2xl border border-emerald-100 text-emerald-950 space-y-1.5">
+                    <p class="font-black text-xs uppercase tracking-wider text-emerald-700"><i class="fa-solid fa-key mr-1"></i> A cosa serve il Token d'Invito:</p>
+                    <p>Il pulsante <strong>"Invito WhatsApp (Token)"</strong> genera un collegamento che include un <strong>codice token univoco</strong> associato esclusivamente alla vostra classe. Quando gli altri genitori cliccano sul link, l'app si sincronizza automaticamente con la classe corretta senza bisogno di configurazioni manuali.</p>
+                </div>
+                <div class="bg-indigo-50 p-3.5 rounded-2xl border border-indigo-100 text-indigo-950 space-y-1.5">
+                    <p class="font-black text-xs uppercase tracking-wider text-indigo-700"><i class="fa-brands fa-android mr-1"></i> A cosa serve l'App Android (APK):</p>
+                    <p>Il file <strong>APK</strong> consente di installare l'applicazione direttamente sul telefono Android come una normale app. Aprendola e cliccando sul link d'invito con il token la prima volta, rimarrà collegata stabilmente alla bacheca della classe.</p>
+                </div>
+            </div>
+            <button onclick="closeTokenInfoModal()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-2xl text-xs font-bold transition">Ho capito</button>
+        </div>
+    </div>
+
+    <!-- Modale Gestione Materie (Aggiungi/Modifica Materie) -->
+    <div id="manageMaterieModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl space-y-4 border border-slate-100 flex flex-col max-h-[90vh]">
+            <div class="flex justify-between items-center">
+                <h3 class="text-lg font-black text-slate-900">Gestisci Materie</h3>
+                <button onclick="closeManageMaterieModal()" class="text-slate-400 hover:text-slate-600 p-1.5 rounded-xl hover:bg-slate-100 transition"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <p class="text-xs text-slate-500 font-medium">Aggiungi una nuova materia o elimina quelle esistenti:</p>
+            <div class="flex gap-2">
+                <input type="text" id="newMateriaInput" placeholder="Nome nuova materia..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                <button onclick="addNewMateria()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-xl text-xs font-bold transition shadow-md whitespace-nowrap">Aggiungi</button>
+            </div>
+            <div id="materieListContainer" class="space-y-2 overflow-y-auto flex-1 pr-1 max-h-[220px]">
+                <!-- Popolato via JS -->
+            </div>
+            <button onclick="closeManageMaterieModal()" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 py-2.5 rounded-2xl text-xs font-bold transition">Chiudi</button>
+        </div>
+    </div>
 
     <!-- Modale Login Admin con Recupero -->
     <div id="adminModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md hidden z-50 flex items-center justify-center p-4">
@@ -656,10 +673,6 @@
                     <button onclick="toggleAdminModal(); openConfigModal();" class="w-full bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 py-3 px-4 rounded-2xl text-xs font-bold transition flex items-center justify-center space-x-2">
                         <i class="fa-solid fa-gear"></i>
                         <span>Impostazioni Classe, Sezioni & Password</span>
-                    </button>
-                    <button onclick="toggleAdminModal(); switchTab('guida');" class="w-full bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 py-3 px-4 rounded-2xl text-xs font-bold transition flex items-center justify-center space-x-2">
-                        <i class="fa-solid fa-share-nodes"></i>
-                        <span>Gestione Token, Invito & APK</span>
                     </button>
                 </div>
 
@@ -700,9 +713,7 @@
                 <!-- Toggle Sezioni con 1 click -->
                 <div class="pt-3 border-t border-slate-100 space-y-2">
                     <label class="block text-xs font-black text-slate-900 uppercase tracking-wider">Visibilità Sezioni (Attiva/Disattiva con un click)</label>
-                    <div id="sectionTogglesContainer" class="grid grid-cols-2 gap-2 pt-1">
-                        <!-- Generato via JS -->
-                    </div>
+                    <div id="sectionTogglesContainer" class="grid grid-cols-2 gap-2 pt-1"></div>
                 </div>
 
                 <button onclick="saveAppConfig()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-2xl text-sm font-bold shadow-lg shadow-indigo-200 transition">Salva Impostazioni</button>
@@ -730,7 +741,7 @@
         </div>
     </div>
 
-    <!-- Modale Inserimento / Modifica Dati -->
+    <!-- Modale Inserimento / Modifica Dati (Adattato dinamicamente per Orario e Compiti) -->
     <div id="dataModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md hidden z-50 flex items-center justify-center p-4">
         <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto border border-slate-100">
             <div class="flex justify-between items-center">
@@ -747,18 +758,7 @@
                 <div id="materiaWrapper">
                     <label class="block text-xs font-black text-slate-700 mb-1.5">Materia / Categoria</label>
                     <select id="inputMateria" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-inner font-medium">
-                        <option value="Italiano">Italiano</option>
-                        <option value="Matematica">Matematica</option>
-                        <option value="Inglese">Inglese</option>
-                        <option value="Storia">Storia</option>
-                        <option value="Geografia">Geografia</option>
-                        <option value="Scienze">Scienze</option>
-                        <option value="Tecnologia">Tecnologia</option>
-                        <option value="Arte e Immagine">Arte e Immagine</option>
-                        <option value="Musica">Musica</option>
-                        <option value="Religione / Alternativa">Religione / Alternativa</option>
-                        <option value="Educazione Fisica">Educazione Fisica</option>
-                        <option value="Altro">Altro</option>
+                        <!-- Popolato dinamicamente -->
                     </select>
                 </div>
                 <div id="dateWrapper">
@@ -769,7 +769,7 @@
                     <label class="block text-xs font-black text-slate-700 mb-1.5" id="labelDetails">Descrizione / Note (Opzionale)</label>
                     <textarea id="inputDetails" rows="4" placeholder="Note o istruzioni..." class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-inner font-medium"></textarea>
                 </div>
-                <div>
+                <div id="fileUrlWrapper">
                     <label class="block text-xs font-black text-slate-700 mb-1.5" id="labelFileUrl">Link Google Drive (PDF o Foto)</label>
                     <input type="text" id="inputFileUrl" placeholder="https://drive.google.com/..." class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-inner font-medium">
                 </div>
@@ -851,6 +851,13 @@
             window.open(`https://api.whatsapp.com/send?text=${waText}`, '_blank');
         }
 
+        function openTokenInfoModal() {
+            document.getElementById('tokenInfoModal').classList.remove('hidden');
+        }
+        function closeTokenInfoModal() {
+            document.getElementById('tokenInfoModal').classList.add('hidden');
+        }
+
         let isAdmin = localStorage.getItem('isAdmin_app') === 'true';
         let dbData = { 
             appConfig: { 
@@ -859,6 +866,7 @@
                 logo: "3E", 
                 adminPassword: "3e", 
                 recoveryCode: "segreto",
+                materie: ["Italiano", "Matematica", "Inglese", "Storia", "Geografia", "Scienze", "Tecnologia", "Arte e Immagine", "Musica", "Religione / Alternativa", "Educazione Fisica", "Altro"],
                 sections: {
                     compiti: true,
                     orario: true,
@@ -1029,20 +1037,106 @@
                 const val = snapshot.val();
                 if (val) {
                     dbData = { ...dbData, ...val };
-                    if (!dbData.appConfig) dbData.appConfig = { name: "Classe 3E", subtitle: "Scuola Primaria", logo: "3E", adminPassword: "3e", recoveryCode: "segreto", sections: {} };
+                    if (!dbData.appConfig) dbData.appConfig = { name: "Classe 3E", subtitle: "Scuola Primaria", logo: "3E", adminPassword: "3e", recoveryCode: "segreto", materie: [], sections: {} };
                     if (!dbData.appConfig.adminPassword) dbData.appConfig.adminPassword = "3e";
                     if (!dbData.appConfig.recoveryCode) dbData.appConfig.recoveryCode = "segreto";
+                    if (!dbData.appConfig.materie || dbData.appConfig.materie.length === 0) {
+                        dbData.appConfig.materie = ["Italiano", "Matematica", "Inglese", "Storia", "Geografia", "Scienze", "Tecnologia", "Arte e Immagine", "Musica", "Religione / Alternativa", "Educazione Fisica", "Altro"];
+                    }
                     if (!dbData.appConfig.sections) dbData.appConfig.sections = { compiti: true, orario: true, mensa: true, libri: true, countdown: true, sondaggi: true, ruota: true, snake: true, fondo: true, avvisi: true, galleria: true, linkutili: true, compleanni: true, promemoria: true, guida: true };
                     updateAppBranding();
                     checkAndCleanExpiredCompiti();
                 }
                 renderNavTabs();
+                populateMaterieSelects();
                 renderAll();
                 renderSnakeLeaderboard();
                 updateVisitsCounter();
                 renderFondoSummary();
             });
         });
+
+        function populateMaterieSelects() {
+            const materie = dbData.appConfig.materie || ["Italiano", "Matematica"];
+            
+            // Filter select
+            const filterSelect = document.getElementById('materiaFilterSelect');
+            if (filterSelect) {
+                const currentFilter = filterSelect.value || 'Tutte';
+                let html = `<option value="Tutte">Tutte le materie</option>`;
+                materie.forEach(m => {
+                    html += `<option value="${escapeHtml(m)}" ${currentFilter === m ? 'selected' : ''}>${escapeHtml(m)}</option>`;
+                });
+                filterSelect.innerHTML = html;
+            }
+
+            // Modal select
+            const modalSelect = document.getElementById('inputMateria');
+            if (modalSelect) {
+                const currentModalVal = modalSelect.value;
+                let htmlModal = '';
+                materie.forEach(m => {
+                    htmlModal += `<option value="${escapeHtml(m)}" ${currentModalVal === m ? 'selected' : ''}>${escapeHtml(m)}</option>`;
+                });
+                modalSelect.innerHTML = htmlModal;
+            }
+        }
+
+        function openManageMaterieModal() {
+            renderMaterieManagementList();
+            document.getElementById('manageMaterieModal').classList.remove('hidden');
+        }
+
+        function closeManageMaterieModal() {
+            document.getElementById('manageMaterieModal').classList.add('hidden');
+        }
+
+        function renderMaterieManagementList() {
+            const container = document.getElementById('materieListContainer');
+            if (!container) return;
+            const materie = dbData.appConfig.materie || [];
+            
+            container.innerHTML = materie.map((mat, idx) => `
+                <div class="flex items-center justify-between bg-slate-50 p-2.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-700">
+                    <span>${escapeHtml(mat)}</span>
+                    <button onclick="removeMateria(${idx})" class="text-rose-500 hover:text-rose-700 p-1.5 rounded-lg hover:bg-rose-50 transition" title="Elimina materia"><i class="fa-solid fa-trash text-xs"></i></button>
+                </div>
+            `).join('');
+        }
+
+        function addNewMateria() {
+            const input = document.getElementById('newMateriaInput');
+            const val = input.value.trim();
+            if (!val) { alert('Inserisci il nome della materia!'); return; }
+            if (!dbData.appConfig.materie) dbData.appConfig.materie = [];
+            if (dbData.appConfig.materie.includes(val)) { alert('Materia già presente!'); return; }
+
+            dbData.appConfig.materie.push(val);
+            input.value = '';
+
+            const { db, ref, set } = window.fbDB;
+            set(ref(db, firebaseNodePath), dbData).then(() => {
+                populateMaterieSelects();
+                renderMaterieManagementList();
+                showAdminNotification("Materia aggiunta con successo!", "success");
+            });
+        }
+
+        function removeMateria(index) {
+            const materie = dbData.appConfig.materie || [];
+            if (materie.length <= 1) { alert('Devi mantenere almeno una materia!'); return; }
+            if (confirm(`Vuoi rimuovere la materia "${materie[index]}"?`)) {
+                materie.splice(index, 1);
+                dbData.appConfig.materie = materie;
+
+                const { db, ref, set } = window.fbDB;
+                set(ref(db, firebaseNodePath), dbData).then(() => {
+                    populateMaterieSelects();
+                    renderMaterieManagementList();
+                    showAdminNotification("Materia rimossa con successo!", "success");
+                });
+            }
+        }
 
         function renderNavTabs() {
             const navContainer = document.getElementById('navTabsContainer');
@@ -1066,7 +1160,6 @@
             const subEl = document.getElementById('displayAppSubtitle');
             const logoEl = document.getElementById('headerAppLogo');
             const titleEl = document.getElementById('pageTitle');
-            const footerEl = document.getElementById('footerAppInfo');
             const snakeTitle = document.getElementById('snakeTitleText');
 
             if (nameEl) nameEl.innerText = cfg.name;
@@ -1076,7 +1169,6 @@
             }
             if (logoEl) logoEl.innerText = cfg.logo || "App";
             if (titleEl) titleEl.innerText = cfg.name + (cfg.subtitle ? ' - ' + cfg.subtitle : '');
-            if (footerEl) footerEl.innerText = `Bacheca Scolastica • ${cfg.name}`;
             if (snakeTitle) snakeTitle.innerText = `Snake (${cfg.name})`;
         }
 
@@ -1562,23 +1654,51 @@
             const dateWrapper = document.getElementById('dateWrapper');
             const modalTitle = document.getElementById('modalTitle');
             const saveBtn = document.getElementById('saveBtn');
+            const labelTitle = document.getElementById('labelTitle');
+            const inputTitle = document.getElementById('inputTitle');
+            const labelDetails = document.getElementById('labelDetails');
+            const inputDetails = document.getElementById('inputDetails');
+
+            // Personalizzazioni specifiche per sezione (Orario vs Compiti)
+            if (section === 'orario') {
+                modalTitle.innerText = itemId ? "Modifica Giorno Orario" : "Aggiungi Giorno Orario";
+                labelTitle.innerText = "Inserire il Giorno (es. Lunedì)";
+                inputTitle.placeholder = "Es. Lunedì";
+                labelDetails.innerText = "Inserire materie giornaliere";
+                inputDetails.placeholder = "8:00 - Italiano&#10;9:00 - Matematica...";
+                materiaWrapper.classList.add('hidden');
+                dateWrapper.classList.add('hidden');
+            } else if (section === 'compiti') {
+                modalTitle.innerText = itemId ? "Modifica Compito" : "Nuovo Compito";
+                labelTitle.innerText = "Titolo / Argomento";
+                inputTitle.placeholder = "Es. Esercizi di Matematica";
+                labelDetails.innerText = "Descrizione / Note (Opzionale)";
+                inputDetails.placeholder = "Note o istruzioni...";
+                materiaWrapper.classList.remove('hidden');
+                dateWrapper.classList.remove('hidden');
+                populateMaterieSelects();
+            } else {
+                modalTitle.innerText = "Aggiungi a " + section.toUpperCase();
+                labelTitle.innerText = "Titolo / Argomento";
+                inputTitle.placeholder = "Es. Titolo elemento";
+                labelDetails.innerText = "Descrizione / Note (Opzionale)";
+                inputDetails.placeholder = "Note o istruzioni...";
+                materiaWrapper.classList.add('hidden');
+                dateWrapper.classList.toggle('hidden', section === 'mensa' || section === 'libri' || section === 'sondaggi' || section === 'compleanni');
+            }
 
             if (itemId && dbData[section] && dbData[section][itemId]) {
                 const item = dbData[section][itemId];
-                modalTitle.innerText = "Modifica " + section.toUpperCase();
-                saveBtn.innerText = "Salva Modifiche";
-                document.getElementById('inputTitle').value = item.title || '';
-                if (section === 'compiti') document.getElementById('inputMateria').value = item.materia || 'Italiano';
+                inputTitle.value = item.title || '';
+                if (section === 'compiti') document.getElementById('inputMateria').value = item.materia || '';
                 document.getElementById('inputDate').value = item.date || '';
-                document.getElementById('inputDetails').value = section === 'sondaggi' && item.options ? item.options.join('\n') : (item.details || '');
+                inputDetails.value = section === 'sondaggi' && item.options ? item.options.join('\n') : (item.details || '');
                 document.getElementById('inputFileUrl').value = item.fileUrl || '';
+                saveBtn.innerText = "Salva Modifiche";
             } else {
-                modalTitle.innerText = "Aggiungi a " + section.toUpperCase();
                 saveBtn.innerText = "Pubblica";
             }
 
-            materiaWrapper.classList.toggle('hidden', section !== 'compiti');
-            dateWrapper.classList.toggle('hidden', section === 'orario' || section === 'mensa' || section === 'libri' || section === 'sondaggi' || section === 'compleanni');
             document.getElementById('dataModal').classList.remove('hidden');
         }
 
@@ -1589,7 +1709,7 @@
             const section = document.getElementById('currentSection').value;
             const itemId = document.getElementById('editItemId').value;
             const title = document.getElementById('inputTitle').value;
-            const materia = document.getElementById('inputMateria').value;
+            const materia = section === 'compiti' ? document.getElementById('inputMateria').value : '';
             const date = document.getElementById('inputDate').value;
             const details = document.getElementById('inputDetails').value;
             const fileUrl = document.getElementById('inputFileUrl').value;
@@ -1604,7 +1724,7 @@
             const idToUse = itemId ? itemId : ('item_' + Date.now());
             const createdAtTime = (itemId && dbData[section][itemId]) ? dbData[section][itemId].createdAt : Date.now();
 
-            let itemData = { id: idToUse, title, materia: section === 'compiti' ? materia : '', date, details, fileUrl, createdAt: createdAtTime };
+            let itemData = { id: idToUse, title, materia, date, details, fileUrl, createdAt: createdAtTime };
 
             if (section === 'sondaggi') {
                 const optionsArr = details.split('\n').map(o => o.trim()).filter(o => o.length > 0);
