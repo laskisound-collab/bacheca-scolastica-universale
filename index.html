@@ -520,7 +520,7 @@
                     </div>
                     <div class="bg-slate-900 text-white p-5 rounded-3xl border border-slate-800 space-y-2">
                         <h4 class="font-black text-xs text-slate-100 uppercase flex items-center gap-2"><i class="fa-brands fa-apple text-base text-white"></i> Installazione su Apple iOS (iPhone / iPad)</h4>
-                        <p class="text-xs text-slate-300 leading-relaxed font-medium">I sistemi Apple richiedono la validazione per i file eseguibili. Su iPhone/iPad apri il link della bacheca in <strong>Safari</strong>, tocca il tasto <strong>Condividi</strong> (quadretto con freccia) e seleziona <strong>"Aggiungi alla schermata Home"</strong>. Per visualizzare correttamente i PDF e documenti scolastici, assicurati di avere l'app gratuita di <strong>Google Drive</strong> installata da App Store.</p>
+                        <p class="text-xs text-slate-300 leading-relaxed font-medium">I sistemi Apple richiedono la validazione per i file eseguibili e non possono scaricare file APK. Su iPhone/iPad apri il link della bacheca in <strong>Safari</strong>, tocca il tasto <strong>Condividi</strong> (quadretto con freccia) e seleziona <strong>"Aggiungi alla schermata Home"</strong>. Per visualizzare correttamente i PDF e documenti scolastici, assicurati di avere l'app gratuita di <strong>Google Drive</strong> installata da App Store.</p>
                     </div>
                 </div>
 
@@ -580,11 +580,11 @@
                     <i class="fa-brands fa-android text-sm"></i>
                     <span>Scarica Android</span>
                 </a>
-                <!-- Pulsante Guida Safari / Apple iOS -->
-                <a href="./ios-next-steps.html" target="_blank" class="bg-slate-800 hover:bg-slate-900 text-white px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center space-x-2 shadow-sm" title="Guida installazione su Safari per Apple iOS">
+                <!-- Pulsante Guida Safari / Apple iOS (Punta alla sezione Guida integrata) -->
+                <button onclick="switchTab('guida')" class="bg-slate-800 hover:bg-slate-900 text-white px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center space-x-2 shadow-sm" title="Guida installazione su Safari per Apple iOS">
                     <i class="fa-brands fa-apple text-sm"></i>
                     <span>Guida Safari / Apple</span>
-                </a>
+                </button>
                 <!-- Pulsante Donazione PayPal.Me -->
                 <a href="https://paypal.me/bachecascolastica" target="_blank" class="bg-amber-500 hover:bg-amber-600 text-white px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center space-x-2 shadow-sm" title="Supporto sviluppo">
                     <i class="fa-brands fa-paypal text-sm"></i>
@@ -848,11 +848,10 @@
             const baseUrl = window.location.href.split('#')[0];
             const inviteUrl = `${baseUrl}#${currentToken}`;
             const apkUrl = `${baseUrl}app-release.apk`;
-            const iosUrl = `${baseUrl}ios-next-steps.html`;
             
             const cfg = dbData.appConfig || { name: "Bacheca Scolastica" };
             
-            const waText = encodeURIComponent(`👋 Buongiorno genitori!\n\nEcco il link ufficiale aggiornato per la nostra bacheca di classe (${cfg.name}) per seguire compiti, orari, menu mensa e fondo cassa:\n\n📱 *Come installare l'app sul telefono:*\n\n🤖 *Per Android:* Scarica l'app APK direttamente dal pulsante in bacheca.\n\n🍏 *Per Apple (iPhone / iPad):*\n1. Apri il link della bacheca in *Safari*.\n2. Tocca il tasto *Condividi* (quadretto con freccia).\n3. Seleziona *"Aggiungi alla schermata Home"*.\n4. *(Nota: per aprire correttamente i PDF e documenti, scarica l'app gratuita Google Drive da App Store)*.\n\n🔗 *Link Guida Apple:* ${iosUrl}\n🤖 *Scarica App Android:* ${apkUrl}\n\n✨ *Apri Bacheca (Sincronizza Classe):*\n${inviteUrl}`);
+            const waText = encodeURIComponent(`👋 Buongiorno genitori!\n\nEcco il link ufficiale aggiornato per la nostra bacheca di classe (${cfg.name}) per seguire compiti, orari, menu mensa e fondo cassa:\n\n📱 *Come installare l'app sul telefono:*\n\n🤖 *Per Android:* Scarica l'app APK direttamente dal pulsante in bacheca.\n\n🍏 *Per Apple (iPhone / iPad):*\n1. Apri il link della bacheca in *Safari*.\n2. Tocca il tasto *Condividi* (quadretto con freccia).\n3. Seleziona *"Aggiungi alla schermata Home"*.\n4. *(Nota: per aprire correttamente i PDF e documenti, scarica l'app gratuita Google Drive da App Store)*.\n\n🤖 *Scarica App Android:* ${apkUrl}\n\n✨ *Apri Bacheca (Sincronizza Classe):*\n${inviteUrl}`);
             
             window.open(`https://api.whatsapp.com/send?text=${waText}`, '_blank');
         }
