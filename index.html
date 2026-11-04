@@ -507,9 +507,9 @@
                 <div>
                     <span class="bg-emerald-50 text-emerald-700 text-[10px] font-black px-3.5 py-1.5 rounded-full uppercase tracking-wider border border-emerald-100">Manuale d'Uso della Bacheca</span>
                     <h2 class="text-2xl font-black text-slate-900 tracking-tight mt-2 flex items-center gap-2.5">
-                        <i class="fa-solid fa-circle-question text-indigo-600"></i> Guida Completa alle Sezioni & Dispositivi
+                        <i class="fa-solid fa-circle-question text-indigo-600"></i> Guida Completa alle Sezioni, Dispositivi & Notifiche
                     </h2>
-                    <p class="text-xs sm:text-sm text-slate-500 font-medium mt-1">Procedura dettagliata per l'installazione su Android, Apple iOS e la gestione dei file.</p>
+                    <p class="text-xs sm:text-sm text-slate-500 font-medium mt-1">Procedura dettagliata per l'installazione su Android, Apple iOS, gestione file, scadenza automatica compiti e notifiche.</p>
                 </div>
 
                 <!-- Box dedicato installazione smartphone -->
@@ -519,17 +519,33 @@
                         <ol class="list-decimal list-inside text-xs text-indigo-900 space-y-1 font-medium leading-relaxed">
                             <li>Clicca sul pulsante <strong>"Scarica Android"</strong> in basso per scaricare il file APK.</li>
                             <li>Apri il file scaricato sul telefono e consenti l'installazione dell'app.</li>
-                            <li>Una volta installata l'app, apri il <strong>link ufficiale ricevuto sul gruppo WhatsApp</strong> per collegarti automaticamente alla classe corretta tramite il token.</li>
+                            <li>Una volta installata l'app, apri o **rimpremi il link ufficiale ricevuto sul gruppo WhatsApp** per agganciare correttamente la classe e il token.</li>
                         </ol>
                     </div>
                     <div class="bg-slate-900 text-white p-5 rounded-3xl border border-slate-800 space-y-2">
                         <h4 class="font-black text-xs text-slate-100 uppercase flex items-center gap-2"><i class="fa-brands fa-apple text-base text-white"></i> Installazione su Apple iOS (iPhone / iPad)</h4>
                         <ol class="list-decimal list-inside text-xs text-slate-300 space-y-1 font-medium leading-relaxed">
-                            <li>I dispositivi Apple non supportano file APK. Apri il link della bacheca direttamente in <strong>Safari</strong>.</li>
-                            <li>Tocca il tasto <strong>Condividi</strong> (il quadratino con la freccia in alto o in basso) e seleziona <strong>"Aggiungi alla schermata Home"</strong>.</li>
+                            <li>I dispositivi Apple non supportano file APK. Apri il link della bacheca contenente il token direttamente in <strong>Safari</strong>.</li>
+                            <li>Tocca il tasto <strong>Condividi</strong> (il quadratino con la freccia) e seleziona <strong>"Aggiungi alla schermata Home"</strong>.</li>
                             <li>Per visualizzare correttamente PDF e documenti scolastici, assicurati di installare l'app gratuita <strong>Google Drive</strong> da App Store.</li>
                         </ol>
                     </div>
+                </div>
+
+                <!-- Box Regole Compiti e Scomparsa 12h -->
+                <div class="bg-purple-50/80 p-5 rounded-3xl border border-purple-200 space-y-3">
+                    <h3 class="font-black text-sm text-purple-950 flex items-center gap-2"><i class="fa-solid fa-clock text-purple-600"></i> Regola di Scomparsa Automatica dei Compiti</h3>
+                    <p class="text-xs text-purple-900 font-medium leading-relaxed">
+                        I compiti e le attività inserite nel diario **spariscono automaticamente dopo 12 ore** calcolate in base alla data e all'orario di scadenza impostati dall'Admin in quella specifica sezione. In questo modo la bacheca rimane sempre pulita e aggiornata con le sole scadenze attive.
+                    </p>
+                </div>
+
+                <!-- Box Notifiche Audio e Visive -->
+                <div class="bg-emerald-50/80 p-5 rounded-3xl border border-emerald-200 space-y-3">
+                    <h3 class="font-black text-sm text-emerald-950 flex items-center gap-2"><i class="fa-solid fa-bell text-emerald-600"></i> Notifiche Audio e Visive per i Nuovi Contenuti</h3>
+                    <p class="text-xs text-emerald-900 font-medium leading-relaxed">
+                        Ogni volta che l'amministratore aggiunge un nuovo compito, un avviso o qualsiasi altro aggiornamento nell'app, viene generata automaticamente una **notifica visiva a schermo** accompagnata da un **segnale audio** per avvisare subito tutti i genitori collegati.
+                    </p>
                 </div>
 
                 <div class="bg-amber-50/80 p-5 rounded-3xl border border-amber-200 space-y-3">
@@ -774,6 +790,28 @@
         </div>
     </div>
 
+    <!-- Script Audio Notifica Sintetizzato (Web Audio API) -->
+    <script>
+        function playAdminNotificationSound() {
+            try {
+                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(587.33, audioCtx.currentTime); // Nota D5
+                osc.frequency.setValueAtTime(880, audioCtx.currentTime + 0.1); // Nota A5
+                gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.4);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.4);
+            } catch (e) {
+                console.log("Audio context non supportato o bloccato dal browser");
+            }
+        }
+    </script>
+
     <!-- Script Logica App -->
     <script>
         function updateClock() {
@@ -790,10 +828,8 @@
             const currentToken = localStorage.getItem('active_class_token') || classToken;
             const baseUrl = window.location.href.split('#')[0];
             
-            // Aggiorna l'URL con il token attuale nel browser
             history.pushState(null, '', `${baseUrl}#${currentToken}`);
             
-            // Controlla se il file APK esiste e avvia il download
             fetch('./app-release.apk', { method: 'HEAD' })
                 .then(res => {
                     if (res.ok) {
@@ -817,7 +853,6 @@
             const currentToken = localStorage.getItem('active_class_token') || classToken;
             const baseUrl = window.location.href.split('#')[0];
             
-            // Imposta l'hash del token e sposta sulla sezione guida
             history.pushState(null, '', `${baseUrl}#${currentToken}`);
             switchTab('guida');
         }
@@ -855,7 +890,7 @@
             
             const cfg = dbData.appConfig || { name: "Bacheca Scolastica" };
             
-            const waText = encodeURIComponent(`👋 Buongiorno genitori!\n\nEcco il link ufficiale aggiornato per la nostra bacheca di classe (${cfg.name}) per seguire compiti, orari, menu mensa e fondo cassa:\n\n📱 *Come installare l'app sul telefono:*\n\n🤖 *Per Android:* Clicca sul link per scaricare l'app APK e poi aprilo per sincronizzare la classe.\n\n🍏 *Per Apple (iPhone / iPad):*\n1. Apri il link della bacheca in *Safari*.\n2. Tocca il tasto *Condividi* (quadretto con freccia).\n3. Seleziona *"Aggiungi alla schermata Home"*.\n4. *(Nota: per aprire correttamente i PDF e documenti, scarica l'app gratuita Google Drive da App Store)*.\n\n🤖 *Scarica App Android:* ${apkUrl}\n\n✨ *Apri Bacheca (Sincronizza Classe):*\n${inviteUrl}`);
+            const waText = encodeURIComponent(`👋 Buongiorno genitori!\n\nEcco il link ufficiale aggiornato per la nostra bacheca di classe (${cfg.name}) per seguire compiti, orari, menu mensa e fondo cassa:\n\n📱 *Come installare l'app sul telefono:*\n\n🤖 *Per Android:*\n1. Clicca sul link per scaricare l'app:\n${apkUrl}\n2. Installa l'applicazione sul telefono.\n3. Una volta installata, *rimpremi il link della classe qui sotto* per agganciare il token e sincronizzare i dati:\n${inviteUrl}\n\n🍏 *Per Apple (iPhone / iPad):*\n1. Apri questo link direttamente in *Safari*:\n${inviteUrl}\n2. Tocca il tasto *Condividi* (quadretto con freccia).\n3. Seleziona *"Aggiungi alla schermata Home"*.\n4. *(Nota: per aprire correttamente i PDF e documenti, scarica l'app gratuita Google Drive da App Store)*.`);
             
             window.open(`https://api.whatsapp.com/send?text=${waText}`, '_blank');
         }
@@ -963,7 +998,7 @@
             linkutili: "Fornisce accesso rapido a portali esterni, registri o modulistica utile.",
             compleanni: "Memorizza le date di compleanno dei bambini per festeggiarli insieme.",
             promemoria: "Segna impegni e scadenze da ricordare per la classe o i rappresentanti.",
-            guida: "Spiega come installare l'app su Android e iOS e come gestire i file su Google Drive."
+            guida: "Spiega come installare l'app su Android e iOS, come gestire i file su Google Drive e il funzionamento della scadenza automatica compiti."
         };
 
         function openInfoModal(sectionKey) {
@@ -983,7 +1018,9 @@
         }
 
         function showAdminNotification(message, type = 'success') {
-            if (!isAdmin) return;
+            // Esegue sempre il segnale audio e la notifica visiva quando viene pubblicato qualcosa
+            playAdminNotificationSound();
+            
             const container = document.getElementById('adminNotificationContainer');
             if (!container) return;
 
@@ -1750,6 +1787,8 @@
                 saveBtn.innerText = "Pubblica";
                 saveBtn.disabled = false;
                 renderFondoSummary();
+                // Attiva la notifica sonora e visiva ogni volta che l'admin pubblica un contenuto
+                showAdminNotification(`Nuovo elemento pubblicato in ${sectionNames[section] || section}!`, 'success');
             });
         }
 
