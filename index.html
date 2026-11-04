@@ -66,7 +66,7 @@
     <!-- Container Notifiche Admin -->
     <div id="adminNotificationContainer" class="fixed top-20 right-4 z-50 space-y-2 pointer-events-none max-w-sm w-full px-4"></div>
 
-    <!-- Header Pulito e Ordinato (Senza pulsante WhatsApp in alto) -->
+    <!-- Header Pulito e Ordinato -->
     <header class="bg-gradient-to-r from-indigo-950 via-indigo-900 to-blue-950 text-white shadow-xl sticky top-0 z-50 backdrop-blur-md bg-opacity-95 border-b border-white/10">
         <div class="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center">
             <div class="flex items-center space-x-3.5">
@@ -133,7 +133,6 @@
                     <select id="materiaFilterSelect" onchange="renderAll()" class="bg-slate-50 border border-slate-200 rounded-2xl px-3.5 py-2.5 text-xs font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-inner">
                         <!-- Popolato dinamicamente -->
                     </select>
-                    <!-- Pulsante Admin per gestire l'elenco materie -->
                     <button onclick="openManageMaterieModal()" class="admin-only hidden bg-slate-100 hover:bg-slate-200 text-slate-700 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-slate-300" title="Gestisci / Aggiungi Materie"><i class="fa-solid fa-list-check text-sm"></i></button>
                     <button onclick="openInfoModal('compiti')" class="bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida sezione"><i class="fa-solid fa-circle-info text-base"></i></button>
                     <button onclick="openAddModal('compiti')" class="admin-only hidden bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 rounded-2xl text-xs font-bold shadow-lg shadow-indigo-200 transition whitespace-nowrap flex items-center space-x-1.5">
@@ -574,11 +573,10 @@
 
     </main>
 
-    <!-- Footer con Contatore Visite, POWER_laski e Condivisione Token/APK spostata in basso -->
+    <!-- Footer con Contatore Visite, POWER_laski e Condivisione Token/APK -->
     <footer class="bg-white/80 backdrop-blur-md border-t border-slate-200/80 py-4 mt-auto">
         <div class="max-w-4xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-slate-500 font-medium">
             
-            <!-- Area Condivisione WhatsApp Token & APK in basso con icona info -->
             <div class="flex items-center space-x-2">
                 <button onclick="shareClassInvite()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center space-x-2 shadow-sm" title="Genera invito WhatsApp con token univoco">
                     <i class="fa-brands fa-whatsapp text-sm"></i>
@@ -603,7 +601,7 @@
         </div>
     </footer>
 
-    <!-- Modale Spiegazione Token e APK (richiesto dal pulsante info in basso) -->
+    <!-- Modale Spiegazione Token e APK -->
     <div id="tokenInfoModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md hidden z-50 flex items-center justify-center p-4">
         <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4 border border-slate-100">
             <div class="flex justify-between items-center">
@@ -613,18 +611,18 @@
             <div class="text-xs sm:text-sm text-slate-600 space-y-3 font-medium leading-relaxed">
                 <div class="bg-emerald-50 p-3.5 rounded-2xl border border-emerald-100 text-emerald-950 space-y-1.5">
                     <p class="font-black text-xs uppercase tracking-wider text-emerald-700"><i class="fa-solid fa-key mr-1"></i> A cosa serve il Token d'Invito:</p>
-                    <p>Il pulsante <strong>"Invito WhatsApp (Token)"</strong> genera un collegamento che include un <strong>codice token univoco</strong> associato esclusivamente alla vostra classe. Quando gli altri genitori cliccano sul link, l'app si sincronizza automaticamente con la classe corretta senza bisogno di configurazioni manuali.</p>
+                    <p>Il pulsante <strong>"Invito WhatsApp (Token)"</strong> genera un collegamento che include un <strong>codice token univoco</strong> associato esclusivamente alla vostra classe. Chi riceve il link vedrà l'app come utente e si collegherà automaticamente alla classe corretta.</p>
                 </div>
                 <div class="bg-indigo-50 p-3.5 rounded-2xl border border-indigo-100 text-indigo-950 space-y-1.5">
                     <p class="font-black text-xs uppercase tracking-wider text-indigo-700"><i class="fa-brands fa-android mr-1"></i> A cosa serve l'App Android (APK):</p>
-                    <p>Il file <strong>APK</strong> consente di installare l'applicazione direttamente sul telefono Android come una normale app. Aprendola e cliccando sul link d'invito con il token la prima volta, rimarrà collegata stabilmente alla bacheca della classe.</p>
+                    <p>Il file <strong>APK</strong> consente di installare l'applicazione direttamente sul telefono Android come una normale app.</p>
                 </div>
             </div>
             <button onclick="closeTokenInfoModal()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-2xl text-xs font-bold transition">Ho capito</button>
         </div>
     </div>
 
-    <!-- Modale Gestione Materie (Aggiungi/Modifica Materie) -->
+    <!-- Modale Gestione Materie -->
     <div id="manageMaterieModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md hidden z-50 flex items-center justify-center p-4">
         <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl space-y-4 border border-slate-100 flex flex-col max-h-[90vh]">
             <div class="flex justify-between items-center">
@@ -636,14 +634,12 @@
                 <input type="text" id="newMateriaInput" placeholder="Nome nuova materia..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-indigo-500">
                 <button onclick="addNewMateria()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-xl text-xs font-bold transition shadow-md whitespace-nowrap">Aggiungi</button>
             </div>
-            <div id="materieListContainer" class="space-y-2 overflow-y-auto flex-1 pr-1 max-h-[220px]">
-                <!-- Popolato via JS -->
-            </div>
+            <div id="materieListContainer" class="space-y-2 overflow-y-auto flex-1 pr-1 max-h-[220px]"></div>
             <button onclick="closeManageMaterieModal()" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 py-2.5 rounded-2xl text-xs font-bold transition">Chiudi</button>
         </div>
     </div>
 
-    <!-- Modale Login Admin con Recupero -->
+    <!-- Modale Login Admin con Recupero e Avviso Cambio Password -->
     <div id="adminModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md hidden z-50 flex items-center justify-center p-4">
         <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl space-y-4 border border-slate-100">
             <div class="flex justify-between items-center">
@@ -669,6 +665,13 @@
             <div id="adminLogoutDiv" class="hidden space-y-3.5">
                 <p class="text-xs text-emerald-600 font-bold flex items-center bg-emerald-50 p-3 rounded-2xl border border-emerald-100"><i class="fa-solid fa-circle-check mr-2 text-base"></i> Autenticato come Amministratore.</p>
                 
+                <!-- Avviso invitante a cambiare password se è ancora quella predefinita -->
+                <div id="defaultPasswordWarning" class="hidden bg-amber-50 border border-amber-200 p-3 rounded-2xl space-y-2">
+                    <p class="text-xs text-amber-800 font-bold flex items-center gap-1.5"><i class="fa-solid fa-triangle-exclamation"></i> Stai usando la password predefinita!</p>
+                    <p class="text-[11px] text-amber-700">Ti consigliamo di cambiarla subito per motivi di sicurezza.</p>
+                    <button onclick="toggleAdminModal(); openConfigModal();" class="w-full bg-amber-600 hover:bg-amber-700 text-white py-2 rounded-xl text-xs font-bold transition shadow-sm">Cambia Password Ora</button>
+                </div>
+
                 <div class="space-y-2 pt-2">
                     <button onclick="toggleAdminModal(); openConfigModal();" class="w-full bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 py-3 px-4 rounded-2xl text-xs font-bold transition flex items-center justify-center space-x-2">
                         <i class="fa-solid fa-gear"></i>
@@ -741,7 +744,7 @@
         </div>
     </div>
 
-    <!-- Modale Inserimento / Modifica Dati (Adattato dinamicamente per Orario e Compiti) -->
+    <!-- Modale Inserimento / Modifica Dati -->
     <div id="dataModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md hidden z-50 flex items-center justify-center p-4">
         <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto border border-slate-100">
             <div class="flex justify-between items-center">
@@ -757,9 +760,7 @@
                 </div>
                 <div id="materiaWrapper">
                     <label class="block text-xs font-black text-slate-700 mb-1.5">Materia / Categoria</label>
-                    <select id="inputMateria" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-inner font-medium">
-                        <!-- Popolato dinamicamente -->
-                    </select>
+                    <select id="inputMateria" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-inner font-medium"></select>
                 </div>
                 <div id="dateWrapper">
                     <label class="block text-xs font-black text-slate-700 mb-1.5" id="labelDate">Data e Ora Scadenza (Opzionale)</label>
@@ -847,7 +848,8 @@
             const apkUrl = `${baseUrl}app-release.apk`;
             
             const cfg = dbData.appConfig || { name: "Bacheca Scolastica" };
-            const waText = encodeURIComponent(`👋 Buongiorno genitori!\n\nEcco il link ufficiale aggiornato per la nostra bacheca di classe (${cfg.name}) per seguire compiti, orari, menu mensa e fondo cassa:\n\n🔗 Apri Bacheca: ${inviteUrl}\n\n🤖 Scarica App Android (APK):\n${apkUrl}`);
+            // Messaggio impostato per utente attivo / genitore (senza menzionare admin)
+            const waText = encodeURIComponent(`👋 Buongiorno genitori!\n\nEcco il link ufficiale aggiornato per la nostra bacheca di classe (${cfg.name}) per seguire compiti, orari, menu mensa e fondo cassa:\n\n🔗 Apri Bacheca (Utente attivo): ${inviteUrl}\n\n🤖 Scarica App Android (APK):\n${apkUrl}`);
             window.open(`https://api.whatsapp.com/send?text=${waText}`, '_blank');
         }
 
@@ -1059,7 +1061,6 @@
         function populateMaterieSelects() {
             const materie = dbData.appConfig.materie || ["Italiano", "Matematica"];
             
-            // Filter select
             const filterSelect = document.getElementById('materiaFilterSelect');
             if (filterSelect) {
                 const currentFilter = filterSelect.value || 'Tutte';
@@ -1070,7 +1071,6 @@
                 filterSelect.innerHTML = html;
             }
 
-            // Modal select
             const modalSelect = document.getElementById('inputMateria');
             if (modalSelect) {
                 const currentModalVal = modalSelect.value;
@@ -1480,6 +1480,7 @@
             const adminLoginForm = document.getElementById('adminLoginForm');
             const adminRecoveryForm = document.getElementById('adminRecoveryForm');
             const adminLogoutDiv = document.getElementById('adminLogoutDiv');
+            const defaultPassWarning = document.getElementById('defaultPasswordWarning');
 
             if (isAdmin) {
                 adminOnlyElements.forEach(el => el.classList.remove('hidden'));
@@ -1488,6 +1489,15 @@
                 if (adminLoginForm) adminLoginForm.classList.add('hidden');
                 if (adminRecoveryForm) adminRecoveryForm.classList.add('hidden');
                 if (adminLogoutDiv) adminLogoutDiv.classList.remove('hidden');
+
+                // Mostra avviso cambio password se la password corrente è quella predefinita "3e"
+                const currentPass = (dbData.appConfig && dbData.appConfig.adminPassword) ? dbData.appConfig.adminPassword : '3e';
+                if (currentPass === '3e') {
+                    if (defaultPassWarning) defaultPassWarning.classList.remove('hidden');
+                } else {
+                    if (defaultPassWarning) defaultPassWarning.classList.add('hidden');
+                }
+
                 localStorage.setItem('isAdmin_app', 'true');
                 requestBrowserNotificationPermission();
             } else {
@@ -1588,7 +1598,7 @@
             const baseUrl = window.location.href.split('#')[0];
             const appUrl = `${baseUrl}#${currentToken}`;
 
-            waTextList += `\n🔗 *Gestito tramite la Bacheca:* ${appUrl}`;
+            waTextList += `\n🔗 *Gestito tramite la Bacheca (Utente attivo):* ${appUrl}`;
             const encodedWA = encodeURIComponent(waTextList.trim());
 
             document.getElementById('wheelWhatsAppContainer').innerHTML = `
@@ -1659,13 +1669,12 @@
             const labelDetails = document.getElementById('labelDetails');
             const inputDetails = document.getElementById('inputDetails');
 
-            // Personalizzazioni specifiche per sezione (Orario vs Compiti)
             if (section === 'orario') {
                 modalTitle.innerText = itemId ? "Modifica Giorno Orario" : "Aggiungi Giorno Orario";
                 labelTitle.innerText = "Inserire il Giorno (es. Lunedì)";
                 inputTitle.placeholder = "Es. Lunedì";
                 labelDetails.innerText = "Inserire materie giornaliere";
-                inputDetails.placeholder = "8:00 - Italiano&#10;9:00 - Matematica...";
+                inputDetails.placeholder = "8:00 - Italiano\n9:00 - Matematica...";
                 materiaWrapper.classList.add('hidden');
                 dateWrapper.classList.add('hidden');
             } else if (section === 'compiti') {
@@ -1828,7 +1837,7 @@
                 contentEl.innerHTML = summaryHtml || `<p class="text-slate-400 text-xs text-center py-4 font-medium">Nessun voto registrato.</p>`;
             }
 
-            summaryTextForWA += `\n🔗 *Vota qui:* ${appUrl}`;
+            summaryTextForWA += `\n🔗 *Vota qui (Utente attivo):* ${appUrl}`;
             const encodedWA = encodeURIComponent(summaryTextForWA.trim());
             whatsappContainer.innerHTML = `
                 <a href="https://api.whatsapp.com/send?text=${encodedWA}" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3 px-4 rounded-2xl text-xs font-bold transition flex items-center justify-center space-x-2 shadow-md">
@@ -1912,7 +1921,7 @@
                     const t = latestCD.date ? getTimeRemaining(latestCD.date) : { days: 0, hours: 0, minutes: 0, seconds: 0 };
                     const isUrgent = t.days <= 2 && t.total > 0;
                     const cardBg = isUrgent ? 'bg-gradient-to-br from-rose-950 via-purple-950 to-indigo-950 border-rose-500/50 animate-pulse' : 'bg-gradient-to-br from-indigo-950 via-indigo-900 to-blue-950 border-white/10';
-                    const waText = encodeURIComponent(`⏳ *Conto alla rovescia*\n*${latestCD.title}*\nMancano ${t.days} giorni, ${t.hours} ore e ${t.minutes} minuti!`);
+                    const waText = encodeURIComponent(`⏳ *Conto alla rovescia (Utente attivo)*\n*${latestCD.title}*\nMancano ${t.days} giorni, ${t.hours} ore e ${t.minutes} minuti!\n\n🔗 ${appUrl}`);
                     
                     homeCountdownContainer.innerHTML = `
                     <div class="${cardBg} text-white p-6 rounded-3xl shadow-xl flex justify-between items-center relative overflow-hidden mb-4 border transition-all">
@@ -1946,7 +1955,7 @@
                         urls.forEach((u, idx) => { waText += `Link ${idx + 1}: ${u}\n`; });
                     }
                 }
-                waText += `\n📲 *Verifica sulla Bacheca:* ${appUrl}`;
+                waText += `\n📲 *Bacheca (Utente attivo):* ${appUrl}`;
                 const encodedWA = encodeURIComponent(waText.trim());
                 const badgeNew = isNewItem(item.createdAt) ? `<span class="bg-emerald-500 text-white text-[9px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider ml-2 animate-pulse">Nuovo</span>` : '';
                 const materiaBadge = item.materia ? `<span class="inline-flex items-center gap-1.5 bg-indigo-50 text-indigo-700 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider border border-indigo-100"><i class="fa-solid fa-bookmark text-indigo-500"></i>${escapeHtml(item.materia)}</span>` : '';
@@ -1991,7 +2000,7 @@
                     const urls = item.fileUrl.split(/[\s,]+/).filter(u => u.trim().startsWith('http'));
                     if (urls.length > 0) waText += `🔗 *PDF Ufficiale:* ${urls[0]}\n`;
                 }
-                waText += `\n📲 *Vedi sulla Bacheca:* ${appUrl}`;
+                waText += `\n📲 *Bacheca (Utente attivo):* ${appUrl}`;
                 const encodedWA = encodeURIComponent(waText.trim());
                 return `
                 <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-200/80 flex justify-between items-start space-x-3 transition hover:shadow-md">
@@ -2015,7 +2024,7 @@
                     const urls = item.fileUrl.split(/[\s,]+/).filter(u => u.trim().startsWith('http'));
                     if (urls.length > 0) waText += `🔗 *Link / Allegato:* ${urls[0]}\n`;
                 }
-                waText += `\n📲 *Verifica sulla Bacheca:* ${appUrl}`;
+                waText += `\n📲 *Bacheca (Utente attivo):* ${appUrl}`;
                 const encodedWA = encodeURIComponent(waText.trim());
                 return `
                 <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-200/80 flex justify-between items-start space-x-3 transition hover:shadow-md">
@@ -2037,7 +2046,7 @@
             renderCustomSection('countdown', 'list-countdown', null, item => {
                 const t = item.date ? getTimeRemaining(item.date) : { days: 0, hours: 0, minutes: 0, seconds: 0 };
                 const isUrgent = t.days <= 2 && t.total > 0;
-                const waText = encodeURIComponent(`⏳ *Conto alla rovescia*\n*${item.title}*\nMancano ${t.days} giorni, ${t.hours} ore e ${t.minutes} minuti!`);
+                const waText = encodeURIComponent(`⏳ *Conto alla rovescia*\n*${item.title}*\nMancano ${t.days} giorni, ${t.hours} ore e ${t.minutes} minuti!\n\n🔗 ${appUrl}`);
                 return `
                 <div class="${isUrgent ? 'bg-gradient-to-br from-rose-950 via-purple-950 to-indigo-950 border-rose-500/50 animate-pulse' : 'bg-gradient-to-br from-indigo-950 via-indigo-900 to-blue-950 border-white/10'} text-white p-6 rounded-3xl shadow-xl flex justify-between items-center relative overflow-hidden border">
                     <div class="absolute -right-4 -bottom-4 text-white/5 text-9xl font-black pointer-events-none"><i class="fa-solid fa-hourglass-half"></i></div>
@@ -2092,7 +2101,7 @@
                     `;
                 });
 
-                const waText = encodeURIComponent(`📊 *Sondaggio*\n*${item.title}*\nTotale voti: ${totalVotes}\n\n🔗 *Vota qui:* ${appUrl}`);
+                const waText = encodeURIComponent(`📊 *Sondaggio*\n*${item.title}*\nTotale voti: ${totalVotes}\n\n🔗 *Vota qui (Utente attivo):* ${appUrl}`);
 
                 let voterSectionHtml = !currentVoter ? `
                     <div class="bg-gradient-to-r from-indigo-50 to-blue-50 p-4 rounded-2xl border border-indigo-100 flex flex-col sm:flex-row items-center gap-3">
@@ -2146,7 +2155,7 @@
                     const urls = item.fileUrl.split(/[\s,]+/).filter(u => u.trim().startsWith('http'));
                     if (urls.length > 0) waText += `🔗 *Link / Scontrino:* ${urls[0]}\n`;
                 }
-                waText += `\n📲 *Verifica sulla Bacheca:* ${appUrl}`;
+                waText += `\n📲 *Bacheca (Utente attivo):* ${appUrl}`;
                 const encodedWA = encodeURIComponent(waText.trim());
                 return `
                 <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-200/80 flex justify-between items-center transition hover:shadow-md">
@@ -2172,7 +2181,7 @@
                     const urls = item.fileUrl.split(/[\s,]+/).filter(u => u.trim().startsWith('http'));
                     if (urls.length > 0) waText += `🔗 *Allegato:* ${urls[0]}\n`;
                 }
-                waText += `\n📲 *Leggi sulla Bacheca:* ${appUrl}`;
+                waText += `\n📲 *Bacheca (Utente attivo):* ${appUrl}`;
                 const encodedWA = encodeURIComponent(waText.trim());
                 const badgeNew = isNewItem(item.createdAt) ? `<span class="bg-emerald-500 text-white text-[9px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider ml-2 animate-pulse">Nuovo</span>` : '';
                 return `
@@ -2200,7 +2209,7 @@
                     const urls = item.fileUrl.split(/[\s,]+/).filter(u => u.trim().startsWith('http'));
                     if (urls.length > 0) waText += `🔗 *Link / Foto:* ${urls[0]}\n`;
                 }
-                waText += `\n📲 *Guarda sulla Bacheca:* ${appUrl}`;
+                waText += `\n📲 *Bacheca (Utente attivo):* ${appUrl}`;
                 const encodedWA = encodeURIComponent(waText.trim());
                 return `
                 <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-200/80 space-y-3 flex flex-col justify-between transition hover:shadow-md">
@@ -2222,7 +2231,7 @@
             renderCustomSection('linkutili', 'list-linkutili', null, item => {
                 let waText = `🔗 *Link Utile*\n*${item.title}*\n${item.details ? item.details + '\n' : ''}`;
                 if (item.fileUrl) waText += `🌐 ${item.fileUrl}\n`;
-                waText += `\n📲 *Accedi dalla Bacheca:* ${appUrl}`;
+                waText += `\n📲 *Bacheca (Utente attivo):* ${appUrl}`;
                 const encodedWA = encodeURIComponent(waText.trim());
                 return `
                 <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-200/80 flex items-center justify-between transition hover:shadow-md">
@@ -2241,7 +2250,7 @@
 
             // Compleanni
             renderCustomSection('compleanni', 'list-compleanni', null, item => {
-                let waText = `🎂 *Ricorrenza / Compleanno*\nFesteggiamo insieme ${item.title}!\n${item.details ? 'Data: ' + item.details + '\n' : ''}\n📲 *Vedi sulla Bacheca:* ${appUrl}`;
+                let waText = `🎂 *Ricorrenza / Compleanno*\nFesteggiamo insieme ${item.title}!\n${item.details ? 'Data: ' + item.details + '\n' : ''}\n📲 *Bacheca (Utente attivo):* ${appUrl}`;
                 const encodedWA = encodeURIComponent(waText.trim());
                 return `
                 <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-200/80 flex justify-between items-center transition hover:shadow-md">
@@ -2268,7 +2277,7 @@
                     const urls = item.fileUrl.split(/[\s,]+/).filter(u => u.trim().startsWith('http'));
                     if (urls.length > 0) waText += `🔗 *Link / Allegato:* ${urls[0]}\n`;
                 }
-                waText += `\n📲 *Vedi sulla Bacheca:* ${appUrl}`;
+                waText += `\n📲 *Bacheca (Utente attivo):* ${appUrl}`;
                 const encodedWA = encodeURIComponent(waText.trim());
                 return `
                 <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-200/80 flex justify-between items-start space-x-3 transition hover:shadow-md">
