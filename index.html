@@ -576,12 +576,12 @@
                     <i class="fa-brands fa-whatsapp text-sm"></i>
                     <span>Invito WhatsApp (Token)</span>
                 </button>
-                <a href="./app-release.apk" download onclick="handleDownloadAPK(event)" class="bg-indigo-600 hover:bg-indigo-700 text-white px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center space-x-2 shadow-sm" title="Scarica App Android APK">
+                <button onclick="downloadAndroidWithToken()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center space-x-2 shadow-sm" title="Scarica App Android APK e sincronizza token">
                     <i class="fa-brands fa-android text-sm"></i>
                     <span>Scarica Android</span>
-                </a>
-                <!-- Pulsante Guida Safari / Apple iOS (Punta alla sezione Guida integrata) -->
-                <button onclick="switchTab('guida')" class="bg-slate-800 hover:bg-slate-900 text-white px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center space-x-2 shadow-sm" title="Guida installazione su Safari per Apple iOS">
+                </button>
+                <!-- Pulsante Guida Safari / Apple iOS con Token -->
+                <button onclick="openAppleGuideWithToken()" class="bg-slate-800 hover:bg-slate-900 text-white px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center space-x-2 shadow-sm" title="Guida installazione su Safari per Apple iOS">
                     <i class="fa-brands fa-apple text-sm"></i>
                     <span>Guida Safari / Apple</span>
                 </button>
@@ -807,15 +807,41 @@
         setInterval(updateClock, 1000);
         updateClock();
 
-        function handleDownloadAPK(e) {
+        // Funzione dedicata per scaricare Android mantenendo il token della classe
+        function downloadAndroidWithToken() {
+            const currentToken = localStorage.getItem('active_class_token') || classToken;
+            const baseUrl = window.location.href.split('#')[0];
+            
+            // Aggiorna l'URL con il token attuale nel browser
+            history.pushState(null, '', `${baseUrl}#${currentToken}`);
+            
+            // Controlla se il file APK esiste e avvia il download
             fetch('./app-release.apk', { method: 'HEAD' })
                 .then(res => {
-                    if (!res.ok) {
-                        e.preventDefault();
+                    if (res.ok) {
+                        const link = document.createElement('a');
+                        link.href = './app-release.apk';
+                        link.download = 'app-release.apk';
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                    } else {
                         alert("⚠️ Il file 'app-release.apk' non è stato ancora caricato nella repository GitHub. Caricalo nella cartella principale per consentire il download!");
                     }
                 })
-                .catch(() => {});
+                .catch(() => {
+                    alert("⚠️ Impossibile verificare il file APK. Assicurati di averlo caricato su GitHub.");
+                });
+        }
+
+        // Funzione dedicata per aprire la guida Apple mantenendo il token della classe
+        function openAppleGuideWithToken() {
+            const currentToken = localStorage.getItem('active_class_token') || classToken;
+            const baseUrl = window.location.href.split('#')[0];
+            
+            // Imposta l'hash del token e sposta sulla sezione guida
+            history.pushState(null, '', `${baseUrl}#${currentToken}`);
+            switchTab('guida');
         }
 
         // Gestione Token e pulizia automatica URL
