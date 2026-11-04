@@ -379,7 +379,7 @@
             </div>
         </section>
 
-        <!-- SEZIONE FONDO CASSA (Senza grafico a torta) -->
+        <!-- SEZIONE FONDO CASSA -->
         <section id="fondo" class="tab-content space-y-4">
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-white p-5 rounded-3xl shadow-sm border border-slate-200/80 gap-3">
                 <div>
@@ -614,8 +614,8 @@
                     <p>Il pulsante <strong>"Invito WhatsApp (Token)"</strong> genera un collegamento che include un <strong>codice token univoco</strong> associato esclusivamente alla vostra classe. Chi riceve il link vedrà l'app come utente e si collegherà automaticamente alla classe corretta.</p>
                 </div>
                 <div class="bg-indigo-50 p-3.5 rounded-2xl border border-indigo-100 text-indigo-950 space-y-1.5">
-                    <p class="font-black text-xs uppercase tracking-wider text-indigo-700"><i class="fa-brands fa-android mr-1"></i> A cosa serve l'App Android (APK):</p>
-                    <p>Il file <strong>APK</strong> consente di installare l'applicazione direttamente sul telefono Android come una normale app.</p>
+                    <p class="font-black text-xs uppercase tracking-wider text-indigo-700"><i class="fa-brands fa-android mr-1"></i> Istruzioni per i Genitori:</p>
+                    <p>Consiglia ai genitori di installare prima l'app Android (APK) o aprire la pagina, e poi cliccare nuovamente sul link d'invito con il token per sincronizzarla stabilmente con la bacheca di classe.</p>
                 </div>
             </div>
             <button onclick="closeTokenInfoModal()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-2xl text-xs font-bold transition">Ho capito</button>
@@ -848,8 +848,10 @@
             const apkUrl = `${baseUrl}app-release.apk`;
             
             const cfg = dbData.appConfig || { name: "Bacheca Scolastica" };
-            // Messaggio impostato per utente attivo / genitore (senza menzionare admin)
-            const waText = encodeURIComponent(`👋 Buongiorno genitori!\n\nEcco il link ufficiale aggiornato per la nostra bacheca di classe (${cfg.name}) per seguire compiti, orari, menu mensa e fondo cassa:\n\n🔗 Apri Bacheca (Utente attivo): ${inviteUrl}\n\n🤖 Scarica App Android (APK):\n${apkUrl}`);
+            
+            // Testo dettagliato per WhatsApp con spiegazione chiara (installare prima APK/app e poi premere il link)
+            const waText = encodeURIComponent(`👋 Buongiorno genitori!\n\nEcco il link ufficiale aggiornato per la nostra bacheca di classe (${cfg.name}) per seguire compiti, orari, menu mensa e fondo cassa:\n\n📱 *Istruzioni:* Se non hai ancora installato l'app, scarica prima l'APK qui sotto, poi torna su questo messaggio e clicca sul link d'invito per sincronizzarti automaticamente con la classe.\n\n🤖 *Scarica App Android (APK):*\n${apkUrl}\n\n🔗 *Apri Bacheca (Sincronizza Classe):*\n${inviteUrl}`);
+            
             window.open(`https://api.whatsapp.com/send?text=${waText}`, '_blank');
         }
 
@@ -1490,7 +1492,6 @@
                 if (adminRecoveryForm) adminRecoveryForm.classList.add('hidden');
                 if (adminLogoutDiv) adminLogoutDiv.classList.remove('hidden');
 
-                // Mostra avviso cambio password se la password corrente è quella predefinita "3e"
                 const currentPass = (dbData.appConfig && dbData.appConfig.adminPassword) ? dbData.appConfig.adminPassword : '3e';
                 if (currentPass === '3e') {
                     if (defaultPassWarning) defaultPassWarning.classList.remove('hidden');
