@@ -426,6 +426,86 @@
             <div id="list-avvisi" class="space-y-3.5"></div>
         </section>
 
+        <!-- SEZIONE RICEVIMENTO GENITORI -->
+        <section id="ricevimento" class="tab-content space-y-4">
+            <div class="flex justify-between items-center bg-white p-5 rounded-3xl shadow-sm border border-slate-200/80">
+                <div>
+                    <h2 class="text-xl font-black text-slate-900 tracking-tight flex items-center gap-2">
+                        <span class="w-8 h-8 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center text-sm"><i class="fa-solid fa-chalkboard-user"></i></span>
+                        Ricevimento Genitori / Colloqui
+                    </h2>
+                    <p class="text-xs text-slate-500 font-medium mt-0.5">Orari, date e modalità dei colloqui con i docenti</p>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button onclick="openInfoModal('ricevimento')" class="bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida sezione"><i class="fa-solid fa-circle-info text-base"></i></button>
+                    <button onclick="openAddModal('ricevimento')" class="admin-only hidden bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 rounded-2xl text-xs font-bold shadow-lg shadow-indigo-200 transition flex items-center space-x-1.5">
+                        <i class="fa-solid fa-plus"></i><span>Aggiungi Ricevimento</span>
+                    </button>
+                </div>
+            </div>
+            <div id="list-ricevimento" class="space-y-3.5"></div>
+        </section>
+
+        <!-- CIRCOLARI & MODULISTICA -->
+        <section id="circolari" class="tab-content space-y-4">
+            <div class="flex justify-between items-center bg-white p-5 rounded-3xl shadow-sm border border-slate-200/80">
+                <div>
+                    <h2 class="text-xl font-black text-slate-900 tracking-tight flex items-center gap-2">
+                        <span class="w-8 h-8 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center text-sm"><i class="fa-solid fa-file-lines"></i></span>
+                        Circolari & Modulistica
+                    </h2>
+                    <p class="text-xs text-slate-500 font-medium mt-0.5">Moduli autorizzazioni, circolari e documenti ufficiali</p>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button onclick="openInfoModal('circolari')" class="bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida sezione"><i class="fa-solid fa-circle-info text-base"></i></button>
+                    <button onclick="openAddModal('circolari')" class="admin-only hidden bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 rounded-2xl text-xs font-bold shadow-lg shadow-indigo-200 transition flex items-center space-x-1.5">
+                        <i class="fa-solid fa-plus"></i><span>Aggiungi Circolare</span>
+                    </button>
+                </div>
+            </div>
+            <div id="list-circolari" class="space-y-3.5"></div>
+        </section>
+
+        <!-- MERITI & ATTESTATI -->
+        <section id="meriti" class="tab-content space-y-4">
+            <div class="flex justify-between items-center bg-white p-5 rounded-3xl shadow-sm border border-slate-200/80">
+                <div>
+                    <h2 class="text-xl font-black text-slate-900 tracking-tight flex items-center gap-2">
+                        <span class="w-8 h-8 rounded-xl bg-yellow-50 text-yellow-600 flex items-center justify-center text-sm"><i class="fa-solid fa-award"></i></span>
+                        Bacheca Meriti & Riconoscimenti
+                    </h2>
+                    <p class="text-xs text-slate-500 font-medium mt-0.5">Attestati, progetti speciali e premi della classe</p>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button onclick="openInfoModal('meriti')" class="bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida sezione"><i class="fa-solid fa-circle-info text-base"></i></button>
+                    <button onclick="openAddModal('meriti')" class="admin-only hidden bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 rounded-2xl text-xs font-bold shadow-lg shadow-indigo-200 transition flex items-center space-x-1.5">
+                        <i class="fa-solid fa-plus"></i><span>Aggiungi Merito</span>
+                    </button>
+                </div>
+            </div>
+            <div id="list-meriti" class="space-y-3.5"></div>
+        </section>
+
+        <!-- OGGETTI SMARRITI -->
+        <section id="smarriti" class="tab-content space-y-4">
+            <div class="flex justify-between items-center bg-white p-5 rounded-3xl shadow-sm border border-slate-200/80">
+                <div>
+                    <h2 class="text-xl font-black text-slate-900 tracking-tight flex items-center gap-2">
+                        <span class="w-8 h-8 rounded-xl bg-red-50 text-red-600 flex items-center justify-center text-sm"><i class="fa-solid fa-box-archive"></i></span>
+                        Oggetti Smarriti / "Chi l'ha visto?"
+                    </h2>
+                    <p class="text-xs text-slate-500 font-medium mt-0.5">Segnalazioni felpe, libri o oggetti dimenticati a scuola</p>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button onclick="openInfoModal('smarriti')" class="bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida sezione"><i class="fa-solid fa-circle-info text-base"></i></button>
+                    <button onclick="openAddModal('smarriti')" class="admin-only hidden bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 rounded-2xl text-xs font-bold shadow-lg shadow-indigo-200 transition flex items-center space-x-1.5">
+                        <i class="fa-solid fa-plus"></i><span>Segnala Oggetto</span>
+                    </button>
+                </div>
+            </div>
+            <div id="list-smarriti" class="space-y-3.5"></div>
+        </section>
+
         <!-- SEZIONE GALLERIA -->
         <section id="galleria" class="tab-content space-y-4">
             <div class="flex justify-between items-center bg-white p-5 rounded-3xl shadow-sm border border-slate-200/80">
@@ -1002,6 +1082,10 @@
                     snake: true,
                     fondo: true,
                     avvisi: true,
+                    ricevimento: true,
+                    circolari: true,
+                    meriti: true,
+                    smarriti: true,
                     galleria: true,
                     linkutili: true,
                     compleanni: true,
@@ -1018,6 +1102,10 @@
             fondo: {}, 
             fondoIniziale: 0, 
             avvisi: {}, 
+            ricevimento: {},
+            circolari: {},
+            meriti: {},
+            smarriti: {},
             galleria: {}, 
             linkutili: {}, 
             compleanni: {}, 
@@ -1038,6 +1126,10 @@
             snake: "Snake Game",
             fondo: "Fondo Cassa",
             avvisi: "Avvisi",
+            ricevimento: "Ricevimento Genitori",
+            circolari: "Circolari",
+            meriti: "Meriti",
+            smarriti: "Oggetti Smarriti",
             galleria: "Foto & Video",
             linkutili: "Link Utili",
             compleanni: "Compleanni",
@@ -1056,6 +1148,10 @@
             snake: "fa-gamepad",
             fondo: "fa-wallet",
             avvisi: "fa-bullhorn",
+            ricevimento: "fa-chalkboard-user",
+            circolari: "fa-file-lines",
+            meriti: "fa-award",
+            smarriti: "fa-box-archive",
             galleria: "fa-images",
             linkutili: "fa-link",
             compleanni: "fa-cake-candles",
@@ -1074,6 +1170,10 @@
             snake: "Mini-gioco integrato con classifica ufficiale e sincronizzazione in tempo reale su Firebase.",
             fondo: "Gestisce il bilancio di classe in modo trasparente, registrando il totale raccolto iniziale e le spese sostenute.",
             avvisi: "Pubblica comunicazioni ufficiali con evidenza automatica e supporto per allegati multipli.",
+            ricevimento: "Raccoglie le date, gli orari e le modalità dei colloqui individuali o generali con i docenti.",
+            circolari: "Raccoglie le circolari scolastiche, i moduli di autorizzazione per le gite e i documenti ufficiali della scuola.",
+            meriti: "Bacheca dedicata ai riconoscimenti, agli attestati e ai progetti speciali completati dai bambini.",
+            smarriti: "Spazio per segnalare e ritrovare felpe, astucci, libri o oggetti dimenticati a scuola o sul pulman.",
             galleria: "Archivia i ricordi fotografici e video delle attività scolastiche e delle feste.",
             linkutili: "Fornisce accesso rapido a portali esterni, registri o modulistica utile.",
             compleanni: "Memorizza le date di compleanno dei bambini per festeggiarli insieme.",
@@ -1154,7 +1254,7 @@
                     if (!dbData.appConfig.materie || dbData.appConfig.materie.length === 0) {
                         dbData.appConfig.materie = ["Italiano", "Matematica", "Inglese", "Storia", "Geografia", "Scienze", "Tecnologia", "Arte e Immagine", "Musica", "Religione / Alternativa", "Educazione Fisica", "Altro"];
                     }
-                    if (!dbData.appConfig.sections) dbData.appConfig.sections = { compiti: true, orario: true, mensa: true, libri: true, countdown: true, sondaggi: true, ruota: true, snake: true, fondo: true, avvisi: true, galleria: true, linkutili: true, compleanni: true, promemoria: true, guida: true };
+                    if (!dbData.appConfig.sections) dbData.appConfig.sections = { compiti: true, orario: true, mensa: true, libri: true, countdown: true, sondaggi: true, ruota: true, snake: true, fondo: true, avvisi: true, ricevimento: true, circolari: true, meriti: true, smarriti: true, galleria: true, linkutili: true, compleanni: true, promemoria: true, guida: true };
                     updateAppBranding();
                     checkAndCleanExpiredCompiti();
                 }
@@ -2330,6 +2430,93 @@
                     <div class="flex items-center space-x-2 shrink-0">
                         <a href="https://api.whatsapp.com/send?text=${encodedWA}" target="_blank" class="bg-white hover:bg-amber-100 text-emerald-600 p-3 rounded-2xl transition border border-amber-200 flex items-center justify-center"><i class="fa-brands fa-whatsapp text-lg"></i></a>
                         ${getAdminButtons('avvisi', item.id)}
+                    </div>
+                </div>`;
+            });
+
+            // Ricevimento Genitori
+            renderCustomSection('ricevimento', 'list-ricevimento', null, item => {
+                let waText = `👨‍🏫 *Ricevimento / Colloquio Docenti*\n*${item.title}*\n`;
+                if (item.date) waText += `📅 Data/Ora: ${new Date(item.date).toLocaleString('it-IT')}\n`;
+                if (item.details) waText += `${item.details}\n`;
+                if (item.fileUrl) waText += `🔗 ${item.fileUrl}\n`;
+                waText += `\n📲 *Bacheca di Classe:* ${appUrl}`;
+                const encodedWA = encodeURIComponent(waText.trim());
+                return `
+                <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-200/80 flex justify-between items-start space-x-3 transition hover:shadow-md">
+                    <div class="space-y-2.5 flex-1">
+                        <span class="inline-flex items-center gap-1.5 bg-teal-50 text-teal-700 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider border border-teal-100"><i class="fa-solid fa-chalkboard-user"></i> Colloquio Docenti</span>
+                        <h3 class="font-black text-slate-900 text-base">${escapeHtml(item.title)}</h3>
+                        ${item.date ? `<p class="text-xs text-indigo-600 font-bold flex items-center gap-1.5"><i class="fa-regular fa-calendar"></i>${new Date(item.date).toLocaleString('it-IT')}</p>` : ''}
+                        ${item.details ? `<p class="text-sm text-slate-600 font-medium leading-relaxed">${escapeHtml(item.details)}</p>` : ''}
+                        ${renderMultipleLinks(item.fileUrl)}
+                    </div>
+                    <div class="flex items-center space-x-2 shrink-0">
+                        <a href="https://api.whatsapp.com/send?text=${encodedWA}" target="_blank" class="bg-emerald-50 hover:bg-emerald-100 text-emerald-600 p-3 rounded-2xl transition border border-emerald-100 flex items-center justify-center"><i class="fa-brands fa-whatsapp text-lg"></i></a>
+                        ${getAdminButtons('ricevimento', item.id)}
+                    </div>
+                </div>`;
+            });
+
+            // Circolari
+            renderCustomSection('circolari', 'list-circolari', null, item => {
+                let waText = `📄 *Circolare / Modulo*\n*${item.title}*\n${item.details ? item.details + '\n' : ''}`;
+                if (item.fileUrl) waText += `🔗 ${item.fileUrl}\n`;
+                waText += `\n📲 *Bacheca di Classe:* ${appUrl}`;
+                const encodedWA = encodeURIComponent(waText.trim());
+                return `
+                <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-200/80 flex justify-between items-start space-x-3 transition hover:shadow-md">
+                    <div class="space-y-2.5 flex-1">
+                        <span class="inline-flex items-center gap-1.5 bg-orange-50 text-orange-700 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider border border-orange-100"><i class="fa-solid fa-file-lines"></i> Circolare Ufficiale</span>
+                        <h3 class="font-black text-slate-900 text-base">${escapeHtml(item.title)}</h3>
+                        ${item.details ? `<p class="text-sm text-slate-600 font-medium leading-relaxed">${escapeHtml(item.details)}</p>` : ''}
+                        ${renderMultipleLinks(item.fileUrl)}
+                    </div>
+                    <div class="flex items-center space-x-2 shrink-0">
+                        <a href="https://api.whatsapp.com/send?text=${encodedWA}" target="_blank" class="bg-emerald-50 hover:bg-emerald-100 text-emerald-600 p-3 rounded-2xl transition border border-emerald-100 flex items-center justify-center"><i class="fa-brands fa-whatsapp text-lg"></i></a>
+                        ${getAdminButtons('circolari', item.id)}
+                    </div>
+                </div>`;
+            });
+
+            // Meriti
+            renderCustomSection('meriti', 'list-meriti', null, item => {
+                let waText = `🏆 *Riconoscimento / Merito*\n*${item.title}*\n${item.details ? item.details + '\n' : ''}`;
+                if (item.fileUrl) waText += `🔗 ${item.fileUrl}\n`;
+                waText += `\n📲 *Bacheca di Classe:* ${appUrl}`;
+                const encodedWA = encodeURIComponent(waText.trim());
+                return `
+                <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-200/80 flex justify-between items-start space-x-3 transition hover:shadow-md">
+                    <div class="space-y-2.5 flex-1">
+                        <span class="inline-flex items-center gap-1.5 bg-yellow-50 text-yellow-700 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider border border-yellow-100"><i class="fa-solid fa-award"></i> Merito & Progetti</span>
+                        <h3 class="font-black text-slate-900 text-base">${escapeHtml(item.title)}</h3>
+                        ${item.details ? `<p class="text-sm text-slate-600 font-medium leading-relaxed">${escapeHtml(item.details)}</p>` : ''}
+                        ${renderMultipleLinks(item.fileUrl)}
+                    </div>
+                    <div class="flex items-center space-x-2 shrink-0">
+                        <a href="https://api.whatsapp.com/send?text=${encodedWA}" target="_blank" class="bg-emerald-50 hover:bg-emerald-100 text-emerald-600 p-3 rounded-2xl transition border border-emerald-100 flex items-center justify-center"><i class="fa-brands fa-whatsapp text-lg"></i></a>
+                        ${getAdminButtons('meriti', item.id)}
+                    </div>
+                </div>`;
+            });
+
+            // Oggetti Smarriti
+            renderCustomSection('smarriti', 'list-smarriti', null, item => {
+                let waText = `🎒 *Oggetto Smarrito / Ritrovato*\n*${item.title}*\n${item.details ? item.details + '\n' : ''}`;
+                if (item.fileUrl) waText += `🔗 Foto: ${item.fileUrl}\n`;
+                waText += `\n📲 *Bacheca di Classe:* ${appUrl}`;
+                const encodedWA = encodeURIComponent(waText.trim());
+                return `
+                <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-200/80 flex justify-between items-start space-x-3 transition hover:shadow-md">
+                    <div class="space-y-2.5 flex-1">
+                        <span class="inline-flex items-center gap-1.5 bg-red-50 text-red-700 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider border border-red-100"><i class="fa-solid fa-box-archive"></i> Segnalazione Smarrimento</span>
+                        <h3 class="font-black text-slate-900 text-base">${escapeHtml(item.title)}</h3>
+                        ${item.details ? `<p class="text-sm text-slate-600 font-medium leading-relaxed">${escapeHtml(item.details)}</p>` : ''}
+                        ${renderMultipleLinks(item.fileUrl)}
+                    </div>
+                    <div class="flex items-center space-x-2 shrink-0">
+                        <a href="https://api.whatsapp.com/send?text=${encodedWA}" target="_blank" class="bg-emerald-50 hover:bg-emerald-100 text-emerald-600 p-3 rounded-2xl transition border border-emerald-100 flex items-center justify-center"><i class="fa-brands fa-whatsapp text-lg"></i></a>
+                        ${getAdminButtons('smarriti', item.id)}
                     </div>
                 </div>`;
             });
