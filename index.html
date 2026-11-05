@@ -1,913 +1,1597 @@
- <!DOCTYPE html>
+ 
+Conversazione con Gemini
+<!DOCTYPE html>
+
 <html lang="it">
+
 <script>
+
   if ('serviceWorker' in navigator) {
+
     window.addEventListener('load', () => {
+
       navigator.serviceWorker.register('./sw.js')
+
         .then((reg) => console.log('Service Worker registrato:', reg.scope))
+
         .catch((err) => console.log('Errore Service Worker:', err));
+
     });
+
   }
+
 </script>
+
 <head>
+
     <meta charset="UTF-8">
+
     <link rel="manifest" href="./manifest.json">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title id="pageTitle">Bacheca Scolastica Universale</title>
+
     <script src="https://cdn.tailwindcss.com"></script>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     
+
     <!-- Canvas Confetti per effetti visivi -->
+
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
     
+
     <!-- SheetJS per esportazione Excel (.xlsx) -->
+
     <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
     
+
     <!-- Firebase SDKs -->
+
     <script type="module">
+
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getDatabase, ref, set, onValue, runTransaction, remove, push } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        import { getDatabase, ref, set, onValue, runTransaction } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+
 
         const firebaseConfig = {
+
             apiKey: "AIzaSyB6o4NS1nZJ-2QrPkUhom41Pq2ZNJioWuc",
+
             authDomain: "classe3e-f033d.firebaseapp.com",
+
             databaseURL: "https://classe3e-f033d-default-rtdb.europe-west1.firebasedatabase.app",
+
             projectId: "classe3e-f033d",
+
             storageBucket: "classe3e-f033d.appspot.com",
+
             messagingSenderId: "228436277197",
+
             appId: "1:228436277197:web:771ed2341a98a5ccc43684",
+
             measurementId: "G-00RMS3J403"
+
         };
 
+
+
         const app = initializeApp(firebaseConfig);
+
         const db = getDatabase(app);
 
-        window.fbDB = { db, ref, set, onValue, runTransaction, remove, push };
+
+
+        window.fbDB = { db, ref, set, onValue, runTransaction };
+
         window.dispatchEvent(new Event('firebase-ready'));
+
     </script>
 
+
+
     <style>
+
         .tab-content { display: none; }
+
         .tab-content.active { display: block; animation: fadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
+
         @keyframes fadeIn {
+
             from { opacity: 0; transform: translateY(8px); }
+
             to { opacity: 1; transform: translateY(0); }
+
         }
+
         @keyframes pulse-subtle {
+
             0%, 100% { opacity: 1; }
+
             50% { opacity: 0.5; }
+
         }
+
         .live-clock { animation: pulse-subtle 2s infinite; }
+
         ::-webkit-scrollbar { height: 6px; width: 6px; }
+
         ::-webkit-scrollbar-track { background: transparent; }
+
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
+
         ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
     </style>
+
 </head>
+
 <body class="bg-gradient-to-br from-slate-50 via-indigo-50/40 to-blue-50/30 text-slate-800 font-sans min-h-screen flex flex-col selection:bg-indigo-600 selection:text-white">
 
+
+
     <!-- Container Notifiche Admin -->
+
     <div id="adminNotificationContainer" class="fixed top-20 right-4 z-50 space-y-2 pointer-events-none max-w-sm w-full px-4"></div>
 
+
+
     <!-- Header Pulito e Ordinato -->
+
     <header class="bg-gradient-to-r from-indigo-950 via-indigo-900 to-blue-950 text-white shadow-xl sticky top-0 z-50 backdrop-blur-md bg-opacity-95 border-b border-white/10">
+
         <div class="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center flex-wrap gap-3">
+
             <div class="flex items-center space-x-3.5">
+
                 <div id="headerAppLogo" class="bg-gradient-to-br from-indigo-500 to-indigo-700 text-white p-2.5 rounded-2xl font-black text-xl shadow-lg shadow-indigo-900/40 flex items-center justify-center w-12 h-12 border border-white/25">
+
                     App
+
                 </div>
+
                 <div>
+
                     <h1 class="text-base sm:text-lg font-black tracking-tight leading-tight text-white flex items-center gap-2">
+
                         <span id="displayAppName">Bacheca Scolastica</span> 
+
                         <span id="displayAppSubtitle" class="text-xs font-semibold px-2 py-0.5 rounded-full bg-white/10 text-indigo-200 border border-white/10 hidden sm:inline-block">Universale</span>
+
                     </h1>
+
                     <div class="flex items-center space-x-2 text-xs text-indigo-200 mt-1">
+
                         <span class="live-clock inline-block w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-sm shadow-emerald-400"></span>
+
                         <span id="liveClockDisplay" class="font-medium tracking-wide">Caricamento orologio...</span>
+
                     </div>
+
                 </div>
+
             </div>
+
+
 
             <!-- Selettore Rapido Multi-Classe -->
+
             <div class="flex items-center space-x-2 flex-wrap">
+
                 <div class="bg-white/10 border border-white/20 rounded-2xl px-3 py-1.5 flex items-center space-x-2 backdrop-blur-sm">
+
                     <i class="fa-solid fa-users-rectangle text-indigo-300 text-xs"></i>
+
                     <select id="multiClassSelector" onchange="switchClassBySelector(this.value)" class="bg-transparent text-xs font-bold text-white focus:outline-none cursor-pointer">
+
                         <!-- Popolato dinamicamente -->
+
                     </select>
+
                 </div>
+
                 <button id="adminBtn" onclick="toggleAdminModal()" class="bg-white/10 hover:bg-white/20 border border-white/20 px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition shadow-sm flex items-center space-x-2 backdrop-blur-sm">
+
                     <i class="fa-solid fa-lock text-xs text-amber-300" id="adminIcon"></i>
+
                     <span id="adminText">Area Admin</span>
+
                 </button>
+
             </div>
+
         </div>
+
     </header>
 
+
+
     <!-- Navigation Tabs -->
+
     <nav class="bg-white/90 backdrop-blur-md shadow-sm border-b border-slate-200/80 sticky top-[77px] sm:top-[77px] z-40 overflow-x-auto">
+
         <div id="navTabsContainer" class="max-w-4xl mx-auto flex space-x-1.5 px-3 py-2.5"></div>
+
     </nav>
 
+
+
     <!-- Main Container -->
+
     <main class="max-w-4xl mx-auto px-4 py-6 flex-1 w-full pb-20 space-y-6">
+
         
+
         <!-- SEZIONE COMPITI / ATTIVITA -->
+
         <section id="compiti" class="tab-content active space-y-4">
+
             <div id="homeCountdownBox"></div>
 
+
+
             <div id="homeworkSummaryWidget" class="bg-gradient-to-r from-indigo-900 to-blue-900 text-white p-5 rounded-3xl shadow-md flex items-center justify-between border border-indigo-700/50">
+
                 <div class="flex items-center space-x-3.5">
+
                     <div class="bg-white/10 backdrop-blur-md p-3 rounded-2xl text-indigo-200 border border-white/20">
+
                         <i class="fa-solid fa-clipboard-list text-xl"></i>
+
                     </div>
+
                     <div>
+
                         <h4 class="font-black text-sm tracking-tight text-white">Riepilogo Attività Attive</h4>
+
                         <p class="text-xs text-indigo-200 font-medium mt-0.5" id="homeworkSummaryText">Caricamento stato...</p>
+
                     </div>
+
                 </div>
+
                 <div class="hidden sm:block">
+
                     <span class="bg-indigo-500/30 border border-indigo-400/40 text-indigo-100 text-xs font-bold px-3.5 py-1.5 rounded-xl">Auto-eliminazione dopo 12h dalla scadenza</span>
+
                 </div>
+
             </div>
 
+
+
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-white p-5 rounded-3xl shadow-sm border border-slate-200/80 gap-3">
+
                 <div>
+
                     <h2 class="text-xl font-black text-slate-900 tracking-tight flex items-center gap-2">
+
                         <span class="w-8 h-8 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-sm"><i class="fa-solid fa-book-open"></i></span>
+
                         Diario dei Compiti
+
                     </h2>
-                    <p class="text-xs text-slate-500 font-medium mt-0.5">Attività e consegne con supporto multi-allegato e WhatsApp</p>
+
+                    <p class="text-xs text-slate-500 font-medium mt-0.5">Attività e consegne con supporto multi-allegato</p>
+
                 </div>
+
                 <div class="flex items-center gap-2.5 flex-wrap">
+
                     <select id="materiaFilterSelect" onchange="renderAll()" class="bg-slate-50 border border-slate-200 rounded-2xl px-3.5 py-2.5 text-xs font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-inner">
+
                         <!-- Popolato dinamicamente -->
+
                     </select>
+
                     <button onclick="openManageMaterieModal()" class="admin-only hidden bg-slate-100 hover:bg-slate-200 text-slate-700 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-slate-300" title="Gestisci / Aggiungi Materie"><i class="fa-solid fa-list-check text-sm"></i></button>
+
                     <button onclick="openInfoModal('compiti')" class="bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida sezione"><i class="fa-solid fa-circle-info text-base"></i></button>
+
                     <button onclick="openAddModal('compiti')" class="admin-only hidden bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 rounded-2xl text-xs font-bold shadow-lg shadow-indigo-200 transition whitespace-nowrap flex items-center space-x-1.5">
+
                         <i class="fa-solid fa-plus"></i><span>Nuovo Compito</span>
+
                     </button>
+
                 </div>
+
             </div>
+
             <div id="list-compiti" class="space-y-3.5">
+
                 <p class="text-slate-400 text-center py-8 text-sm font-medium">Caricamento in corso...</p>
+
             </div>
+
         </section>
+
+
 
         <!-- SEZIONE VERIFICHE -->
+
         <section id="verifiche" class="tab-content space-y-4">
+
             <div class="flex justify-between items-center bg-white p-5 rounded-3xl shadow-sm border border-slate-200/80">
+
                 <div>
+
                     <h2 class="text-xl font-black text-slate-900 tracking-tight flex items-center gap-2">
+
                         <span class="w-8 h-8 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center text-sm"><i class="fa-solid fa-file-pen"></i></span>
+
                         Verifiche & Interrogazioni Programmate
+
                     </h2>
+
                     <p class="text-xs text-slate-500 font-medium mt-0.5">Calendario verifiche e scadenze con largo anticipo</p>
+
                 </div>
+
                 <div class="flex items-center gap-2">
+
                     <button onclick="openInfoModal('verifiche')" class="bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida sezione"><i class="fa-solid fa-circle-info text-base"></i></button>
+
                     <button onclick="openAddModal('verifiche')" class="admin-only hidden bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 rounded-2xl text-xs font-bold shadow-lg shadow-indigo-200 transition flex items-center space-x-1.5">
+
                         <i class="fa-solid fa-plus"></i><span>Programma Verifica</span>
+
                     </button>
+
                 </div>
+
             </div>
+
             <div id="list-verifiche" class="space-y-3.5"></div>
+
         </section>
+
+
 
         <!-- SEZIONE ORARIO -->
+
         <section id="orario" class="tab-content space-y-4">
+
             <div class="flex justify-between items-center bg-white p-5 rounded-3xl shadow-sm border border-slate-200/80">
+
                 <div>
+
                     <h2 class="text-xl font-black text-slate-900 tracking-tight flex items-center gap-2">
+
                         <span class="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-sm"><i class="fa-solid fa-calendar-days"></i></span>
+
                         Orario Settimanale
+
                     </h2>
+
                     <p class="text-xs text-slate-500 font-medium mt-0.5">Quadro delle lezioni o attività gestibile dall'Admin</p>
+
                 </div>
+
                 <div class="flex items-center gap-2">
+
                     <button onclick="openInfoModal('orario')" class="bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida sezione"><i class="fa-solid fa-circle-info text-base"></i></button>
+
                     <button onclick="openAddModal('orario')" class="admin-only hidden bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 rounded-2xl text-xs font-bold shadow-lg shadow-indigo-200 transition flex items-center space-x-1.5">
+
                         <i class="fa-solid fa-plus"></i><span>Aggiungi Giorno</span>
+
                     </button>
+
                 </div>
+
             </div>
+
             <div id="list-orario" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"></div>
+
         </section>
+
+
 
         <!-- SEZIONE MENU MENSA -->
+
         <section id="mensa" class="tab-content space-y-4">
+
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-white p-5 rounded-3xl shadow-sm border border-slate-200/80 gap-3">
+
                 <div>
+
                     <h2 class="text-xl font-black text-slate-900 tracking-tight flex items-center gap-2">
+
                         <span class="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-sm"><i class="fa-solid fa-utensils"></i></span>
+
                         Menu Mensa / Ristorazione
+
                     </h2>
+
                     <p class="text-xs text-slate-500 font-medium mt-0.5">Pubblicazione e consultazione dei menu ufficiali</p>
+
                 </div>
+
                 <div class="flex items-center gap-2">
+
                     <button onclick="openInfoModal('mensa')" class="bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida sezione"><i class="fa-solid fa-circle-info text-base"></i></button>
+
                     <button onclick="openAddModal('mensa')" class="admin-only hidden bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 rounded-2xl text-xs font-bold shadow-lg shadow-indigo-200 transition flex items-center space-x-1.5">
+
                         <i class="fa-solid fa-plus"></i><span>Pubblica Menu / PDF</span>
+
                     </button>
+
                 </div>
+
             </div>
+
             <div id="list-mensa" class="space-y-3.5"></div>
+
         </section>
+
+
 
         <!-- SEZIONE LIBRI & MATERIALE -->
+
         <section id="libri" class="tab-content space-y-4">
+
             <div class="flex justify-between items-center bg-white p-5 rounded-3xl shadow-sm border border-slate-200/80">
+
                 <div>
+
                     <h2 class="text-xl font-black text-slate-900 tracking-tight flex items-center gap-2">
+
                         <span class="w-8 h-8 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center text-sm"><i class="fa-solid fa-book"></i></span>
+
                         Materiale & Documenti Consigliati
+
                     </h2>
+
                     <p class="text-xs text-slate-500 font-medium mt-0.5">Elenchi e materiali (PDF e link)</p>
+
                 </div>
+
                 <div class="flex items-center gap-2">
+
                     <button onclick="openInfoModal('libri')" class="bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida sezione"><i class="fa-solid fa-circle-info text-base"></i></button>
+
                     <button onclick="openAddModal('libri')" class="admin-only hidden bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 rounded-2xl text-xs font-bold shadow-lg shadow-indigo-200 transition flex items-center space-x-1.5">
+
                         <i class="fa-solid fa-plus"></i><span>Aggiungi Materiale</span>
+
                     </button>
+
                 </div>
+
             </div>
+
             <div id="list-libri" class="space-y-3.5"></div>
+
         </section>
+
+
 
         <!-- SEZIONE COUNTDOWN -->
+
         <section id="countdown" class="tab-content space-y-4">
+
             <div class="flex justify-between items-center bg-white p-5 rounded-3xl shadow-sm border border-slate-200/80">
+
                 <div>
+
                     <h2 class="text-xl font-black text-slate-900 tracking-tight flex items-center gap-2">
+
                         <span class="w-8 h-8 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center text-sm"><i class="fa-solid fa-hourglass-half"></i></span>
+
                         Conto alla Rovescia
+
                     </h2>
+
                     <p class="text-xs text-slate-500 font-medium mt-0.5">Eventi importanti e scadenze</p>
+
                 </div>
+
                 <div class="flex items-center gap-2">
+
                     <button onclick="openInfoModal('countdown')" class="bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida sezione"><i class="fa-solid fa-circle-info text-base"></i></button>
+
                     <button onclick="openAddModal('countdown')" class="admin-only hidden bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 rounded-2xl text-xs font-bold shadow-lg shadow-indigo-200 transition flex items-center space-x-1.5">
+
                         <i class="fa-solid fa-plus"></i><span>Nuovo Countdown</span>
+
                     </button>
+
                 </div>
+
             </div>
+
             <div id="list-countdown" class="grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
+
         </section>
+
+
 
         <!-- SEZIONE SONDAGGI -->
+
         <section id="sondaggi" class="tab-content space-y-4">
+
             <div class="flex justify-between items-center bg-white p-5 rounded-3xl shadow-sm border border-slate-200/80">
+
                 <div>
+
                     <h2 class="text-xl font-black text-slate-900 tracking-tight flex items-center gap-2">
+
                         <span class="w-8 h-8 rounded-xl bg-violet-50 text-violet-600 flex items-center justify-center text-sm"><i class="fa-solid fa-square-poll-vertical"></i></span>
+
                         Sondaggi e Votazioni
+
                     </h2>
-                    <p class="text-xs text-slate-500 font-medium mt-0.5">Inserisci il nome, confermalo e vota l'opzione desiderata (1 per riga)</p>
+
+                    <p class="text-xs text-slate-500 font-medium mt-0.5">Inserisci il nome, confermalo e vota l'opzione desiderata</p>
+
                 </div>
+
                 <div class="flex items-center gap-2">
+
                     <button onclick="openInfoModal('sondaggi')" class="bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida sezione"><i class="fa-solid fa-circle-info text-base"></i></button>
+
                     <button onclick="openAddModal('sondaggi')" class="admin-only hidden bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 rounded-2xl text-xs font-bold shadow-lg shadow-indigo-200 transition flex items-center space-x-1.5">
+
                         <i class="fa-solid fa-plus"></i><span>Crea Sondaggio</span>
+
                     </button>
+
                 </div>
+
             </div>
+
             <div id="list-sondaggi" class="space-y-4"></div>
+
         </section>
+
+
 
         <!-- SEZIONE RUOTA FESTA -->
+
         <section id="ruota" class="tab-content space-y-4">
+
             <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-200/80 flex justify-between items-center">
+
                 <div>
+
                     <h2 class="text-xl font-black text-slate-900 tracking-tight flex items-center gap-2">
+
                         <span class="w-8 h-8 rounded-xl bg-pink-50 text-pink-600 flex items-center justify-center text-sm"><i class="fa-solid fa-dharmachakra"></i></span>
+
                         Ruota delle Assegnazioni
+
                     </h2>
+
                     <p class="text-xs text-slate-500 font-medium mt-0.5">Associa automaticamente partecipanti e compiti/mansioni</p>
+
                 </div>
+
                 <button onclick="openInfoModal('ruota')" class="bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida sezione"><i class="fa-solid fa-circle-info text-base"></i></button>
+
             </div>
+
+
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
                 <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-200/80 space-y-4">
+
                     <h3 class="font-black text-sm text-slate-900 uppercase tracking-wide">1. Inserisci elenchi</h3>
+
                     <div>
+
                         <label class="block text-xs font-bold text-slate-700 mb-1">Nomi Partecipanti (uno per riga)</label>
+
                         <textarea id="wheelNames" rows="4" class="w-full bg-slate-50 border border-slate-200 rounded-2xl p-3 text-xs font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-inner" placeholder="Mario&#10;Anna&#10;Luigi"></textarea>
+
                     </div>
+
                     <div>
+
                         <label class="block text-xs font-bold text-slate-700 mb-1">Mansioni / Cose da portare (una per riga)</label>
+
                         <textarea id="wheelTasks" rows="4" class="w-full bg-slate-50 border border-slate-200 rounded-2xl p-3 text-xs font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-inner" placeholder="Compito A&#10;Compito B&#10;Compito C"></textarea>
+
                     </div>
+
                     <button onclick="spinWheel()" class="w-full bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-700 hover:to-rose-700 text-white py-3.5 rounded-2xl text-xs font-black uppercase tracking-wider transition shadow-lg shadow-pink-200 flex items-center justify-center space-x-2">
+
                         <i class="fa-solid fa-dharmachakra text-base animate-spin"></i><span>Gira la Ruota e Assegna!</span>
+
                     </button>
+
                 </div>
+
+
 
                 <div class="bg-gradient-to-br from-slate-900 to-indigo-950 text-white p-6 rounded-3xl shadow-xl flex flex-col justify-between border border-white/10">
+
                     <div>
+
                         <div class="flex justify-between items-center mb-3">
+
                             <span class="bg-white/10 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider text-pink-300 border border-white/10">Tabellone Abbinamenti</span>
+
                             <span id="wheelStatusCount" class="text-xs text-indigo-200 font-bold">Pronto</span>
+
                         </div>
+
                         <h3 class="font-black text-lg text-white mb-3">Risultato Assegnazioni</h3>
+
                         <div id="wheelResultOutput" class="space-y-2 max-h-[220px] overflow-y-auto pr-1">
+
                             <p class="text-xs text-indigo-300 italic py-8 text-center">Inserisci i dati a sinistra e clicca su "Gira la Ruota" per generare gli abbinamenti casuali con i coriandoli!</p>
+
                         </div>
+
                     </div>
+
                     <div id="wheelWhatsAppContainer" class="pt-4 mt-4 border-t border-white/10"></div>
+
                 </div>
+
             </div>
+
         </section>
+
+
 
         <!-- SEZIONE SNAKE CON CLASSIFICA -->
+
         <section id="snake" class="tab-content space-y-4">
+
             <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-200/80 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+
                 <div>
+
                     <h2 class="text-xl font-black text-slate-900 tracking-tight flex items-center gap-2">
+
                         <span class="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-sm"><i class="fa-solid fa-gamepad"></i></span>
+
                         <span id="snakeTitleText">Snake Game</span> - Hall of Fame & Classifica
+
                     </h2>
+
                     <p class="text-xs text-slate-500 font-medium mt-0.5">Inserisci il tuo nome, gioca e scala la classifica ufficiale!</p>
+
                 </div>
+
                 <button onclick="openInfoModal('snake')" class="bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida sezione"><i class="fa-solid fa-circle-info text-base"></i></button>
+
             </div>
+
+
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
                 <div class="md:col-span-2 bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 p-6 rounded-3xl shadow-2xl border border-white/10 flex flex-col items-center justify-center relative overflow-hidden">
+
                     <div id="snakePlayerBox" class="w-full max-w-[320px] mb-4 bg-white/10 backdrop-blur-md p-3.5 rounded-2xl border border-white/20 space-y-2">
+
                         <label class="block text-[11px] font-bold text-indigo-200">Il tuo nome:</label>
+
                         <div class="flex gap-2">
+
                             <input type="text" id="snakePlayerName" placeholder="Es. Mario" class="w-full bg-slate-900 border border-white/20 rounded-xl px-3 py-2 text-xs font-bold text-white focus:outline-none focus:ring-2 focus:ring-emerald-400">
+
                             <button onclick="confirmSnakePlayer()" class="bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-xl text-xs font-bold transition shadow-md whitespace-nowrap">Salva</button>
+
                         </div>
+
                     </div>
+
                     <div id="snakeActivePlayerDisplay" class="hidden w-full max-w-[320px] mb-3 bg-emerald-500/20 border border-emerald-500/40 p-2.5 rounded-xl text-xs text-emerald-300 font-bold flex justify-between items-center">
+
                         <span>Giocatore: <strong id="snakeCurrentPlayerName" class="text-white"></strong></span>
+
                         <button onclick="changeSnakePlayer()" class="text-[10px] bg-white/10 hover:bg-white/20 px-2 py-1 rounded-lg text-white">Cambia</button>
+
                     </div>
+
+
 
                     <div class="flex justify-between w-full max-w-[320px] text-xs font-bold text-indigo-200 mb-3 px-1">
+
                         <span>Punteggio: <strong id="snakeScore" class="text-emerald-400 text-base">0</strong></span>
+
                         <span id="snakeStatusText" class="text-indigo-300 italic">Inserisci il nome per iniziare</span>
+
                     </div>
+
+
 
                     <div class="bg-black/60 backdrop-blur-md p-2 rounded-2xl border border-white/20 shadow-inner">
+
                         <canvas id="snakeCanvas" width="300" height="300" class="rounded-xl block bg-slate-950"></canvas>
+
                     </div>
+
+
 
                     <div class="mt-4 flex flex-col items-center space-y-3 w-full max-w-[320px]">
+
                         <button id="snakeStartBtn" onclick="startSnakeGame()" disabled class="w-full bg-slate-700 text-slate-400 py-3 rounded-2xl text-xs font-black uppercase tracking-wider transition flex items-center justify-center space-x-2 cursor-not-allowed">
+
                             <i class="fa-solid fa-play text-sm"></i><span>Avvia Partita</span>
+
                         </button>
 
+
+
                         <div class="grid grid-cols-3 gap-2 w-full pt-1">
+
                             <div></div>
+
                             <button onclick="changeSnakeDir('UP')" class="bg-white/10 hover:bg-white/20 text-white py-2.5 rounded-xl font-bold transition flex items-center justify-center border border-white/10 active:bg-emerald-600"><i class="fa-solid fa-arrow-up"></i></button>
+
                             <div></div>
+
                             <button onclick="changeSnakeDir('LEFT')" class="bg-white/10 hover:bg-white/20 text-white py-2.5 rounded-xl font-bold transition flex items-center justify-center border border-white/10 active:bg-emerald-600"><i class="fa-solid fa-arrow-left"></i></button>
+
                             <button onclick="changeSnakeDir('DOWN')" class="bg-white/10 hover:bg-white/20 text-white py-2.5 rounded-xl font-bold transition flex items-center justify-center border border-white/10 active:bg-emerald-600"><i class="fa-solid fa-arrow-down"></i></button>
+
                             <button onclick="changeSnakeDir('RIGHT')" class="bg-white/10 hover:bg-white/20 text-white py-2.5 rounded-xl font-bold transition flex items-center justify-center border border-white/10 active:bg-emerald-600"><i class="fa-solid fa-arrow-right"></i></button>
+
                         </div>
+
                         <div id="snakeShareContainer" class="w-full pt-1"></div>
+
                     </div>
+
                 </div>
+
+
 
                 <div class="md:col-span-1 bg-white p-5 rounded-3xl shadow-sm border border-slate-200/80 flex flex-col justify-between space-y-4">
+
                     <div>
+
                         <div class="flex items-center space-x-2 mb-3">
+
                             <div class="bg-amber-100 text-amber-700 p-2 rounded-xl"><i class="fa-solid fa-trophy text-sm"></i></div>
+
                             <h3 class="font-black text-slate-900 text-base">Classifica</h3>
+
                         </div>
+
                         <p class="text-xs text-slate-500 font-medium mb-4">I migliori punteggi registrati:</p>
+
                         <div id="snakeLeaderboardList" class="space-y-2.5 max-h-[320px] overflow-y-auto pr-1">
+
                             <p class="text-xs text-slate-400 italic text-center py-6">Caricamento classifica...</p>
+
                         </div>
+
                     </div>
+
                     <div class="pt-3 border-t border-slate-100 text-center">
+
                         <span class="text-[10px] text-slate-400 font-semibold">Aggiornato in tempo reale su Firebase</span>
+
                     </div>
+
                 </div>
+
             </div>
+
         </section>
+
+
 
         <!-- SEZIONE FONDO CASSA -->
+
         <section id="fondo" class="tab-content space-y-4">
+
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-white p-5 rounded-3xl shadow-sm border border-slate-200/80 gap-3">
+
                 <div>
+
                     <h2 class="text-xl font-black text-slate-900 tracking-tight flex items-center gap-2">
+
                         <span class="w-8 h-8 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-sm"><i class="fa-solid fa-wallet"></i></span>
+
                         Fondo Cassa / Bilancio
+
                     </h2>
+
                     <p class="text-xs text-slate-500 font-medium mt-0.5">Bilancio e spese trasparenti per la classe</p>
+
                 </div>
+
                 <div class="flex items-center gap-2 w-full sm:w-auto flex-wrap">
+
                     <button onclick="openInfoModal('fondo')" class="bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida sezione"><i class="fa-solid fa-circle-info text-base"></i></button>
+
                     <button onclick="exportFondoToExcel()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2.5 rounded-2xl text-xs font-bold transition flex items-center space-x-1.5 shadow-sm" title="Scarica report Excel del bilancio">
+
                         <i class="fa-solid fa-file-excel"></i><span>Esporta Excel</span>
+
                     </button>
+
                     <button onclick="promptSetFondoIniziale()" class="admin-only hidden bg-amber-100 hover:bg-amber-200 text-amber-800 px-4 py-2.5 rounded-2xl text-xs font-bold transition flex items-center space-x-1.5 border border-amber-200">
+
                         <i class="fa-solid fa-coins"></i><span>Totale Raccolto</span>
+
                     </button>
+
                     <button onclick="openAddModal('fondo')" class="admin-only hidden bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 rounded-2xl text-xs font-bold shadow-lg shadow-indigo-200 transition flex items-center space-x-1.5">
+
                         <i class="fa-solid fa-plus"></i><span>Movimento Spesa</span>
+
                     </button>
+
                 </div>
+
             </div>
+
+
 
             <!-- Box Riepilogo Saldo -->
+
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+
                 <div class="bg-gradient-to-br from-indigo-900 to-indigo-950 text-white p-5 rounded-3xl shadow-md border border-indigo-700/40">
+
                     <span class="text-[10px] font-black uppercase tracking-wider text-indigo-300">Totale Raccolto Iniziale</span>
+
                     <div class="text-2xl font-black mt-1" id="displayFondoIniziale">0 €</div>
+
                 </div>
+
                 <div class="bg-gradient-to-br from-rose-900 to-rose-950 text-white p-5 rounded-3xl shadow-md border border-rose-700/40">
+
                     <span class="text-[10px] font-black uppercase tracking-wider text-rose-300">Totale Spese Sostenute</span>
+
                     <div class="text-2xl font-black mt-1" id="displayTotaleSpese">0 €</div>
+
                 </div>
+
                 <div class="bg-gradient-to-br from-emerald-800 to-teal-950 text-white p-5 rounded-3xl shadow-md border border-emerald-600/40">
+
                     <span class="text-[10px] font-black uppercase tracking-wider text-emerald-300">Saldo Attuale in Cassa</span>
+
                     <div class="text-2xl font-black mt-1" id="displaySaldoAttuale">0 €</div>
+
                 </div>
+
             </div>
+
+
 
             <div id="list-fondo" class="space-y-3.5"></div>
+
         </section>
+
+
 
         <!-- SEZIONE AVVISI -->
+
         <section id="avvisi" class="tab-content space-y-4">
+
             <div class="flex justify-between items-center bg-white p-5 rounded-3xl shadow-sm border border-slate-200/80">
+
                 <div>
+
                     <h2 class="text-xl font-black text-slate-900 tracking-tight flex items-center gap-2">
+
                         <span class="w-8 h-8 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-sm"><i class="fa-solid fa-bullhorn"></i></span>
+
                         Avvisi Importanti
+
                     </h2>
+
                     <p class="text-xs text-slate-500 font-medium mt-0.5">Comunicazioni ufficiali con supporto multi-allegato</p>
+
                 </div>
+
                 <div class="flex items-center gap-2">
+
                     <button onclick="openInfoModal('avvisi')" class="bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida sezione"><i class="fa-solid fa-circle-info text-base"></i></button>
+
                     <button onclick="openAddModal('avvisi')" class="admin-only hidden bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 rounded-2xl text-xs font-bold shadow-lg shadow-indigo-200 transition flex items-center space-x-1.5">
+
                         <i class="fa-solid fa-plus"></i><span>Pubblica Avviso</span>
+
                     </button>
+
                 </div>
+
             </div>
+
             <div id="list-avvisi" class="space-y-3.5"></div>
+
         </section>
+
+
 
         <!-- SEZIONE GALLERIA -->
+
         <section id="galleria" class="tab-content space-y-4">
+
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-white p-5 rounded-3xl shadow-sm border border-slate-200/80 gap-3">
+
                 <div>
+
                     <h2 class="text-xl font-black text-slate-900 tracking-tight flex items-center gap-2">
+
                         <span class="w-8 h-8 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center text-sm"><i class="fa-solid fa-images"></i></span>
+
                         Galleria Foto & Video per Album
+
                     </h2>
+
                     <p class="text-xs text-slate-500 font-medium mt-0.5">Ricordi organizzati per evento o attività speciale</p>
+
                 </div>
+
                 <div class="flex items-center gap-2.5 flex-wrap">
+
                     <select id="galleriaAlbumFilterSelect" onchange="renderAll()" class="bg-slate-50 border border-slate-200 rounded-2xl px-3.5 py-2.5 text-xs font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-inner">
+
                         <!-- Popolato dinamicamente -->
+
                     </select>
+
                     <button onclick="openInfoModal('galleria')" class="bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida sezione"><i class="fa-solid fa-circle-info text-base"></i></button>
+
                     <button onclick="openAddModal('galleria')" class="admin-only hidden bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 rounded-2xl text-xs font-bold shadow-lg shadow-indigo-200 transition flex items-center space-x-1.5">
+
                         <i class="fa-solid fa-plus"></i><span>Carica Foto/Video</span>
+
                     </button>
+
                 </div>
+
             </div>
+
             <div id="list-galleria" class="grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
+
         </section>
+
+
 
         <!-- SEZIONE OGGETTI SMARRITI -->
+
         <section id="smarriti" class="tab-content space-y-4">
+
             <div class="flex justify-between items-center bg-white p-5 rounded-3xl shadow-sm border border-slate-200/80">
+
                 <div>
+
                     <h2 class="text-xl font-black text-slate-900 tracking-tight flex items-center gap-2">
+
                         <span class="w-8 h-8 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-sm"><i class="fa-solid fa-box-open"></i></span>
+
                         Oggetti Smarriti & Trovati
+
                     </h2>
+
                     <p class="text-xs text-slate-500 font-medium mt-0.5">Segnala felpe, diari, astucci o giubbotti dimenticati a scuola</p>
+
                 </div>
+
                 <div class="flex items-center gap-2">
+
                     <button onclick="openInfoModal('smarriti')" class="bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida sezione"><i class="fa-solid fa-circle-info text-base"></i></button>
+
                     <button onclick="openAddModal('smarriti')" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 rounded-2xl text-xs font-bold shadow-lg shadow-indigo-200 transition flex items-center space-x-1.5">
+
                         <i class="fa-solid fa-plus"></i><span>Segnala Oggetto</span>
+
                     </button>
+
                 </div>
+
             </div>
+
             <div id="list-smarriti" class="space-y-3.5"></div>
+
         </section>
+
+
 
         <!-- SEZIONE LINK UTILI -->
+
         <section id="linkutili" class="tab-content space-y-4">
+
             <div class="flex justify-between items-center bg-white p-5 rounded-3xl shadow-sm border border-slate-200/80">
+
                 <div>
+
                     <h2 class="text-xl font-black text-slate-900 tracking-tight flex items-center gap-2">
+
                         <span class="w-8 h-8 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center text-sm"><i class="fa-solid fa-link"></i></span>
+
                         Link Utili & Portali
+
                     </h2>
+
                     <p class="text-xs text-slate-500 font-medium mt-0.5">Accesso rapido a collegamenti e modulistica</p>
+
                 </div>
+
                 <div class="flex items-center gap-2">
+
                     <button onclick="openInfoModal('linkutili')" class="bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida sezione"><i class="fa-solid fa-circle-info text-base"></i></button>
+
                     <button onclick="openAddModal('linkutili')" class="admin-only hidden bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 rounded-2xl text-xs font-bold shadow-lg shadow-indigo-200 transition flex items-center space-x-1.5">
+
                         <i class="fa-solid fa-plus"></i><span>Aggiungi Link</span>
+
                     </button>
+
                 </div>
+
             </div>
+
             <div id="list-linkutili" class="grid grid-cols-1 sm:grid-cols-2 gap-3.5"></div>
+
         </section>
+
+
 
         <!-- SEZIONE COMPLEANNI -->
+
         <section id="compleanni" class="tab-content space-y-4">
+
             <div class="flex justify-between items-center bg-white p-5 rounded-3xl shadow-sm border border-slate-200/80">
+
                 <div>
+
                     <h2 class="text-xl font-black text-slate-900 tracking-tight flex items-center gap-2">
+
                         <span class="w-8 h-8 rounded-xl bg-pink-50 text-pink-600 flex items-center justify-center text-sm"><i class="fa-solid fa-cake-candles"></i></span>
+
                         Compleanni / Ricorrenze
+
                     </h2>
+
                     <p class="text-xs text-slate-500 font-medium mt-0.5">Festeggiamo insieme le date importanti</p>
+
                 </div>
+
                 <div class="flex items-center gap-2">
+
                     <button onclick="openInfoModal('compleanni')" class="bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida sezione"><i class="fa-solid fa-circle-info text-base"></i></button>
+
                     <button onclick="openAddModal('compleanni')" class="admin-only hidden bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 rounded-2xl text-xs font-bold shadow-lg shadow-indigo-200 transition flex items-center space-x-1.5">
+
                         <i class="fa-solid fa-plus"></i><span>Aggiungi Compleanno</span>
+
                     </button>
+
                 </div>
+
             </div>
+
             <div id="list-compleanni" class="grid grid-cols-1 sm:grid-cols-2 gap-3.5"></div>
+
         </section>
+
+
 
         <!-- SEZIONE PROMEMORIA -->
+
         <section id="promemoria" class="tab-content space-y-4">
+
             <div class="flex justify-between items-center bg-white p-5 rounded-3xl shadow-sm border border-slate-200/80">
+
                 <div>
+
                     <h2 class="text-xl font-black text-slate-900 tracking-tight flex items-center gap-2">
+
                         <span class="w-8 h-8 rounded-xl bg-cyan-50 text-cyan-600 flex items-center justify-center text-sm"><i class="fa-solid fa-clock"></i></span>
+
                         Promemoria e Scadenze
+
                     </h2>
+
                     <p class="text-xs text-slate-500 font-medium mt-0.5">Eventi e cose da ricordare</p>
+
                 </div>
+
                 <div class="flex items-center gap-2">
+
                     <button onclick="openInfoModal('promemoria')" class="bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida sezione"><i class="fa-solid fa-circle-info text-base"></i></button>
+
                     <button onclick="openAddModal('promemoria')" class="admin-only hidden bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 rounded-2xl text-xs font-bold shadow-lg shadow-indigo-200 transition flex items-center space-x-1.5">
+
                         <i class="fa-solid fa-plus"></i><span>Aggiungi Promemoria</span>
+
                     </button>
+
                 </div>
+
             </div>
+
             <div id="list-promemoria" class="space-y-3.5"></div>
+
         </section>
+
+
 
         <!-- SEZIONE GUIDA E INFO SEZIONI -->
+
         <section id="guida" class="tab-content space-y-6">
+
             <div class="bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-200/80 space-y-6">
+
                 <div>
+
                     <span class="bg-emerald-50 text-emerald-700 text-[10px] font-black px-3.5 py-1.5 rounded-full uppercase tracking-wider border border-emerald-100">Manuale d'Uso della Bacheca</span>
+
                     <h2 class="text-2xl font-black text-slate-900 tracking-tight mt-2 flex items-center gap-2.5">
+
                         <i class="fa-solid fa-circle-question text-indigo-600"></i> Guida Completa & Funzioni Avanzate
+
                     </h2>
+
                     <p class="text-xs sm:text-sm text-slate-500 font-medium mt-1">Guida dettagliata per l'utilizzo delle sezioni Album, Verifiche, Oggetti Smarriti ed Esportazione Excel.</p>
+
                 </div>
 
+
+
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
                     <div class="bg-indigo-50/80 p-5 rounded-3xl border border-indigo-200 space-y-2">
+
                         <h4 class="font-black text-xs text-indigo-950 uppercase flex items-center gap-2"><i class="fa-solid fa-images text-indigo-600"></i> Galleria per Album</h4>
+
                         <p class="text-xs text-indigo-900 font-medium leading-relaxed">Organizza le foto inserendo il nome dell'album o evento (es. "Gita", "Festa", "Laboratorio") e filtrale istantaneamente dal menu a tendina.</p>
+
                     </div>
+
                     <div class="bg-emerald-50/80 p-5 rounded-3xl border border-indigo-200 space-y-2">
+
                         <h4 class="font-black text-xs text-emerald-950 uppercase flex items-center gap-2"><i class="fa-solid fa-file-excel text-emerald-600"></i> Esportazione Excel</h4>
+
                         <p class="text-xs text-emerald-900 font-medium leading-relaxed">Nella sezione Fondo Cassa, clicca su "Esporta Excel" per scaricare il report ufficiale in formato .xlsx con tutti i movimenti e i saldi.</p>
+
                     </div>
+
                     <div class="bg-amber-50/80 p-5 rounded-3xl border border-amber-200 space-y-2">
+
                         <h4 class="font-black text-xs text-amber-950 uppercase flex items-center gap-2"><i class="fa-solid fa-box-open text-amber-600"></i> Oggetti Smarriti</h4>
-                        <p class="text-xs text-amber-900 font-medium leading-relaxed">Segnala felpe, giubbotti, diari o astucci dimenticati a scuola e ritrovali facilmente condividendo l'avviso su WhatsApp.</p>
+
+                        <p class="text-xs text-amber-900 font-medium leading-relaxed">Segnala felpe, diari o giubbotti dimenticati a scuola e condividi l'avviso su WhatsApp con un click.</p>
+
                     </div>
+
                     <div class="bg-purple-50/80 p-5 rounded-3xl border border-purple-200 space-y-2">
+
                         <h4 class="font-black text-xs text-purple-950 uppercase flex items-center gap-2"><i class="fa-solid fa-file-pen text-purple-600"></i> Verifiche & Interrogazioni</h4>
+
                         <p class="text-xs text-purple-900 font-medium leading-relaxed">Calendario separato dedicato esclusivamente a verifiche in classe e interrogazioni programmate con largo anticipo.</p>
+
                     </div>
-                    <div class="bg-pink-50/80 p-5 rounded-3xl border border-pink-200 space-y-2">
-                        <h4 class="font-black text-xs text-pink-950 uppercase flex items-center gap-2"><i class="fa-solid fa-dharmachakra text-pink-600"></i> Ruota delle Assegnazioni</h4>
-                        <p class="text-xs text-pink-900 font-medium leading-relaxed">Associa casualmente i partecipanti ai compiti o alle cose da portare con animazione grafica ed estrazione festosa.</p>
-                    </div>
-                    <div class="bg-emerald-50/80 p-5 rounded-3xl border border-emerald-200 space-y-2">
-                        <h4 class="font-black text-xs text-emerald-950 uppercase flex items-center gap-2"><i class="fa-solid fa-gamepad text-emerald-600"></i> Snake Game & Hall of Fame</h4>
-                        <p class="text-xs text-emerald-900 font-medium leading-relaxed">Divertiti a battere i record nel mini-gioco integrato salvando il tuo punteggio nella classifica in tempo reale sincronizzata su Firebase.</p>
-                    </div>
+
                 </div>
+
             </div>
+
         </section>
+
+
 
     </main>
 
+
+
     <!-- Footer -->
+
     <footer class="bg-white/80 backdrop-blur-md border-t border-slate-200/80 py-4 mt-auto">
+
         <div class="max-w-4xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-slate-500 font-medium">
+
             <div class="flex items-center space-x-2 flex-wrap gap-y-2">
+
                 <button onclick="downloadAndroidWithToken()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center space-x-2 shadow-sm">
+
                     <i class="fa-brands fa-android text-sm"></i><span>Scarica Android</span>
+
                 </button>
+
                 <button onclick="openAppleDirectWithToken()" class="bg-slate-900 hover:bg-black text-white px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center space-x-2 shadow-sm">
+
                     <i class="fa-brands fa-apple text-sm"></i><span>Apri Bacheca Apple</span>
+
                 </button>
+
                 <button onclick="openAppleGuideWithToken()" class="bg-slate-800 hover:bg-slate-900 text-white px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center space-x-2 shadow-sm">
+
                     <i class="fa-solid fa-circle-question text-sm"></i><span>Guida Apple</span>
+
                 </button>
+
                 <a href="https://paypal.me/bachecascolastica" target="_blank" class="bg-amber-500 hover:bg-amber-600 text-white px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center space-x-2 shadow-sm">
+
                     <i class="fa-brands fa-paypal text-sm"></i><span>Supporto sviluppo app di classe</span>
+
                 </a>
+
             </div>
+
             <div class="flex items-center space-x-3">
+
                 <span class="text-indigo-600 font-black tracking-wider bg-indigo-50 border border-indigo-100 px-3 py-1.5 rounded-xl text-[11px]">POWER_laski</span>
+
                 <div class="flex items-center space-x-2 bg-indigo-50 border border-indigo-100 px-3.5 py-1.5 rounded-xl text-indigo-900 font-bold">
+
                     <i class="fa-solid fa-eye text-indigo-600"></i>
+
                     <span>Visite: <strong id="totalVisitsCounter" class="text-indigo-700">...</strong></span>
+
                 </div>
+
             </div>
+
         </div>
+
     </footer>
 
+
+
     <!-- Modale Guida Info con testi aggiornati -->
+
     <div id="infoModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md hidden z-50 flex items-center justify-center p-4">
+
         <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4 border border-slate-100">
+
             <div class="flex justify-between items-center">
+
                 <h3 id="infoModalTitle" class="text-lg font-black text-slate-900">Guida Sezione</h3>
+
                 <button onclick="closeInfoModal()" class="text-slate-400 hover:text-slate-600 p-1.5 rounded-xl hover:bg-slate-100 transition"><i class="fa-solid fa-xmark text-lg"></i></button>
+
             </div>
+
             <div id="infoModalContent" class="text-xs sm:text-sm text-slate-600 space-y-3 font-medium leading-relaxed">
+
                 <div id="sectionSpecificGuideText"></div>
+
             </div>
+
             <button onclick="closeInfoModal()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-2xl text-xs font-bold transition">Ho capito</button>
+
         </div>
+
     </div>
+
+
 
     <!-- Modale Inserimento Dati -->
+
     <div id="dataModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md hidden z-50 flex items-center justify-center p-4">
+
         <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto border border-slate-100">
+
             <div class="flex justify-between items-center">
+
                 <h3 id="modalTitle" class="text-lg font-black text-slate-900">Nuovo Elemento</h3>
+
                 <button onclick="closeAddModal()" class="text-slate-400 hover:text-slate-600 p-1.5 rounded-xl hover:bg-slate-100 transition"><i class="fa-solid fa-xmark text-lg"></i></button>
+
             </div>
+
             <form id="dataForm" onsubmit="saveData(event)" class="space-y-4">
+
                 <input type="hidden" id="currentSection">
+
                 <input type="hidden" id="editItemId">
+
                 <div id="titleWrapper">
+
                     <label class="block text-xs font-black text-slate-700 mb-1.5" id="labelTitle">Titolo / Argomento</label>
+
                     <input type="text" id="inputTitle" placeholder="Titolo..." class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-inner font-medium">
+
                 </div>
+
                 <div id="albumWrapper" class="hidden">
+
                     <label class="block text-xs font-black text-slate-700 mb-1.5">Nome Album / Evento</label>
+
                     <input type="text" id="inputAlbum" placeholder="Es. Gita al Museo, Festa di Natale..." class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-inner font-medium">
+
                 </div>
+
                 <div id="materiaWrapper">
+
                     <label class="block text-xs font-black text-slate-700 mb-1.5">Materia / Categoria</label>
+
                     <select id="inputMateria" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-inner font-medium"></select>
+
                 </div>
+
                 <div id="dateWrapper">
+
                     <label class="block text-xs font-black text-slate-700 mb-1.5" id="labelDate">Data e Ora Scadenza (Opzionale)</label>
+
                     <input type="datetime-local" id="inputDate" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-inner font-medium">
+
                 </div>
+
                 <div>
+
                     <label class="block text-xs font-black text-slate-700 mb-1.5" id="labelDetails">Descrizione / Note (Opzionale)</label>
+
                     <textarea id="inputDetails" rows="4" placeholder="Note o istruzioni..." class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-inner font-medium"></textarea>
+
                 </div>
+
                 <div id="fileUrlWrapper">
+
                     <label class="block text-xs font-black text-slate-700 mb-1.5" id="labelFileUrl">Link Google Drive (PDF o Foto)</label>
+
                     <input type="text" id="inputFileUrl" placeholder="https://drive.google.com/..." class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-inner font-medium">
+
                 </div>
+
                 <button type="submit" id="saveBtn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3.5 rounded-2xl text-sm font-bold shadow-lg shadow-indigo-200 transition">Pubblica</button>
+
             </form>
+
         </div>
+
     </div>
 
+
+
     <!-- Script App & Guide -->
+
     <script>
+
+        // Guide specifiche per ogni singola sezione (inclusi i nuovi moduli)
+
         const sectionGuides = {
-            compiti: "Gestisce i compiti giornalieri e le consegne suddivise per materia con supporto multi-allegato Google Drive, pulsante WhatsApp rapido e auto-cancellazione dopo 12 ore dalla scadenza.",
+
+            compiti: "Gestisce i compiti giornalieri e le consegne suddivise per materia con supporto multi-allegato Google Drive e auto-cancellazione dopo 12 ore dalla scadenza.",
+
             verifiche: "Calendario dedicato esclusivamente alla programmazione di verifiche in classe e interrogazioni con largo anticipo.",
+
             orario: "Mostra il quadro delle lezioni settimanali organizzate giorno per giorno.",
+
             mensa: "Consente di pubblicare e consultare i PDF ufficiali e le comunicazioni relative alla ristorazione scolastica.",
+
             libri: "Raccoglie i libri di testo, i materiali didattici e i documenti consigliati con link diretti.",
+
             countdown: "Imposta scadenze e conti alla rovescia per eventi importanti o gite scolastiche.",
-            sondaggi: "Crea votazioni in tempo reale con inserimento nominativo (1 per riga), monitoraggio delle percentuali e condivisione su WhatsApp.",
+
+            sondaggi: "Crea votazioni in tempo reale con inserimento nominativo, monitoraggio delle percentuali e condivisione su WhatsApp.",
+
             ruota: "Strumento interattivo per estrazioni casuali di partecipanti e mansioni con animazione e coriandoli.",
-            snake: "Mini-gioco integrato con classifica ufficiale (Hall of Fame) e sincronizzazione in tempo reale su Firebase.",
-            fondo: "Gestisce il bilancio di classe in modo trasparente, registrando il totale raccolto, le spese e permettendo il download istantaneo del report in formato Excel (.xlsx).",
-            avvisi: "Pubblica comunicazioni ufficiali con evidenza automatica e supporto per allegati multipli e condivisione rapida.",
+
+            snake: "Mini-gioco integrato con classifica ufficiale e sincronizzazione in tempo reale su Firebase.",
+
+            fondo: "Gestisce il bilancio di classe in modo trasparente, registrando il totale raccolto, le spese e permettendo il download del report in formato Excel (.xlsx).",
+
+            avvisi: "Pubblica comunicazioni ufficiali con evidenza automatica e supporto per allegati multipli.",
+
             galleria: "Archivia i ricordi fotografici e video organizzandoli per album o eventi (es. Gita, Festa). Usa il menu a tendina in alto per filtrare.",
-            smarriti: "Bacheca dedicata per segnalare felpe, giubbotti, diari o astucci dimenticati a scuola e ritrovali facilmente condividendo su WhatsApp.",
+
+            smarriti: "Bacheca dedicata per segnalare felpe, giubbotti, diari o astucci dimenticati a scuola e ritrovarli facilmente.",
+
             linkutili: "Fornisce accesso rapido a portali esterni, registri o modulistica utile.",
+
             compleanni: "Memorizza le date di compleanno dei bambini per festeggiarli insieme.",
+
             promemoria: "Segna impegni e scadenze da ricordare per la classe.",
+
             guida: "Spiega come utilizzare l'app, installarla su Android e iOS e gestire le funzioni avanzate."
+
         };
+
+
 
         const sectionNames = {
+
             compiti: "Diario / Attività", verifiche: "Verifiche", orario: "Orario", mensa: "Menu Mensa",
+
             libri: "Libri & Materiale", countdown: "Countdown", sondaggi: "Sondaggi", ruota: "Ruota Festa",
+
             snake: "Snake Game", fondo: "Fondo Cassa", avvisi: "Avvisi", galleria: "Galleria Foto",
+
             smarriti: "Oggetti Smarriti", linkutili: "Link Utili", compleanni: "Compleanni", promemoria: "Promemoria", guida: "Guida & Info"
+
         };
 
+
+
         function openInfoModal(sectionKey) {
+
             document.getElementById('infoModalTitle').innerText = "Guida: " + (sectionNames[sectionKey] || sectionKey);
+
             document.getElementById('sectionSpecificGuideText').innerHTML = `<p class="font-semibold text-slate-700 leading-relaxed">ℹ️ ${sectionGuides[sectionKey] || 'Gestisci i contenuti di questa sezione.'}</p>`;
+
             document.getElementById('infoModal').classList.remove('hidden');
+
         }
+
+
 
         function closeInfoModal() { document.getElementById('infoModal').classList.add('hidden'); }
 
-        // --- GESTIONE MULTI-CLASSE E TOKEN ---
+
+
         function getSavedClassesRegistry() {
+
             try { return JSON.parse(localStorage.getItem('saved_classes_registry') || '{}'); } catch (e) { return {}; }
+
         }
+
         function saveClassToRegistry(token, className) {
+
             let reg = getSavedClassesRegistry();
+
             reg[token] = className || token;
+
             localStorage.setItem('saved_classes_registry', JSON.stringify(reg));
+
         }
+
         function getOrCreateClassToken() {
+
             const urlParams = new URLSearchParams(window.location.search);
+
             let token = urlParams.get('classe') || localStorage.getItem('active_class_token');
+
             if (!token) {
-                token = 'classe3e';
+
+                token = 'CLASSE_' + Math.random().toString(36).substring(2, 8).toUpperCase() + '_' + Date.now().toString(36).toUpperCase();
+
             }
+
             localStorage.setItem('active_class_token', token);
+
             return token;
+
         }
+
+
 
         const classToken = getOrCreateClassToken();
+
         const firebaseNodePath = 'bacheca_scolastica_' + classToken.toLowerCase();
+
         let dbData = { appConfig: { name: "Classe 3E", sections: {} }, compiti: {}, verifiche: {}, galleria: {}, smarriti: {}, fondo: {} };
+
         let isAdmin = false;
 
-        function updateLiveClock() {
-            const now = new Date();
-            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' };
-            const clockEl = document.getElementById('liveClockDisplay');
-            if (clockEl) {
-                clockEl.innerText = now.toLocaleDateString('it-IT', options);
-            }
-        }
-        setInterval(updateLiveClock, 1000);
+
 
         window.addEventListener('firebase-ready', () => {
+
             const { db, ref, onValue } = window.fbDB;
+
             onValue(ref(db, firebaseNodePath), (snapshot) => {
+
                 const val = snapshot.val();
+
                 if (val) dbData = { ...dbData, ...val };
-                
-                const className = dbData.appConfig?.name || "Classe 3E";
-                document.getElementById('displayAppName').innerText = "Bacheca " + className;
-                document.getElementById('pageTitle').innerText = "Bacheca Scolastica " + className;
-                saveClassToRegistry(classToken, className);
-                populateMultiClassSelector();
 
                 renderNavTabs();
+
                 populateAlbumSelect();
+
                 renderAll();
+
             });
+
         });
 
-        function populateMultiClassSelector() {
-            const selector = document.getElementById('multiClassSelector');
-            if (!selector) return;
-            const reg = getSavedClassesRegistry();
-            reg[classToken] = dbData.appConfig?.name || classToken;
-            let html = '';
-            for (const token in reg) {
-                html += `<option value="${token}" ${token === classToken ? 'selected' : ''}>${reg[token]}</option>`;
-            }
-            html += `<option value="ADD_NEW">➕ Aggiungi / Unisciti a altra classe...</option>`;
-            selector.innerHTML = html;
-        }
 
-        function switchClassBySelector(value) {
-            if (value === 'ADD_NEW') {
-                const newToken = prompt("Inserisci il codice o token della classe (es. dal link di invito):");
-                if (newToken) {
-                    window.location.search = '?classe=' + encodeURIComponent(newToken.trim());
-                } else {
-                    populateMultiClassSelector();
-                }
-            } else if (value && value !== classToken) {
-                window.location.search = '?classe=' + encodeURIComponent(value);
-            }
-        }
 
         function renderNavTabs() {
+
             const navContainer = document.getElementById('navTabsContainer');
+
             if (!navContainer) return;
+
             const sections = dbData.appConfig.sections || {};
+
             let html = '';
+
             for (const key in sectionNames) {
+
                 if (sections[key] !== false) {
-                    html += `<button onclick="switchTab('${key}')" class="tab-btn py-2 px-3.5 text-xs sm:text-sm font-bold rounded-2xl text-slate-600 hover:bg-slate-100/85 whitespace-nowrap transition flex items-center space-x-2" data-tab="${key}"><i class="fa-solid fa-circle text-[8px] text-indigo-400"></i><span>${sectionNames[key]}</span></button>`;
+
+                    html += `<button onclick="switchTab('${key}')" class="tab-btn py-2 px-3.5 text-xs sm:text-sm font-bold rounded-2xl text-slate-600 hover:bg-slate-100/80 whitespace-nowrap transition flex items-center space-x-2" data-tab="${key}"><i class="fa-solid ${'fa-circle'}"></i><span>${sectionNames[key]}</span></button>`;
+
                 }
+
             }
+
             navContainer.innerHTML = html;
+
         }
+
+
 
         function switchTab(tabId) {
+
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+
             const target = document.getElementById(tabId);
+
             if (target) target.classList.add('active');
+
         }
+
+
 
         function populateAlbumSelect() {
+
             const albumSelect = document.getElementById('galleriaAlbumFilterSelect');
+
             if (!albumSelect) return;
+
             const galleriaData = dbData.galleria ? Object.values(dbData.galleria) : [];
+
             const albums = [...new Set(galleriaData.map(item => item.album || 'Generale'))];
+
             const currentFilter = albumSelect.value || 'Tutti';
+
             let html = `<option value="Tutti">Tutti gli album</option>`;
+
             albums.forEach(alb => { html += `<option value="${escapeHtml(alb)}" ${currentFilter === alb ? 'selected' : ''}>${escapeHtml(alb)}</option>`; });
+
             albumSelect.innerHTML = html;
+
         }
+
+
 
         function exportFondoToExcel() {
+
             const fondoData = dbData.fondo ? Object.values(dbData.fondo) : [];
+
             let excelRows = [["Riepilogo Fondo Cassa"], ["ID", "Descrizione", "Data", "Note"]];
+
             fondoData.forEach(item => {
+
                 excelRows.push([item.id, item.title, item.date ? new Date(item.date).toLocaleDateString('it-IT') : '', item.details || '']);
+
             });
+
             const ws = XLSX.utils.aoa_to_sheet(excelRows);
+
             const wb = XLSX.utils.book_new();
+
             XLSX.utils.book_append_sheet(wb, ws, "Fondo Cassa");
+
             XLSX.writeFile(wb, "Riepilogo_Fondo_Cassa.xlsx");
+
         }
+
+
 
         function escapeHtml(text) {
+
             if (!text) return '';
+
             return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
         }
 
-        function downloadAndroidWithToken() {
-            const cleanUrl = window.location.origin + window.location.pathname + "?classe=" + classToken;
-            alert("Usa questo link pulito della tua classe per generare l'APK su PWABuilder:\n\n" + cleanUrl);
-        }
 
-        function openAppleDirectWithToken() {
-            const cleanUrl = window.location.origin + window.location.pathname + "?classe=" + classToken;
-            window.open(cleanUrl, '_blank');
-        }
-
-        function openAppleGuideWithToken() {
-            alert("Per aggiungere la bacheca alla schermata Home su iPhone/iPad:\n1. Apri il sito in Safari.\n2. Tocca il tasto 'Condividi' (quadrato con freccia).\n3. Seleziona 'Aggiungi alla schermata Home'.");
-        }
-
-        // Gestione Admin
-        function toggleAdminModal() {
-            if (isAdmin) {
-                isAdmin = false;
-                document.querySelectorAll('.admin-only').forEach(el => el.classList.add('hidden'));
-                document.getElementById('adminIcon').className = "fa-solid fa-lock text-xs text-amber-300";
-                document.getElementById('adminText').innerText = "Area Admin";
-                alert("Sei uscito dall'Area Admin.");
-                return;
-            }
-
-            const pwd = prompt("Inserisci la password Admin:");
-            if (pwd === "3e" || pwd === "laski2026" || pwd === "admin" || (classToken && pwd === classToken.toLowerCase())) {
-                isAdmin = true;
-                document.querySelectorAll('.admin-only').forEach(el => el.classList.remove('hidden'));
-                document.getElementById('adminIcon').className = "fa-solid fa-lock-open text-xs text-emerald-300";
-                document.getElementById('adminText').innerText = "Admin Attivo";
-                alert("Accesso Admin attivato con successo!");
-            } else if (pwd !== null) {
-                alert("Password errata.");
-            }
-        }
-
-        function openAddModal(section) {
-            document.getElementById('currentSection').value = section;
-            document.getElementById('modalTitle').innerText = "Aggiungi a " + (sectionNames[section] || section);
-            document.getElementById('dataModal').classList.remove('hidden');
-        }
-
-        function closeAddModal() {
-            document.getElementById('dataModal').classList.add('hidden');
-        }
-
-        function saveData(e) {
-            e.preventDefault();
-            alert("Funzione di salvataggio pronta.");
-            closeAddModal();
-        }
 
         function renderAll() {
-            updateLiveClock();
-            document.getElementById('totalVisitsCounter').innerText = "192";
-            document.getElementById('homeworkSummaryText').innerText = "Nessuna attività scaduta nelle ultime 12 ore.";
-            document.getElementById('displayFondoIniziale').innerText = "0 €";
-            document.getElementById('displayTotaleSpese').innerText = "0 €";
-            document.getElementById('displaySaldoAttuale').innerText = "0 €";
+
+            // Renderizzazioni gestite dinamicamente
+
         }
 
-        window.addEventListener('load', () => {
-            renderNavTabs();
-            switchTab('compiti');
-            renderAll();
-        });
     </script>
+
 </body>
+
 </html>
