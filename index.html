@@ -13,7 +13,7 @@
     <meta charset="UTF-8">
     <link rel="manifest" href="./manifest.json">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="pageTitle">Diario Scolastico e Bacheca di Classe</title>
+    <title id="pageTitle">Bacheca Scolastica Universale</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -507,9 +507,9 @@
                 <div>
                     <span class="bg-emerald-50 text-emerald-700 text-[10px] font-black px-3.5 py-1.5 rounded-full uppercase tracking-wider border border-emerald-100">Manuale d'Uso della Bacheca</span>
                     <h2 class="text-2xl font-black text-slate-900 tracking-tight mt-2 flex items-center gap-2.5">
-                        <i class="fa-solid fa-circle-question text-indigo-600"></i> Guida Completa alle Sezioni, Dispositivi & Sincronizzazione
+                        <i class="fa-solid fa-circle-question text-indigo-600"></i> Guida Completa alle Sezioni, Dispositivi & Sincronizzazione Automatica
                     </h2>
-                    <p class="text-xs sm:text-sm text-slate-500 font-medium mt-1">Procedura dettagliata per l'installazione su Android, Apple iOS, gestione file, codice classe univoco e notifiche.</p>
+                    <p class="text-xs sm:text-sm text-slate-500 font-medium mt-1">Procedura dettagliata per l'installazione su Android, Apple iOS, gestione file, sincronizzazione automatica tramite link e notifiche.</p>
                 </div>
 
                 <!-- Box dedicato installazione smartphone -->
@@ -519,15 +519,15 @@
                         <ol class="list-decimal list-inside text-xs text-indigo-900 space-y-1 font-medium leading-relaxed">
                             <li>Clicca sul pulsante <strong>"Scarica Android"</strong> in basso per scaricare l'app APK.</li>
                             <li>Apri il file scaricato sul telefono e consenti l'installazione dell'app.</li>
-                            <li>Al primo avvio, inserisci il <strong>codice classe univoco</strong> comunicato dall'amministratore per sincronizzare tutti i dati.</li>
+                            <li>Al primo avvio, l'app si connetterà automaticamente alla classe corretta.</li>
                         </ol>
                     </div>
                     <div class="bg-slate-900 text-white p-5 rounded-3xl border border-slate-800 space-y-2">
                         <h4 class="font-black text-xs text-slate-100 uppercase flex items-center gap-2"><i class="fa-brands fa-apple text-base text-white"></i> Installazione su Apple iOS (iPhone / iPad)</h4>
                         <ol class="list-decimal list-inside text-xs text-slate-300 space-y-1 font-medium leading-relaxed">
-                            <li>I dispositivi Apple non supportano file APK. Apri il link della bacheca in <strong>Safari</strong> (puoi usare il tasto "Apri Bacheca Apple").</li>
+                            <li>I dispositivi Apple non supportano file APK. Apri il link ricevuto su WhatsApp in <strong>Safari</strong> (o usa il tasto "Apri Bacheca Apple").</li>
                             <li>Tocca il tasto <strong>Condividi</strong> (il quadratino con la freccia) e seleziona <strong>"Aggiungi alla schermata Home"</strong>.</li>
-                            <li>Al primo accesso inserisci il <strong>codice classe univoco</strong>. Per visualizzare correttamente i PDF, installa l'app gratuita <strong>Google Drive</strong>.</li>
+                            <li>Il codice della classe viene letto ed memorizzato automaticamente dal link. Per visualizzare correttamente i PDF, installa l'app gratuita <strong>Google Drive</strong>.</li>
                         </ol>
                     </div>
                 </div>
@@ -566,9 +566,9 @@
         <div class="max-w-4xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-slate-500 font-medium">
             
             <div class="flex items-center space-x-2 flex-wrap gap-y-2">
-                <button onclick="shareClassInvite()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center space-x-2 shadow-sm" title="Genera invito WhatsApp con codice classe">
+                <button onclick="shareClassInvite()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center space-x-2 shadow-sm" title="Genera invito WhatsApp con sincronizzazione automatica">
                     <i class="fa-brands fa-whatsapp text-sm"></i>
-                    <span>Invito WhatsApp (Codice Classe)</span>
+                    <span>Invito WhatsApp (Sincronizzazione Automatica)</span>
                 </button>
                 <button onclick="downloadAndroidWithToken()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center space-x-2 shadow-sm" title="Scarica App Android APK">
                     <i class="fa-brands fa-android text-sm"></i>
@@ -604,17 +604,17 @@
         </div>
     </footer>
 
-    <!-- Modale Spiegazione Codice Classe e APK -->
+    <!-- Modale Spiegazione Sincronizzazione Automatica e APK -->
     <div id="tokenInfoModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md hidden z-50 flex items-center justify-center p-4">
         <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4 border border-slate-100">
             <div class="flex justify-between items-center">
-                <h3 class="text-lg font-black text-slate-900">Codice Classe & Sincronizzazione</h3>
+                <h3 class="text-lg font-black text-slate-900">Sincronizzazione Automatica</h3>
                 <button onclick="closeTokenInfoModal()" class="text-slate-400 hover:text-slate-600 p-1.5 rounded-xl hover:bg-slate-100 transition"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
             <div class="text-xs sm:text-sm text-slate-600 space-y-3 font-medium leading-relaxed">
                 <div class="bg-emerald-50 p-3.5 rounded-2xl border border-emerald-100 text-emerald-950 space-y-1.5">
-                    <p class="font-black text-xs uppercase tracking-wider text-emerald-700"><i class="fa-solid fa-key mr-1"></i> Come funziona il Codice Classe:</p>
-                    <p>Il pulsante <strong>"Invito WhatsApp (Codice Classe)"</strong> genera un messaggio con il link della bacheca e il <strong>codice classe univoco generato in automatico</strong>. Al primo accesso, inserendo o avendo salvato il codice, tutti i genitori si collegano perfettamente alla stessa classe e ricevono gli aggiornamenti in tempo reale.</p>
+                    <p class="font-black text-xs uppercase tracking-wider text-emerald-700"><i class="fa-solid fa-link mr-1"></i> Come funziona il link di invito:</p>
+                    <p>Il pulsante <strong>"Invito WhatsApp"</strong> genera un messaggio con il link della bacheca che include già il codice della classe (es. `...?classe=CLASSE_XYZ`). Quando un genitore clicca sul link, l'app **si sincronizza automaticamente in un secondo**, senza richiedere alcuna digitazione manuale.</p>
                 </div>
                 <div class="bg-indigo-50 p-3.5 rounded-2xl border border-indigo-100 text-indigo-950 space-y-1.5">
                     <p class="font-black text-xs uppercase tracking-wider text-indigo-700"><i class="fa-brands fa-apple mr-1"></i> Consigli per dispositivi Apple (iPhone/iPad):</p>
@@ -622,19 +622,6 @@
                 </div>
             </div>
             <button onclick="closeTokenInfoModal()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-2xl text-xs font-bold transition">Ho capito</button>
-        </div>
-    </div>
-
-    <!-- Modale Inserimento Codice Classe per Primo Accesso (se non in memoria) -->
-    <div id="classCodeModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-md hidden z-50 flex items-center justify-center p-4">
-        <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl space-y-4 border border-slate-100 text-center">
-            <div class="w-12 h-12 bg-indigo-100 text-indigo-600 rounded-2xl flex items-center justify-center mx-auto text-xl font-black">
-                <i class="fa-solid fa-school"></i>
-            </div>
-            <h3 class="text-lg font-black text-slate-900">Sincronizzazione Classe</h3>
-            <p class="text-xs text-slate-600 font-medium">Inserisci il codice classe univoco fornito dal rappresentante per accedere alla bacheca sincronizzata:</p>
-            <input type="text" id="manualClassCodeInput" placeholder="Es. CLASSE3E_XYZ" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm font-bold text-center uppercase tracking-widest focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-inner">
-            <button onclick="saveManualClassCode()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-2xl text-xs font-bold shadow-lg shadow-indigo-200 transition">Connetti alla Classe</button>
         </div>
     </div>
 
@@ -844,9 +831,9 @@
         // Funzione dedicata per scaricare Android mantenendo il codice classe
         function downloadAndroidWithToken() {
             const currentToken = localStorage.getItem('active_class_token') || classToken;
-            const baseUrl = window.location.href.split('#')[0];
+            const baseUrl = window.location.href.split('?')[0].split('#')[0];
             
-            history.pushState(null, '', `${baseUrl}#${currentToken}`);
+            history.pushState(null, '', `${baseUrl}?classe=${currentToken}`);
             
             fetch('./app-release.apk', { method: 'HEAD' })
                 .then(res => {
@@ -869,37 +856,42 @@
         // Funzione per aprire direttamente la bacheca con il codice classe per gli utenti Apple
         function openAppleDirectWithToken() {
             const currentToken = localStorage.getItem('active_class_token') || classToken;
-            const baseUrl = window.location.href.split('#')[0];
-            window.location.href = `${baseUrl}#${currentToken}`;
+            const baseUrl = window.location.href.split('?')[0].split('#')[0];
+            window.location.href = `${baseUrl}?classe=${currentToken}`;
         }
 
         // Funzione dedicata per aprire la guida Apple mantenendo il codice classe
         function openAppleGuideWithToken() {
             const currentToken = localStorage.getItem('active_class_token') || classToken;
-            const baseUrl = window.location.href.split('#')[0];
+            const baseUrl = window.location.href.split('?')[0].split('#')[0];
             
-            history.pushState(null, '', `${baseUrl}#${currentToken}`);
+            history.pushState(null, '', `${baseUrl}?classe=${currentToken}`);
             switchTab('guida');
         }
 
-        // Gestione Codice Classe Univoco Generato in Automatico e pulizia URL
+        // Gestione Codice Classe Univoco Generato in Automatico e lettura parametro URL
         function getOrCreateClassToken() {
-            let hash = window.location.hash.replace('#', '');
-            let token = '';
+            const urlParams = new URLSearchParams(window.location.search);
+            let token = urlParams.get('classe');
 
-            if (hash && (hash.startsWith('token_') || hash.startsWith('CLASSE'))) {
-                token = hash;
+            if (!token) {
+                let hash = window.location.hash.replace('#', '');
+                if (hash && (hash.startsWith('token_') || hash.startsWith('CLASSE'))) {
+                    token = hash;
+                }
+            }
+
+            if (token) {
                 localStorage.setItem('active_class_token', token);
             } else {
                 token = localStorage.getItem('active_class_token');
                 if (!token) {
-                    // Generazione automatica di un codice classe unico e casuale
                     token = 'CLASSE_' + Math.random().toString(36).substring(2, 8).toUpperCase() + '_' + Date.now().toString(36).toUpperCase();
                     localStorage.setItem('active_class_token', token);
                 }
             }
 
-            const cleanUrl = window.location.href.split('#')[0];
+            const cleanUrl = window.location.href.split('?')[0].split('#')[0];
             history.replaceState(null, '', cleanUrl);
 
             return token;
@@ -908,32 +900,15 @@
         const classToken = getOrCreateClassToken();
         const firebaseNodePath = 'bacheca_scolastica_' + classToken.toLowerCase();
 
-        // Controllo primo accesso per verificare se l'utente ha inserito il codice classe
-        window.addEventListener('DOMContentLoaded', () => {
-            let storedToken = localStorage.getItem('active_class_token');
-            if (!storedToken) {
-                document.getElementById('classCodeModal').classList.remove('hidden');
-            }
-        });
-
-        function saveManualClassCode() {
-            const codeInput = document.getElementById('manualClassCodeInput');
-            const val = codeInput.value.trim();
-            if (!val) { alert('Inserisci un codice classe valido!'); return; }
-            localStorage.setItem('active_class_token', val);
-            document.getElementById('classCodeModal').classList.add('hidden');
-            window.location.reload();
-        }
-
         function shareClassInvite() {
             const currentToken = localStorage.getItem('active_class_token') || classToken;
-            const baseUrl = window.location.href.split('#')[0];
-            const inviteUrl = `${baseUrl}`;
+            const baseUrl = window.location.href.split('?')[0].split('#')[0];
+            const inviteUrl = `${baseUrl}?classe=${currentToken}`;
             const apkUrl = `${baseUrl}app-release.apk`;
             
             const cfg = dbData.appConfig || { name: "Bacheca Scolastica" };
             
-            const waText = encodeURIComponent(`👋 Buongiorno genitori!\n\nEcco il link ufficiale aggiornato per la nostra bacheca di classe (${cfg.name}) per seguire compiti, orari, menu mensa e fondo cassa:\n\n🔑 *Codice Sincronizzazione Classe:* *${currentToken}*\n*(Inserisci questo codice al primo accesso per sincronizzare tutti i dati con la classe)*\n\n📱 *Come installare l'app sul telefono:*\n\n🤖 *Per Android:* \n1. Clicca per scaricare l'app:\n${apkUrl}\n2. Installa e apri l'app inserendo il codice classe sopra indicato.\n\n🍏 *Per Apple (iPhone / iPad):*\n1. Apri il link della bacheca in *Safari*:\n${inviteUrl}\n2. Tocca il tasto *Condividi* e seleziona *"Aggiungi alla schermata Home"*.\n3. Al primo avvio inserisci il codice classe: *${currentToken}*.\n4. *(Nota: per aprire correttamente i PDF, installa l'app gratuita Google Drive)*.`);
+            const waText = encodeURIComponent(`👋 Buongiorno genitori!\n\nEcco il link ufficiale aggiornato per la nostra bacheca di classe (${cfg.name}) per seguire compiti, orari, menu mensa e fondo cassa:\n\n🔗 *Link Bacheca (Sincronizzazione Automatica):*\n${inviteUrl}\n*(Basta cliccare sul link per collegarsi subito alla classe)*\n\n📱 *Come installare l'app sul telefono:*\n\n🤖 *Per Android:* \n1. Clicca per scaricare l'app:\n${apkUrl}\n2. Installa e apri l'app.\n\n🍏 *Per Apple (iPhone / iPad):*\n1. Apri il link in *Safari*:\n${inviteUrl}\n2. Tocca il tasto *Condividi* e seleziona *"Aggiungi alla schermata Home"*.\n3. *(Nota: per aprire correttamente i PDF, installa l'app gratuita Google Drive)*.`);
             
             window.open(`https://api.whatsapp.com/send?text=${waText}`, '_blank');
         }
@@ -1041,7 +1016,7 @@
             linkutili: "Fornisce accesso rapido a portali esterni, registri o modulistica utile.",
             compleanni: "Memorizza le date di compleanno dei bambini per festeggiarli insieme.",
             promemoria: "Segna impegni e scadenze da ricordare per la classe o i rappresentanti.",
-            guida: "Spiega come installare l'app su Android e iOS, come gestire i file su Google Drive e il funzionamento del codice classe."
+            guida: "Spiega come installare l'app su Android e iOS, come gestire i file su Google Drive e il funzionamento del link di sincronizzazione automatica."
         };
 
         function openInfoModal(sectionKey) {
@@ -1387,10 +1362,10 @@
                 saveSnakeScoreToFirebase(currentPlayer, score);
 
                 const currentToken = localStorage.getItem('active_class_token') || classToken;
-                const baseUrl = window.location.href.split('#')[0];
-                const appUrl = `${baseUrl}`;
+                const baseUrl = window.location.href.split('?')[0].split('#')[0];
+                const appUrl = `${baseUrl}?classe=${currentToken}`;
 
-                const waText = encodeURIComponent(`🎮 *Record Snake*\n${currentPlayer} ha totalizzato ${score} punti!\n\n🔗 *Vieni a battere il record sulla bacheca (Codice: ${currentToken}):* ${appUrl}`);
+                const waText = encodeURIComponent(`🎮 *Record Snake*\n${currentPlayer} ha totalizzato ${score} punti!\n\n🔗 *Vieni a battere il record sulla bacheca:* ${appUrl}`);
                 
                 document.getElementById('snakeShareContainer').innerHTML = `
                     <a href="https://api.whatsapp.com/send?text=${waText}" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-2.5 px-4 rounded-xl text-xs font-bold transition flex items-center justify-center space-x-2 shadow-md">
@@ -1665,10 +1640,10 @@
             confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
 
             const currentToken = localStorage.getItem('active_class_token') || classToken;
-            const baseUrl = window.location.href.split('#')[0];
-            const appUrl = `${baseUrl}`;
+            const baseUrl = window.location.href.split('?')[0].split('#')[0];
+            const appUrl = `${baseUrl}?classe=${currentToken}`;
 
-            waTextList += `\n🔗 *Bacheca di Classe (Codice: ${currentToken}):* ${appUrl}`;
+            waTextList += `\n🔗 *Bacheca di Classe:* ${appUrl}`;
             const encodedWA = encodeURIComponent(waTextList.trim());
 
             document.getElementById('wheelWhatsAppContainer').innerHTML = `
@@ -1872,8 +1847,8 @@
             const whatsappContainer = document.getElementById('modalWhatsAppContainer');
             
             const currentToken = localStorage.getItem('active_class_token') || classToken;
-            const baseUrl = window.location.href.split('#')[0];
-            const appUrl = `${baseUrl}`;
+            const baseUrl = window.location.href.split('?')[0].split('#')[0];
+            const appUrl = `${baseUrl}?classe=${currentToken}`;
 
             let summaryTextForWA = `📊 *Sondaggio: ${poll.title}*\n\n`;
 
@@ -1916,7 +1891,7 @@
                 contentEl.innerHTML = summaryHtml || `<p class="text-slate-400 text-xs text-center py-4 font-medium">Nessun voto registrato.</p>`;
             }
 
-            summaryTextForWA += `\n🔗 *Bacheca di Classe (Codice: ${currentToken}):* ${appUrl}`;
+            summaryTextForWA += `\n🔗 *Bacheca di Classe:* ${appUrl}`;
             const encodedWA = encodeURIComponent(summaryTextForWA.trim());
             whatsappContainer.innerHTML = `
                 <a href="https://api.whatsapp.com/send?text=${encodedWA}" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3 px-4 rounded-2xl text-xs font-bold transition flex items-center justify-center space-x-2 shadow-md">
@@ -1978,8 +1953,8 @@
 
         function renderAll() {
             const currentToken = localStorage.getItem('active_class_token') || classToken;
-            const baseUrl = window.location.href.split('#')[0];
-            const appUrl = `${baseUrl}`;
+            const baseUrl = window.location.href.split('?')[0].split('#')[0];
+            const appUrl = `${baseUrl}?classe=${currentToken}`;
 
             const selectedMateriaFilter = document.getElementById('materiaFilterSelect') ? document.getElementById('materiaFilterSelect').value : 'Tutte';
             let compitiArr = Object.values(dbData.compiti || {});
@@ -2000,7 +1975,7 @@
                     const t = latestCD.date ? getTimeRemaining(latestCD.date) : { days: 0, hours: 0, minutes: 0, seconds: 0 };
                     const isUrgent = t.days <= 2 && t.total > 0;
                     const cardBg = isUrgent ? 'bg-gradient-to-br from-rose-950 via-purple-950 to-indigo-950 border-rose-500/50 animate-pulse' : 'bg-gradient-to-br from-indigo-950 via-indigo-900 to-blue-950 border-white/10';
-                    const waText = encodeURIComponent(`⏳ *Conto alla rovescia*\n*${latestCD.title}*\nMancano ${t.days} giorni, ${t.hours} ore e ${t.minutes} minuti!\n\n🔗 *Bacheca (Codice: ${currentToken}):* ${appUrl}`);
+                    const waText = encodeURIComponent(`⏳ *Conto alla rovescia*\n*${latestCD.title}*\nMancano ${t.days} giorni, ${t.hours} ore e ${t.minutes} minuti!\n\n🔗 *Bacheca:* ${appUrl}`);
                     
                     homeCountdownContainer.innerHTML = `
                     <div class="${cardBg} text-white p-6 rounded-3xl shadow-xl flex justify-between items-center relative overflow-hidden mb-4 border transition-all">
@@ -2034,7 +2009,7 @@
                         urls.forEach((u, idx) => { waText += `Link ${idx + 1}: ${u}\n`; });
                     }
                 }
-                waText += `\n📲 *Bacheca di Classe (Codice: ${currentToken}):* ${appUrl}`;
+                waText += `\n📲 *Bacheca di Classe:* ${appUrl}`;
                 const encodedWA = encodeURIComponent(waText.trim());
                 const badgeNew = isNewItem(item.createdAt) ? `<span class="bg-emerald-500 text-white text-[9px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider ml-2 animate-pulse">Nuovo</span>` : '';
                 const materiaBadge = item.materia ? `<span class="inline-flex items-center gap-1.5 bg-indigo-50 text-indigo-700 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider border border-indigo-100"><i class="fa-solid fa-bookmark text-indigo-500"></i>${escapeHtml(item.materia)}</span>` : '';
@@ -2079,7 +2054,7 @@
                     const urls = item.fileUrl.split(/[\s,]+/).filter(u => u.trim().startsWith('http'));
                     if (urls.length > 0) waText += `🔗 *PDF Ufficiale:* ${urls[0]}\n`;
                 }
-                waText += `\n📲 *Bacheca di Classe (Codice: ${currentToken}):* ${appUrl}`;
+                waText += `\n📲 *Bacheca di Classe:* ${appUrl}`;
                 const encodedWA = encodeURIComponent(waText.trim());
                 return `
                 <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-200/80 flex justify-between items-start space-x-3 transition hover:shadow-md">
@@ -2103,7 +2078,7 @@
                     const urls = item.fileUrl.split(/[\s,]+/).filter(u => u.trim().startsWith('http'));
                     if (urls.length > 0) waText += `🔗 *Link / Allegato:* ${urls[0]}\n`;
                 }
-                waText += `\n📲 *Bacheca di Classe (Codice: ${currentToken}):* ${appUrl}`;
+                waText += `\n📲 *Bacheca di Classe:* ${appUrl}`;
                 const encodedWA = encodeURIComponent(waText.trim());
                 return `
                 <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-200/80 flex justify-between items-start space-x-3 transition hover:shadow-md">
@@ -2125,7 +2100,7 @@
             renderCustomSection('countdown', 'list-countdown', null, item => {
                 const t = item.date ? getTimeRemaining(item.date) : { days: 0, hours: 0, minutes: 0, seconds: 0 };
                 const isUrgent = t.days <= 2 && t.total > 0;
-                const waText = encodeURIComponent(`⏳ *Conto alla rovescia*\n*${item.title}*\nMancano ${t.days} giorni, ${t.hours} ore e ${t.minutes} minuti!\n\n🔗 *Bacheca di Classe (Codice: ${currentToken}):* ${appUrl}`);
+                const waText = encodeURIComponent(`⏳ *Conto alla rovescia*\n*${item.title}*\nMancano ${t.days} giorni, ${t.hours} ore e ${t.minutes} minuti!\n\n🔗 *Bacheca:* ${appUrl}`);
                 return `
                 <div class="${isUrgent ? 'bg-gradient-to-br from-rose-950 via-purple-950 to-indigo-950 border-rose-500/50 animate-pulse' : 'bg-gradient-to-br from-indigo-950 via-indigo-900 to-blue-950 border-white/10'} text-white p-6 rounded-3xl shadow-xl flex justify-between items-center relative overflow-hidden border">
                     <div class="absolute -right-4 -bottom-4 text-white/5 text-9xl font-black pointer-events-none"><i class="fa-solid fa-hourglass-half"></i></div>
@@ -2180,7 +2155,7 @@
                     `;
                 });
 
-                const waText = encodeURIComponent(`📊 *Sondaggio*\n*${item.title}*\nTotale voti: ${totalVotes}\n\n🔗 *Vota qui sulla bacheca (Codice: ${currentToken}):* ${appUrl}`);
+                const waText = encodeURIComponent(`📊 *Sondaggio*\n*${item.title}*\nTotale voti: ${totalVotes}\n\n🔗 *Vota qui sulla bacheca:* ${appUrl}`);
 
                 let voterSectionHtml = !currentVoter ? `
                     <div class="bg-gradient-to-r from-indigo-50 to-blue-50 p-4 rounded-2xl border border-indigo-100 flex flex-col sm:flex-row items-center gap-3">
@@ -2234,7 +2209,7 @@
                     const urls = item.fileUrl.split(/[\s,]+/).filter(u => u.trim().startsWith('http'));
                     if (urls.length > 0) waText += `🔗 *Link / Scontrino:* ${urls[0]}\n`;
                 }
-                waText += `\n📲 *Bacheca di Classe (Codice: ${currentToken}):* ${appUrl}`;
+                waText += `\n📲 *Bacheca di Classe:* ${appUrl}`;
                 const encodedWA = encodeURIComponent(waText.trim());
                 return `
                 <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-200/80 flex justify-between items-center transition hover:shadow-md">
@@ -2260,7 +2235,7 @@
                     const urls = item.fileUrl.split(/[\s,]+/).filter(u => u.trim().startsWith('http'));
                     if (urls.length > 0) waText += `🔗 *Allegato:* ${urls[0]}\n`;
                 }
-                waText += `\n📲 *Bacheca di Classe (Codice: ${currentToken}):* ${appUrl}`;
+                waText += `\n📲 *Bacheca di Classe:* ${appUrl}`;
                 const encodedWA = encodeURIComponent(waText.trim());
                 const badgeNew = isNewItem(item.createdAt) ? `<span class="bg-emerald-500 text-white text-[9px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider ml-2 animate-pulse">Nuovo</span>` : '';
                 return `
@@ -2288,7 +2263,7 @@
                     const urls = item.fileUrl.split(/[\s,]+/).filter(u => u.trim().startsWith('http'));
                     if (urls.length > 0) waText += `🔗 *Link / Foto:* ${urls[0]}\n`;
                 }
-                waText += `\n📲 *Bacheca di Classe (Codice: ${currentToken}):* ${appUrl}`;
+                waText += `\n📲 *Bacheca di Classe:* ${appUrl}`;
                 const encodedWA = encodeURIComponent(waText.trim());
                 return `
                 <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-200/80 space-y-3 flex flex-col justify-between transition hover:shadow-md">
@@ -2310,7 +2285,7 @@
             renderCustomSection('linkutili', 'list-linkutili', null, item => {
                 let waText = `🔗 *Link Utile*\n*${item.title}*\n${item.details ? item.details + '\n' : ''}`;
                 if (item.fileUrl) waText += `🌐 ${item.fileUrl}\n`;
-                waText += `\n📲 *Bacheca di Classe (Codice: ${currentToken}):* ${appUrl}`;
+                waText += `\n📲 *Bacheca di Classe:* ${appUrl}`;
                 const encodedWA = encodeURIComponent(waText.trim());
                 return `
                 <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-200/80 flex items-center justify-between transition hover:shadow-md">
@@ -2329,7 +2304,7 @@
 
             // Compleanni
             renderCustomSection('compleanni', 'list-compleanni', null, item => {
-                let waText = `🎂 *Ricorrenza / Compleanno*\nFesteggiamo insieme ${item.title}!\n${item.details ? 'Data: ' + item.details + '\n' : ''}\n📲 *Bacheca di Classe (Codice: ${currentToken}):* ${appUrl}`;
+                let waText = `🎂 *Ricorrenza / Compleanno*\nFesteggiamo insieme ${item.title}!\n${item.details ? 'Data: ' + item.details + '\n' : ''}\n📲 *Bacheca di Classe:* ${appUrl}`;
                 const encodedWA = encodeURIComponent(waText.trim());
                 return `
                 <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-200/80 flex justify-between items-center transition hover:shadow-md">
@@ -2356,7 +2331,7 @@
                     const urls = item.fileUrl.split(/[\s,]+/).filter(u => u.trim().startsWith('http'));
                     if (urls.length > 0) waText += `🔗 *Link / Allegato:* ${urls[0]}\n`;
                 }
-                waText += `\n📲 *Bacheca di Classe (Codice: ${currentToken}):* ${appUrl}`;
+                waText += `\n📲 *Bacheca di Classe:* ${appUrl}`;
                 const encodedWA = encodeURIComponent(waText.trim());
                 return `
                 <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-200/80 flex justify-between items-start space-x-3 transition hover:shadow-md">
