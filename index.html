@@ -716,6 +716,7 @@
 
         function closeInfoModal() { document.getElementById('infoModal').classList.add('hidden'); }
 
+        // --- GESTIONE MULTI-CLASSE E TOKEN ---
         function getSavedClassesRegistry() {
             try { return JSON.parse(localStorage.getItem('saved_classes_registry') || '{}'); } catch (e) { return {}; }
         }
@@ -728,7 +729,7 @@
             const urlParams = new URLSearchParams(window.location.search);
             let token = urlParams.get('classe') || localStorage.getItem('active_class_token');
             if (!token) {
-                token = 'classe3e'; // Default corretto per Classe 3E
+                token = 'classe3e';
             }
             localStorage.setItem('active_class_token', token);
             return token;
@@ -739,7 +740,6 @@
         let dbData = { appConfig: { name: "Classe 3E", sections: {} }, compiti: {}, verifiche: {}, galleria: {}, smarriti: {}, fondo: {} };
         let isAdmin = false;
 
-        // Orologio in tempo reale
         function updateLiveClock() {
             const now = new Date();
             const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' };
@@ -755,11 +755,44 @@
             onValue(ref(db, firebaseNodePath), (snapshot) => {
                 const val = snapshot.val();
                 if (val) dbData = { ...dbData, ...val };
+                
+                const className = dbData.appConfig?.name || "Classe 3E";
+                document.getElementById('displayAppName').innerText = "Bacheca " + className;
+                document.getElementById('pageTitle').innerText = "Bacheca Scolastica " + className;
+                saveClassToRegistry(classToken, className);
+                populateMultiClassSelector();
+
                 renderNavTabs();
                 populateAlbumSelect();
                 renderAll();
             });
         });
+
+        function populateMultiClassSelector() {
+            const selector = document.getElementById('multiClassSelector');
+            if (!selector) return;
+            const reg = getSavedClassesRegistry();
+            reg[classToken] = dbData.appConfig?.name || classToken;
+            let html = '';
+            for (const token in reg) {
+                html += `<option value="${token}" ${token === classToken ? 'selected' : ''}>${reg[token]}</option>`;
+            }
+            html += `<option value="ADD_NEW">➕ Aggiungi / Unisciti a altra classe...</option>`;
+            selector.innerHTML = html;
+        }
+
+        function switchClassBySelector(value) {
+            if (value === 'ADD_NEW') {
+                const newToken = prompt("Inserisci il codice o token della classe (es. dal link di invito):");
+                if (newToken) {
+                    window.location.search = '?classe=' + encodeURIComponent(newToken.trim());
+                } else {
+                    populateMultiClassSelector();
+                }
+            } else if (value && value !== classToken) {
+                window.location.search = '?classe=' + encodeURIComponent(value);
+            }
+        }
 
         function renderNavTabs() {
             const navContainer = document.getElementById('navTabsContainer');
@@ -808,15 +841,38 @@
             return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
         }
 
+        function downloadAndroidWithToken() {
+            const cleanUrl = window.location.origin + window.location.pathname + "?classe=" + classToken;
+            alert("Usa questo link pulito della tua classe per generare l'APK su PWABuilder:\n\n" + cleanUrl);
+        }
+
+        function openAppleDirectWithToken() {
+            const cleanUrl = window.location.origin + window.location.pathname + "?classe=" + classToken;
+            window.open(cleanUrl, '_blank');
+        }
+
+        function openAppleGuideWithToken() {
+            alert("Per aggiungere la bacheca alla schermata Home su iPhone/iPad:\n1. Apri il sito in Safari.\n2. Tocca il tasto 'Condividi' (quadrato con freccia).\n3. Seleziona 'Aggiungi alla schermata Home'.");
+        }
+
+        // Gestione Admin
         function toggleAdminModal() {
+            if (isAdmin) {
+                isAdmin = false;
+                document.querySelectorAll('.admin-only').forEach(el => el.classList.add('hidden'));
+                document.getElementById('adminIcon').className = "fa-solid fa-lock text-xs text-amber-300";
+                document.getElementById('adminText').innerText = "Area Admin";
+                alert("Sei uscito dall'Area Admin.");
+                return;
+            }
+
             const pwd = prompt("Inserisci la password Admin:");
-            if (pwd === "laski2026" || pwd === "admin") {
-                isAdmin = !isAdmin;
-                document.querySelectorAll('.admin-only').forEach(el => {
-                    if (isAdmin) el.classList.remove('hidden');
-                    else el.classList.add('hidden');
-                });
-                alert(isAdmin ? "Accesso Admin attivato con successo!" : "Disconnesso dall'area admin.");
+            if (pwd === "3e" || pwd === "laski2026" || pwd === "admin" || (classToken && pwd === classToken.toLowerCase())) {
+                isAdmin = true;
+                document.querySelectorAll('.admin-only').forEach(el => el.classList.remove('hidden'));
+                document.getElementById('adminIcon').className = "fa-solid fa-lock-open text-xs text-emerald-300";
+                document.getElementById('adminText').innerText = "Admin Attivo";
+                alert("Accesso Admin attivato con successo!");
             } else if (pwd !== null) {
                 alert("Password errata.");
             }
@@ -847,7 +903,6 @@
             document.getElementById('displaySaldoAttuale').innerText = "0 €";
         }
 
-        // Avvio iniziale
         window.addEventListener('load', () => {
             renderNavTabs();
             switchTab('compiti');
