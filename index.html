@@ -1,4 +1,4 @@
-  <!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="it">
 <script>
   if ('serviceWorker' in navigator) {
@@ -85,15 +85,13 @@
                 </div>
             </div>
 
-            <!-- Selettore Rapido Multi-Classe (Multi-Figlio / Multi-Admin) -->
+            <!-- Selettore Rapido Multi-Classe -->
             <div class="flex items-center space-x-2 flex-wrap">
                 <div class="bg-white/10 border border-white/20 rounded-2xl px-3 py-1.5 flex items-center space-x-2 backdrop-blur-sm">
                     <i class="fa-solid fa-users-rectangle text-indigo-300 text-xs"></i>
                     <select id="multiClassSelector" onchange="switchClassBySelector(this.value)" class="bg-transparent text-xs font-bold text-white focus:outline-none cursor-pointer">
-                        <!-- Popolato dinamicamente -->
                     </select>
                 </div>
-                <!-- Pulsante Area Admin -->
                 <button id="adminBtn" onclick="toggleAdminModal()" class="bg-white/10 hover:bg-white/20 border border-white/20 px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition shadow-sm flex items-center space-x-2 backdrop-blur-sm">
                     <i class="fa-solid fa-lock text-xs text-amber-300" id="adminIcon"></i>
                     <span id="adminText">Area Admin</span>
@@ -135,11 +133,10 @@
                         <span class="w-8 h-8 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-sm"><i class="fa-solid fa-book-open"></i></span>
                         Diario dei Compiti
                     </h2>
-                    <p class="text-xs text-slate-500 font-medium mt-0.5">Attività e consegne con supporto multi-allegato</p>
+                    <p class="text-xs text-slate-500 font-medium mt-0.5">Attività e consegne con supporto multi-allegato editabile</p>
                 </div>
                 <div class="flex items-center gap-2.5 flex-wrap">
                     <select id="materiaFilterSelect" onchange="renderAll()" class="bg-slate-50 border border-slate-200 rounded-2xl px-3.5 py-2.5 text-xs font-bold text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-inner">
-                        <!-- Popolato dinamicamente -->
                     </select>
                     <button onclick="openManageMaterieModal()" class="admin-only hidden bg-slate-100 hover:bg-slate-200 text-slate-700 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-slate-300" title="Gestisci / Aggiungi Materie"><i class="fa-solid fa-list-check text-sm"></i></button>
                     <button onclick="openInfoModal('compiti')" class="bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida sezione"><i class="fa-solid fa-circle-info text-base"></i></button>
@@ -161,7 +158,7 @@
                         <span class="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-sm"><i class="fa-solid fa-calendar-days"></i></span>
                         Orario Settimanale
                     </h2>
-                    <p class="text-xs text-slate-500 font-medium mt-0.5">Quadro delle lezioni o attività gestibile dall'Admin</p>
+                    <p class="text-xs text-slate-500 font-medium mt-0.5">Quadro delle lezioni interamente modificabile dall'Admin</p>
                 </div>
                 <div class="flex items-center gap-2">
                     <button onclick="openInfoModal('orario')" class="bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida sezione"><i class="fa-solid fa-circle-info text-base"></i></button>
@@ -181,7 +178,7 @@
                         <span class="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-sm"><i class="fa-solid fa-utensils"></i></span>
                         Menu Mensa / Ristorazione
                     </h2>
-                    <p class="text-xs text-slate-500 font-medium mt-0.5">Pubblicazione e consultazione dei menu ufficiali</p>
+                    <p class="text-xs text-slate-500 font-medium mt-0.5">Pubblicazione e modifica menu ufficiali e portali</p>
                 </div>
                 <div class="flex items-center gap-2">
                     <button onclick="openInfoModal('mensa')" class="bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida sezione"><i class="fa-solid fa-circle-info text-base"></i></button>
@@ -201,7 +198,7 @@
                         <span class="w-8 h-8 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center text-sm"><i class="fa-solid fa-book"></i></span>
                         Materiale & Documenti Consigliati
                     </h2>
-                    <p class="text-xs text-slate-500 font-medium mt-0.5">Elenchi e materiali (PDF e link)</p>
+                    <p class="text-xs text-slate-500 font-medium mt-0.5">Elenchi, libri e materiali modificabili</p>
                 </div>
                 <div class="flex items-center gap-2">
                     <button onclick="openInfoModal('libri')" class="bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida sezione"><i class="fa-solid fa-circle-info text-base"></i></button>
@@ -221,7 +218,7 @@
                         <span class="w-8 h-8 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center text-sm"><i class="fa-solid fa-hourglass-half"></i></span>
                         Conto alla Rovescia
                     </h2>
-                    <p class="text-xs text-slate-500 font-medium mt-0.5">Eventi importanti e scadenze</p>
+                    <p class="text-xs text-slate-500 font-medium mt-0.5">Eventi importanti e scadenze modificabili</p>
                 </div>
                 <div class="flex items-center gap-2">
                     <button onclick="openInfoModal('countdown')" class="bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida sezione"><i class="fa-solid fa-circle-info text-base"></i></button>
@@ -241,7 +238,7 @@
                         <span class="w-8 h-8 rounded-xl bg-violet-50 text-violet-600 flex items-center justify-center text-sm"><i class="fa-solid fa-square-poll-vertical"></i></span>
                         Sondaggi e Votazioni
                     </h2>
-                    <p class="text-xs text-slate-500 font-medium mt-0.5">Inserisci il nome, confermalo e vota l'opzione desiderata</p>
+                    <p class="text-xs text-slate-500 font-medium mt-0.5">Votazioni in tempo reale interamente gestibili</p>
                 </div>
                 <div class="flex items-center gap-2">
                     <button onclick="openInfoModal('sondaggi')" class="bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida sezione"><i class="fa-solid fa-circle-info text-base"></i></button>
@@ -261,7 +258,7 @@
                         <span class="w-8 h-8 rounded-xl bg-pink-50 text-pink-600 flex items-center justify-center text-sm"><i class="fa-solid fa-dharmachakra"></i></span>
                         Ruota delle Assegnazioni
                     </h2>
-                    <p class="text-xs text-slate-500 font-medium mt-0.5">Associa automaticamente partecipanti e compiti/mansioni</p>
+                    <p class="text-xs text-slate-500 font-medium mt-0.5">Associa automaticamente partecipanti e mansioni con coriandoli</p>
                 </div>
                 <button onclick="openInfoModal('ruota')" class="bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida sezione"><i class="fa-solid fa-circle-info text-base"></i></button>
             </div>
@@ -377,7 +374,7 @@
                         <span class="w-8 h-8 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-sm"><i class="fa-solid fa-wallet"></i></span>
                         Fondo Cassa / Bilancio
                     </h2>
-                    <p class="text-xs text-slate-500 font-medium mt-0.5">Bilancio e spese trasparenti per la classe</p>
+                    <p class="text-xs text-slate-500 font-medium mt-0.5">Bilancio e spese trasparenti completamente gestibili</p>
                 </div>
                 <div class="flex items-center gap-2 w-full sm:w-auto flex-wrap">
                     <button onclick="openInfoModal('fondo')" class="bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida sezione"><i class="fa-solid fa-circle-info text-base"></i></button>
@@ -417,7 +414,7 @@
                         <span class="w-8 h-8 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-sm"><i class="fa-solid fa-bullhorn"></i></span>
                         Avvisi Importanti
                     </h2>
-                    <p class="text-xs text-slate-500 font-medium mt-0.5">Comunicazioni ufficiali con supporto multi-allegato</p>
+                    <p class="text-xs text-slate-500 font-medium mt-0.5">Comunicazioni ufficiali modificabili con allegati</p>
                 </div>
                 <div class="flex items-center gap-2">
                     <button onclick="openInfoModal('avvisi')" class="bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida sezione"><i class="fa-solid fa-circle-info text-base"></i></button>
@@ -437,7 +434,7 @@
                         <span class="w-8 h-8 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center text-sm"><i class="fa-solid fa-images"></i></span>
                         Galleria Foto & Video
                     </h2>
-                    <p class="text-xs text-slate-500 font-medium mt-0.5">Ricordi delle attività e dei momenti speciali</p>
+                    <p class="text-xs text-slate-500 font-medium mt-0.5">Ricordi e contenuti multimediali modificabili</p>
                 </div>
                 <div class="flex items-center gap-2">
                     <button onclick="openInfoModal('galleria')" class="bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida sezione"><i class="fa-solid fa-circle-info text-base"></i></button>
@@ -457,7 +454,7 @@
                         <span class="w-8 h-8 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center text-sm"><i class="fa-solid fa-link"></i></span>
                         Link Utili & Portali
                     </h2>
-                    <p class="text-xs text-slate-500 font-medium mt-0.5">Accesso rapido a collegamenti e modulistica</p>
+                    <p class="text-xs text-slate-500 font-medium mt-0.5">Portali scolastici e collegamenti modificabili</p>
                 </div>
                 <div class="flex items-center gap-2">
                     <button onclick="openInfoModal('linkutili')" class="bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida sezione"><i class="fa-solid fa-circle-info text-base"></i></button>
@@ -477,7 +474,7 @@
                         <span class="w-8 h-8 rounded-xl bg-pink-50 text-pink-600 flex items-center justify-center text-sm"><i class="fa-solid fa-cake-candles"></i></span>
                         Compleanni / Ricorrenze
                     </h2>
-                    <p class="text-xs text-slate-500 font-medium mt-0.5">Festeggiamo insieme le date importanti</p>
+                    <p class="text-xs text-slate-500 font-medium mt-0.5">Date importanti e compleanni modificabili</p>
                 </div>
                 <div class="flex items-center gap-2">
                     <button onclick="openInfoModal('compleanni')" class="bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida sezione"><i class="fa-solid fa-circle-info text-base"></i></button>
@@ -497,7 +494,7 @@
                         <span class="w-8 h-8 rounded-xl bg-cyan-50 text-cyan-600 flex items-center justify-center text-sm"><i class="fa-solid fa-clock"></i></span>
                         Promemoria e Scadenze
                     </h2>
-                    <p class="text-xs text-slate-500 font-medium mt-0.5">Eventi e cose da ricordare</p>
+                    <p class="text-xs text-slate-500 font-medium mt-0.5">Eventi e cose da ricordare interamente modificabili</p>
                 </div>
                 <div class="flex items-center gap-2">
                     <button onclick="openInfoModal('promemoria')" class="bg-sky-50 hover:bg-sky-100 text-sky-600 p-2.5 rounded-2xl text-xs font-bold transition flex items-center justify-center border border-sky-200" title="Guida sezione"><i class="fa-solid fa-circle-info text-base"></i></button>
@@ -581,7 +578,7 @@
 
     </main>
 
-    <!-- Footer con Contatore Visite, POWER_laski, Download Android, Apri Apple, Guida Apple e PayPal.Me -->
+    <!-- Footer con Contatore Visite, POWER_laski, Download Android, Apri Apple, Guida Apple e Supporto -->
     <footer class="bg-white/80 backdrop-blur-md border-t border-slate-200/80 py-4 mt-auto">
         <div class="max-w-4xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-slate-500 font-medium">
             
@@ -590,18 +587,15 @@
                     <i class="fa-brands fa-android text-sm"></i>
                     <span>Scarica Android</span>
                 </button>
-                <!-- Pulsante Diretto Apple -->
                 <button onclick="openAppleDirectWithToken()" class="bg-slate-900 hover:bg-black text-white px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center space-x-2 shadow-sm" title="Apri bacheca direttamente per Apple iOS">
                     <i class="fa-brands fa-apple text-sm"></i>
                     <span>Apri Bacheca Apple</span>
                 </button>
-                <!-- Pulsante Guida Safari / Apple iOS -->
                 <button onclick="openAppleGuideWithToken()" class="bg-slate-800 hover:bg-slate-900 text-white px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center space-x-2 shadow-sm" title="Guida installazione su Safari per Apple iOS">
                     <i class="fa-solid fa-circle-question text-sm"></i>
                     <span>Guida Apple</span>
                 </button>
-                <!-- Pulsante Donazione PayPal.Me -->
-                <a href="https://paypal.me/bachecascolastica" target="_blank" class="bg-amber-500 hover:bg-amber-600 text-white px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center space-x-2 shadow-sm" title="Supporto sviluppo">
+                <a href="https://paypal.me/bachecascolastica" target="_blank" class="bg-amber-500 hover:bg-amber-600 text-white px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center space-x-2 shadow-sm" title="Supporto sviluppo app di classe">
                     <i class="fa-brands fa-paypal text-sm"></i>
                     <span>Supporto sviluppo app di classe</span>
                 </a>
@@ -691,7 +685,6 @@
                 </div>
 
                 <div class="space-y-2 pt-2">
-                    <!-- Pulsante Invito WhatsApp Genitori -->
                     <button onclick="shareClassInvite()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3 px-4 rounded-2xl text-xs font-bold transition flex items-center justify-center space-x-2 shadow-sm">
                         <i class="fa-brands fa-whatsapp"></i>
                         <span>Invito WhatsApp Genitori</span>
@@ -700,7 +693,6 @@
                         <i class="fa-solid fa-gear"></i>
                         <span>Impostazioni Classe, Sezioni & Password</span>
                     </button>
-                    <!-- Pulsante Condividi App per Altra Classe -->
                     <button onclick="shareAppForNewClass()" class="w-full bg-slate-900 hover:bg-black text-white py-3 px-4 rounded-2xl text-xs font-bold transition flex items-center justify-center space-x-2 shadow-sm">
                         <i class="fa-solid fa-share-nodes"></i>
                         <span>Condividi App per Nuova Classe</span>
@@ -771,7 +763,7 @@
         </div>
     </div>
 
-    <!-- Modale Inserimento / Modifica Dati -->
+    <!-- Modale Inserimento / Modifica Dati Universale -->
     <div id="dataModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md hidden z-50 flex items-center justify-center p-4">
         <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto border border-slate-100">
             <div class="flex justify-between items-center">
@@ -798,7 +790,7 @@
                     <textarea id="inputDetails" rows="4" placeholder="Note o istruzioni..." class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-inner font-medium"></textarea>
                 </div>
                 <div id="fileUrlWrapper">
-                    <label class="block text-xs font-black text-slate-700 mb-1.5" id="labelFileUrl">Link Google Drive (PDF o Foto)</label>
+                    <label class="block text-xs font-black text-slate-700 mb-1.5" id="labelFileUrl">Link Google Drive / Web (PDF o Foto)</label>
                     <input type="text" id="inputFileUrl" placeholder="https://drive.google.com/..." class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-inner font-medium">
                 </div>
                 <button type="submit" id="saveBtn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3.5 rounded-2xl text-sm font-bold shadow-lg shadow-indigo-200 transition">Pubblica</button>
@@ -829,8 +821,8 @@
                 const osc = audioCtx.createOscillator();
                 const gain = audioCtx.createGain();
                 osc.type = 'sine';
-                osc.frequency.setValueAtTime(587.33, audioCtx.currentTime); // Nota D5
-                osc.frequency.setValueAtTime(880, audioCtx.currentTime + 0.1); // Nota A5
+                osc.frequency.setValueAtTime(587.33, audioCtx.currentTime);
+                osc.frequency.setValueAtTime(880, audioCtx.currentTime + 0.1);
                 gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
                 gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.4);
                 osc.connect(gain);
@@ -854,7 +846,6 @@
         setInterval(updateClock, 1000);
         updateClock();
 
-        // Gestione Rubrica Multi-Classe / Multi-Figlio (Multi-Account locale)
         function getSavedClassesRegistry() {
             try {
                 const reg = localStorage.getItem('saved_classes_registry');
@@ -877,7 +868,6 @@
             let reg = getSavedClassesRegistry();
             const currentToken = localStorage.getItem('active_class_token') || 'DEFAULT';
 
-            // Assicuriamoci che il token attivo sia presente nel registro
             if (!reg[currentToken]) {
                 reg[currentToken] = (dbData.appConfig && dbData.appConfig.name) ? dbData.appConfig.name : currentToken;
                 saveClassToRegistry(currentToken, reg[currentToken]);
@@ -898,14 +888,12 @@
             window.location.href = `${baseUrl}?classe=${newToken}`;
         }
 
-        // Funzione per condividere l'app pulita a un nuovo rappresentante
         function shareAppForNewClass() {
             const cleanBaseUrl = window.location.href.split('?')[0].split('#')[0];
             const waText = encodeURIComponent(`👋 Ciao! Se vuoi usare anche tu la Bacheca Scolastica Universale per gestire la tua classe in autonomia e senza conflitti con altre classi, clicca su questo link pulito:\n\n👉 ${cleanBaseUrl}\n\n🤖 *Come funziona per te:*\n1. Appena apri il link, l'app genererà in automatico un archivio e un database completamente nuovo e indipendente solo per la tua classe.\n2. Entra nell'*Area Admin* con la password predefinita (*3e*).\n3. Vai su *Impostazioni Classe* per personalizzare il nome della tua classe, impostare la tua password e il codice di recupero.\n4. Da quel momento potrai invitare i genitori della tua classe con il tasto di invito WhatsApp dedicato nell'Area Admin!\n\n📱 *Cosa fare se hai più figli o cambi telefono?*\nPuoi aggiungere tutte le classi che vuoi sullo stesso telefono aprendo i rispettivi link: potrai passare da una bacheca all'altra istantaneamente con il menu in alto a destra!`);
             window.open(`https://api.whatsapp.com/send?text=${waText}`, '_blank');
         }
 
-        // Funzione dedicata per scaricare Android mantenendo il codice classe
         function downloadAndroidWithToken() {
             const currentToken = localStorage.getItem('active_class_token') || classToken;
             const baseUrl = window.location.href.split('?')[0].split('#')[0];
@@ -930,14 +918,12 @@
                 });
         }
 
-        // Funzione per aprire direttamente la bacheca con il codice classe per gli utenti Apple
         function openAppleDirectWithToken() {
             const currentToken = localStorage.getItem('active_class_token') || classToken;
             const baseUrl = window.location.href.split('?')[0].split('#')[0];
             window.location.href = `${baseUrl}?classe=${currentToken}`;
         }
 
-        // Funzione dedicata per aprire la guida Apple mantenendo il codice classe
         function openAppleGuideWithToken() {
             const currentToken = localStorage.getItem('active_class_token') || classToken;
             const baseUrl = window.location.href.split('?')[0].split('#')[0];
@@ -946,7 +932,6 @@
             switchTab('guida');
         }
 
-        // Gestione Codice Classe Univoco Generato in Automatico e lettura parametro URL
         function getOrCreateClassToken() {
             const urlParams = new URLSearchParams(window.location.search);
             let token = urlParams.get('classe');
@@ -1080,9 +1065,9 @@
 
         const sectionGuides = {
             compiti: "Gestisce i compiti giornalieri e le verifiche suddivise per materia con supporto multi-allegato Google Drive e auto-cancellazione dopo 12h dalla scadenza.",
-            orario: "Mostra il quadro delle lezioni o delle attività settimanali organizzate giorno per giorno.",
-            mensa: "Consente di pubblicare e consultare i PDF ufficiali e le comunicazioni relative alla ristorazione scolastica.",
-            libri: "Raccoglie i libri di testo, i materiali didattici e i documenti consigliati con link diretti.",
+            orario: "Mostra il quadro delle lezioni o delle attività settimanali organizzate giorno per giorno ed è interamente modificabile dall'Admin.",
+            mensa: "Consente di pubblicare, modificare e consultare i PDF ufficiali, i menu e i portali di ristorazione scolastica.",
+            libri: "Raccoglie i libri di testo, i materiali didattici e i documenti consigliati con link diretti modificabili.",
             countdown: "Imposta scadenze e conti alla rovescia per eventi importanti, gite o verifiche.",
             sondaggi: "Crea votazioni in tempo reale con inserimento nominativo, monitoraggio delle percentuali e condivisione esito su WhatsApp.",
             ruota: "Strumento interattivo per estrazioni casuali di partecipanti e mansioni con animazione e coriandoli.",
@@ -1797,6 +1782,7 @@
             const inputTitle = document.getElementById('inputTitle');
             const labelDetails = document.getElementById('labelDetails');
             const inputDetails = document.getElementById('inputDetails');
+            const labelFileUrl = document.getElementById('labelFileUrl');
 
             if (section === 'orario') {
                 modalTitle.innerText = itemId ? "Modifica Giorno Orario" : "Aggiungi Giorno Orario";
@@ -1823,14 +1809,22 @@
                 inputDetails.placeholder = "Note aggiuntive...";
                 materiaWrapper.classList.add('hidden');
                 dateWrapper.classList.add('hidden');
+            } else if (section === 'sondaggi') {
+                modalTitle.innerText = itemId ? "Modifica Sondaggio" : "Crea Nuovo Sondaggio";
+                labelTitle.innerText = "Titolo del Sondaggio / Domanda";
+                inputTitle.placeholder = "Es. Scelta gita scolastica";
+                labelDetails.innerText = "Opzioni di voto (una per riga)";
+                inputDetails.placeholder = "Opzione A\nOpzione B\nOpzione C";
+                materiaWrapper.classList.add('hidden');
+                dateWrapper.classList.add('hidden');
             } else {
-                modalTitle.innerText = "Aggiungi a " + section.toUpperCase();
+                modalTitle.innerText = (itemId ? "Modifica " : "Aggiungi a ") + (sectionNames[section] || section);
                 labelTitle.innerText = "Titolo / Argomento";
                 inputTitle.placeholder = "Es. Titolo elemento";
                 labelDetails.innerText = "Descrizione / Note (Opzionale)";
                 inputDetails.placeholder = "Note o istruzioni...";
                 materiaWrapper.classList.add('hidden');
-                dateWrapper.classList.toggle('hidden', section === 'libri' || section === 'sondaggi' || section === 'compleanni');
+                dateWrapper.classList.toggle('hidden', section === 'libri' || section === 'compleanni');
             }
 
             if (itemId && dbData[section] && dbData[section][itemId]) {
@@ -1888,7 +1882,7 @@
                 saveBtn.innerText = "Pubblica";
                 saveBtn.disabled = false;
                 renderFondoSummary();
-                showAdminNotification(`Nuovo elemento pubblicato in ${sectionNames[section] || section}!`, 'success');
+                showAdminNotification(`Elemento aggiornato in ${sectionNames[section] || section}!`, 'success');
             });
         }
 
