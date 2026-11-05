@@ -68,7 +68,7 @@
 
     <!-- Header Pulito e Ordinato -->
     <header class="bg-gradient-to-r from-indigo-950 via-indigo-900 to-blue-950 text-white shadow-xl sticky top-0 z-50 backdrop-blur-md bg-opacity-95 border-b border-white/10">
-        <div class="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center">
+        <div class="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center flex-wrap gap-3">
             <div class="flex items-center space-x-3.5">
                 <div id="headerAppLogo" class="bg-gradient-to-br from-indigo-500 to-indigo-700 text-white p-2.5 rounded-2xl font-black text-xl shadow-lg shadow-indigo-900/40 flex items-center justify-center w-12 h-12 border border-white/25">
                     App
@@ -84,7 +84,15 @@
                     </div>
                 </div>
             </div>
-            <div class="flex items-center space-x-2">
+
+            <!-- Selettore Rapido Multi-Classe (Multi-Figlio / Multi-Admin) -->
+            <div class="flex items-center space-x-2 flex-wrap">
+                <div class="bg-white/10 border border-white/20 rounded-2xl px-3 py-1.5 flex items-center space-x-2 backdrop-blur-sm">
+                    <i class="fa-solid fa-users-rectangle text-indigo-300 text-xs"></i>
+                    <select id="multiClassSelector" onchange="switchClassBySelector(this.value)" class="bg-transparent text-xs font-bold text-white focus:outline-none cursor-pointer">
+                        <!-- Popolato dinamicamente -->
+                    </select>
+                </div>
                 <!-- Pulsante Area Admin -->
                 <button id="adminBtn" onclick="toggleAdminModal()" class="bg-white/10 hover:bg-white/20 border border-white/20 px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition shadow-sm flex items-center space-x-2 backdrop-blur-sm">
                     <i class="fa-solid fa-lock text-xs text-amber-300" id="adminIcon"></i>
@@ -95,7 +103,7 @@
     </header>
 
     <!-- Navigation Tabs -->
-    <nav class="bg-white/90 backdrop-blur-md shadow-sm border-b border-slate-200/80 sticky top-[77px] z-40 overflow-x-auto">
+    <nav class="bg-white/90 backdrop-blur-md shadow-sm border-b border-slate-200/80 sticky top-[77px] sm:top-[77px] z-40 overflow-x-auto">
         <div id="navTabsContainer" class="max-w-4xl mx-auto flex space-x-1.5 px-3 py-2.5"></div>
     </nav>
 
@@ -507,9 +515,21 @@
                 <div>
                     <span class="bg-emerald-50 text-emerald-700 text-[10px] font-black px-3.5 py-1.5 rounded-full uppercase tracking-wider border border-emerald-100">Manuale d'Uso della Bacheca</span>
                     <h2 class="text-2xl font-black text-slate-900 tracking-tight mt-2 flex items-center gap-2.5">
-                        <i class="fa-solid fa-circle-question text-indigo-600"></i> Guida Completa alle Sezioni, Dispositivi & Sincronizzazione Automatica
+                        <i class="fa-solid fa-circle-question text-indigo-600"></i> Guida Completa, Multi-Figlio, Dispositivi & Sincronizzazione
                     </h2>
-                    <p class="text-xs sm:text-sm text-slate-500 font-medium mt-1">Procedura dettagliata per l'installazione su Android, Apple iOS, gestione file, sincronizzazione automatica tramite link e notifiche.</p>
+                    <p class="text-xs sm:text-sm text-slate-500 font-medium mt-1">Procedura dettagliata per l'installazione su Android, Apple iOS, gestione multi-classe per genitori con più figli o admin di più gruppi.</p>
+                </div>
+
+                <!-- Box dedicato gestione multi-classe / multi-figlio -->
+                <div class="bg-indigo-50/80 p-5 rounded-3xl border border-indigo-200 space-y-3">
+                    <h3 class="font-black text-sm text-indigo-950 flex items-center gap-2"><i class="fa-solid fa-users-rectangle text-indigo-600"></i> Gestione Multi-Figlio / Multi-Classe (Nello stesso telefono)</h3>
+                    <p class="text-xs text-indigo-950 font-medium leading-relaxed">
+                        Se hai due o più figli in classi diverse (o se sei un amministratore che segue più gruppi), puoi gestirli comodamente dallo stesso smartphone senza installare app separate:
+                    </p>
+                    <ul class="list-disc list-inside text-xs text-indigo-900 space-y-1.5 font-medium leading-relaxed">
+                        <li><strong>Come aggiungere una nuova classe:</strong> Ti basta aprire il link di invito WhatsApp della seconda classe. L'app salverà automaticamente entrambe le classi nella tua memoria.</li>
+                        <li><strong>Come passare da una classe all'altra:</strong> Usa il menu a tendina con l'icona delle classi situato in alto a destra nell'intestazione dell'app: un solo tap e passerai all'istante alla bacheca dell'altra classe!</li>
+                    </ul>
                 </div>
 
                 <!-- Box dedicato installazione smartphone -->
@@ -604,7 +624,7 @@
     <div id="tokenInfoModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md hidden z-50 flex items-center justify-center p-4">
         <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4 border border-slate-100">
             <div class="flex justify-between items-center">
-                <h3 class="text-lg font-black text-slate-900">Sincronizzazione Automatica</h3>
+                <h3 class="text-lg font-black text-slate-900">Sincronizzazione Automatica & Multi-Classe</h3>
                 <button onclick="closeTokenInfoModal()" class="text-slate-400 hover:text-slate-600 p-1.5 rounded-xl hover:bg-slate-100 transition"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
             <div class="text-xs sm:text-sm text-slate-600 space-y-3 font-medium leading-relaxed">
@@ -613,8 +633,8 @@
                     <p>Il pulsante <strong>"Invito WhatsApp"</strong> (presente nell'Area Admin) genera un messaggio con il link della bacheca che include già il codice della classe. Quando un genitore clicca sul link, l'app si sincronizza automaticamente senza digitare nulla.</p>
                 </div>
                 <div class="bg-indigo-50 p-3.5 rounded-2xl border border-indigo-100 text-indigo-950 space-y-1.5">
-                    <p class="font-black text-xs uppercase tracking-wider text-indigo-700"><i class="fa-solid fa-mobile-screen-button mr-1"></i> Cambio telefono o pulizia cache:</p>
-                    <p>Se cambi telefono o pulisci la memoria, ti basta riaprire il link di invito WhatsApp della tua classe per ritrovare subito tutti i dati sincronizzati.</p>
+                    <p class="font-black text-xs uppercase tracking-wider text-indigo-700"><i class="fa-solid fa-users-rectangle mr-1"></i> Gestione Multi-Figlio / Multi-Classe:</p>
+                    <p>Se hai più figli in classi diverse o gestisci più gruppi, l'app salva tutte le classi nella tua rubrica e ti permette di passare da una all'altra usando il selettore in alto a destra.</p>
                 </div>
             </div>
             <button onclick="closeTokenInfoModal()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-2xl text-xs font-bold transition">Ho capito</button>
@@ -823,7 +843,7 @@
         }
     </script>
 
-    <!-- Script Logica App -->
+    <!-- Script Logica App & Multi-Classe -->
     <script>
         function updateClock() {
             const now = new Date();
@@ -834,10 +854,54 @@
         setInterval(updateClock, 1000);
         updateClock();
 
-        // Funzione per condividere l'app pulita a un nuovo rappresentante (con istruzioni su cambio telefono)
+        // Gestione Rubrica Multi-Classe / Multi-Figlio (Multi-Account locale)
+        function getSavedClassesRegistry() {
+            try {
+                const reg = localStorage.getItem('saved_classes_registry');
+                return reg ? JSON.parse(reg) : {};
+            } catch (e) {
+                return {};
+            }
+        }
+
+        function saveClassToRegistry(token, className) {
+            let reg = getSavedClassesRegistry();
+            reg[token] = className || token;
+            localStorage.setItem('saved_classes_registry', JSON.stringify(reg));
+        }
+
+        function renderMultiClassSelector() {
+            const selector = document.getElementById('multiClassSelector');
+            if (!selector) return;
+
+            let reg = getSavedClassesRegistry();
+            const currentToken = localStorage.getItem('active_class_token') || 'DEFAULT';
+
+            // Assicuriamoci che il token attivo sia presente nel registro
+            if (!reg[currentToken]) {
+                reg[currentToken] = (dbData.appConfig && dbData.appConfig.name) ? dbData.appConfig.name : currentToken;
+                saveClassToRegistry(currentToken, reg[currentToken]);
+            }
+
+            let html = '';
+            for (const token in reg) {
+                const isSelected = token === currentToken ? 'selected' : '';
+                html += `<option value="${token}" ${isSelected}>${escapeHtml(reg[token])}</option>`;
+            }
+            selector.innerHTML = html;
+        }
+
+        function switchClassBySelector(newToken) {
+            if (!newToken) return;
+            localStorage.setItem('active_class_token', newToken);
+            const baseUrl = window.location.href.split('?')[0].split('#')[0];
+            window.location.href = `${baseUrl}?classe=${newToken}`;
+        }
+
+        // Funzione per condividere l'app pulita a un nuovo rappresentante
         function shareAppForNewClass() {
             const cleanBaseUrl = window.location.href.split('?')[0].split('#')[0];
-            const waText = encodeURIComponent(`👋 Ciao! Se vuoi usare anche tu la Bacheca Scolastica Universale per gestire la tua classe in autonomia e senza conflitti con altre classi, clicca su questo link pulito:\n\n👉 ${cleanBaseUrl}\n\n🤖 *Come funziona per te:*\n1. Appena apri il link, l'app genererà in automatico un archivio e un database completamente nuovo e indipendente solo per la tua classe.\n2. Entra nell'*Area Admin* con la password predefinita (*3e*).\n3. Vai su *Impostazioni Classe* per personalizzare il nome della tua classe, impostare la tua password e il codice di recupero.\n4. Da quel momento potrai invitare i genitori della tua classe con il tasto di invito WhatsApp dedicato nell'Area Admin!\n\n📱 *Cosa fare se cambi telefono o pulisci la cache?*\nBasta riaprire il link di invito WhatsApp che hai inviato ai genitori della tua classe: l'app si ricollegherà subito al tuo database senza perdere nulla!`);
+            const waText = encodeURIComponent(`👋 Ciao! Se vuoi usare anche tu la Bacheca Scolastica Universale per gestire la tua classe in autonomia e senza conflitti con altre classi, clicca su questo link pulito:\n\n👉 ${cleanBaseUrl}\n\n🤖 *Come funziona per te:*\n1. Appena apri il link, l'app genererà in automatico un archivio e un database completamente nuovo e indipendente solo per la tua classe.\n2. Entra nell'*Area Admin* con la password predefinita (*3e*).\n3. Vai su *Impostazioni Classe* per personalizzare il nome della tua classe, impostare la tua password e il codice di recupero.\n4. Da quel momento potrai invitare i genitori della tua classe con il tasto di invito WhatsApp dedicato nell'Area Admin!\n\n📱 *Cosa fare se hai più figli o cambi telefono?*\nPuoi aggiungere tutte le classi che vuoi sullo stesso telefono aprendo i rispettivi link: potrai passare da una bacheca all'altra istantaneamente con il menu in alto a destra!`);
             window.open(`https://api.whatsapp.com/send?text=${waText}`, '_blank');
         }
 
@@ -1029,7 +1093,7 @@
             linkutili: "Fornisce accesso rapido a portali esterni, registri o modulistica utile.",
             compleanni: "Memorizza le date di compleanno dei bambini per festeggiarli insieme.",
             promemoria: "Segna impegni e scadenze da ricordare per la classe o i rappresentanti.",
-            guida: "Spiega come installare l'app su Android e iOS, come gestire i file su Google Drive e il funzionamento del link di sincronizzazione automatica."
+            guida: "Spiega come installare l'app su Android e iOS, come gestire i file su Google Drive e il funzionamento della gestione multi-figlio/multi-classe."
         };
 
         function openInfoModal(sectionKey) {
@@ -1109,6 +1173,8 @@
                     updateAppBranding();
                     checkAndCleanExpiredCompiti();
                 }
+                saveClassToRegistry(classToken, dbData.appConfig.name);
+                renderMultiClassSelector();
                 renderNavTabs();
                 populateMaterieSelects();
                 renderAll();
@@ -1230,6 +1296,9 @@
             if (logoEl) logoEl.innerText = cfg.logo || "App";
             if (titleEl) titleEl.innerText = cfg.name + (cfg.subtitle ? ' - ' + cfg.subtitle : '');
             if (snakeTitle) snakeTitle.innerText = `Snake (${cfg.name})`;
+
+            saveClassToRegistry(classToken, cfg.name);
+            renderMultiClassSelector();
         }
 
         function openConfigModal() {
@@ -1280,6 +1349,7 @@
             set(ref(db, firebaseNodePath), dbData).then(() => {
                 openConfigModal();
                 renderNavTabs();
+                updateAppBranding();
                 showAdminNotification("Impostazioni e sezioni aggiornate con successo!", "success");
             });
         }
@@ -1296,6 +1366,7 @@
             checkPlayerSessionUI();
             renderFondoSummary();
             updateAppBranding();
+            renderMultiClassSelector();
             if (isAdmin) requestBrowserNotificationPermission();
         });
 
