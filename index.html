@@ -614,7 +614,7 @@
             <div class="text-xs sm:text-sm text-slate-600 space-y-3 font-medium leading-relaxed">
                 <div class="bg-emerald-50 p-3.5 rounded-2xl border border-emerald-100 text-emerald-950 space-y-1.5">
                     <p class="font-black text-xs uppercase tracking-wider text-emerald-700"><i class="fa-solid fa-link mr-1"></i> Come funziona il link di invito:</p>
-                    <p>Il pulsante <strong>"Invito WhatsApp"</strong> genera un messaggio con il link della bacheca che include già il codice della classe (es. `...?classe=CLASSE_XYZ`). Quando un genitore clicca sul link, l'app **si sincronizza automaticamente in un secondo**, senza richiedere alcuna digitazione manuale.</p>
+                    <p>Il pulsante <strong>"Invito WhatsApp"</strong> genera un messaggio con il link della bacheca che include già il codice della classe (es. `...?classe=CLASSE_XYZ`). Quando un genitore clicca sul link, l'app <strong>si sincronizza automaticamente in un secondo</strong>, senza richiedere alcuna digitazione manuale.</p>
                 </div>
                 <div class="bg-indigo-50 p-3.5 rounded-2xl border border-indigo-100 text-indigo-950 space-y-1.5">
                     <p class="font-black text-xs uppercase tracking-wider text-indigo-700"><i class="fa-brands fa-apple mr-1"></i> Consigli per dispositivi Apple (iPhone/iPad):</p>
@@ -642,7 +642,7 @@
         </div>
     </div>
 
-    <!-- Modale Login Admin con Recupero e Avviso Cambio Password -->
+    <!-- Modale Login Admin con Recupero, Avviso Cambio Password e Condivisione App per Nuova Classe -->
     <div id="adminModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md hidden z-50 flex items-center justify-center p-4">
         <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl space-y-4 border border-slate-100">
             <div class="flex justify-between items-center">
@@ -678,6 +678,11 @@
                     <button onclick="toggleAdminModal(); openConfigModal();" class="w-full bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 py-3 px-4 rounded-2xl text-xs font-bold transition flex items-center justify-center space-x-2">
                         <i class="fa-solid fa-gear"></i>
                         <span>Impostazioni Classe, Sezioni & Password</span>
+                    </button>
+                    <!-- Pulsante Condividi App per Altra Classe -->
+                    <button onclick="shareAppForNewClass()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3 px-4 rounded-2xl text-xs font-bold transition flex items-center justify-center space-x-2 shadow-sm">
+                        <i class="fa-brands fa-whatsapp"></i>
+                        <span>Condividi App per Nuova Classe</span>
                     </button>
                 </div>
 
@@ -827,6 +832,13 @@
         }
         setInterval(updateClock, 1000);
         updateClock();
+
+        // Funzione per condividere l'app pulita a un nuovo rappresentante
+        function shareAppForNewClass() {
+            const cleanBaseUrl = window.location.href.split('?')[0].split('#')[0];
+            const waText = encodeURIComponent(`👋 Ciao! Se vuoi usare anche tu la Bacheca Scolastica Universale per gestire la tua classe in autonomia e senza conflitti con altre classi, clicca su questo link pulito:\n\n👉 ${cleanBaseUrl}\n\n🤖 *Come funziona per te:*\n1. Appena apri il link, l'app genererà in automatico un archivio e un database completamente nuovo e indipendente solo per la tua classe.\n2. Entra nell'*Area Admin* con la password predefinita (*3e*).\n3. Vai su *Impostazioni Classe* per personalizzare il nome della tua classe, impostare la tua password e il codice di recupero.\n4. Da quel momento potrai invitare i genitori della tua classe con il tasto di invito WhatsApp dedicato!`);
+            window.open(`https://api.whatsapp.com/send?text=${waText}`, '_blank');
+        }
 
         // Funzione dedicata per scaricare Android mantenendo il codice classe
         function downloadAndroidWithToken() {
