@@ -532,6 +532,15 @@
                     </div>
                 </div>
 
+                <!-- Box Cambio Telefono o Pulizia Cache -->
+                <div class="bg-amber-50/80 p-5 rounded-3xl border border-amber-200 space-y-3">
+                    <h3 class="font-black text-sm text-amber-950 flex items-center gap-2"><i class="fa-solid fa-mobile-screen-button text-amber-600"></i> Cosa succede se cambi telefono o pulisci la cache?</h3>
+                    <p class="text-xs text-amber-950 font-medium leading-relaxed">
+                        L'app memorizza il codice della tua classe nella memoria del browser (`localStorage`). Se cambi telefono o pulisci la cronologia/cache, aprendo l'app potresti visualizzare un codice vuoto o nuovo. <br>
+                        <strong>Come risolvere in 2 secondi:</strong> Ti basta riaprire il link di invito WhatsApp che avevi inviato ai genitori (oppure usare il link con il tuo token `?classe=TUO_TOKEN`) e l'app si ricollegherà immediatamente alla tua bacheca e ai tuoi dati su Firebase senza perdere nulla!
+                    </p>
+                </div>
+
                 <!-- Box Regole Compiti e Scomparsa 12h -->
                 <div class="bg-purple-50/80 p-5 rounded-3xl border border-purple-200 space-y-3">
                     <h3 class="font-black text-sm text-purple-950 flex items-center gap-2"><i class="fa-solid fa-clock text-purple-600"></i> Regola di Scomparsa Automatica dei Compiti</h3>
@@ -547,15 +556,6 @@
                         Ogni volta che l'amministratore aggiunge un nuovo compito, un avviso o qualsiasi altro aggiornamento nell'app, viene generata automaticamente una **notifica visiva a schermo** accompagnata da un **segnale audio** per avvisare subito tutti i genitori collegati.
                     </p>
                 </div>
-
-                <div class="bg-amber-50/80 p-5 rounded-3xl border border-amber-200 space-y-3">
-                    <h3 class="font-black text-sm text-amber-950 flex items-center gap-2"><i class="fa-solid fa-cloud-arrow-up text-amber-600"></i> Regole per l'Admin: come caricare file, PDF o foto</h3>
-                    <ol class="list-decimal list-inside text-xs text-amber-900 space-y-1.5 font-medium leading-relaxed">
-                        <li>L'amministratore deve caricare i documenti o le foto sul proprio account personale di <strong>Google Drive</strong>.</li>
-                        <li>Nelle impostazioni di condivisione del file su Google Drive, l'admin deve impostare obbligatoriamente i permessi su <strong>"Chiunque abbia il link può visualizzare"</strong> (altrimenti i genitori vedranno un errore di accesso negato).</li>
-                        <li>Copia il link di condivisione e incollalo nel campo <strong>"Link Google Drive"</strong> quando pubblichi o modifichi un elemento nella bacheca.</li>
-                    </ol>
-                </div>
             </div>
         </section>
 
@@ -566,10 +566,6 @@
         <div class="max-w-4xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-slate-500 font-medium">
             
             <div class="flex items-center space-x-2 flex-wrap gap-y-2">
-                <button onclick="shareClassInvite()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center space-x-2 shadow-sm" title="Genera invito WhatsApp con sincronizzazione automatica">
-                    <i class="fa-brands fa-whatsapp text-sm"></i>
-                    <span>Invito WhatsApp (Sincronizzazione Automatica)</span>
-                </button>
                 <button onclick="downloadAndroidWithToken()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center space-x-2 shadow-sm" title="Scarica App Android APK">
                     <i class="fa-brands fa-android text-sm"></i>
                     <span>Scarica Android</span>
@@ -614,11 +610,11 @@
             <div class="text-xs sm:text-sm text-slate-600 space-y-3 font-medium leading-relaxed">
                 <div class="bg-emerald-50 p-3.5 rounded-2xl border border-emerald-100 text-emerald-950 space-y-1.5">
                     <p class="font-black text-xs uppercase tracking-wider text-emerald-700"><i class="fa-solid fa-link mr-1"></i> Come funziona il link di invito:</p>
-                    <p>Il pulsante <strong>"Invito WhatsApp"</strong> genera un messaggio con il link della bacheca che include già il codice della classe (es. `...?classe=CLASSE_XYZ`). Quando un genitore clicca sul link, l'app <strong>si sincronizza automaticamente in un secondo</strong>, senza richiedere alcuna digitazione manuale.</p>
+                    <p>Il pulsante <strong>"Invito WhatsApp"</strong> (presente nell'Area Admin) genera un messaggio con il link della bacheca che include già il codice della classe. Quando un genitore clicca sul link, l'app si sincronizza automaticamente senza digitare nulla.</p>
                 </div>
                 <div class="bg-indigo-50 p-3.5 rounded-2xl border border-indigo-100 text-indigo-950 space-y-1.5">
-                    <p class="font-black text-xs uppercase tracking-wider text-indigo-700"><i class="fa-brands fa-apple mr-1"></i> Consigli per dispositivi Apple (iPhone/iPad):</p>
-                    <p>Consiglia ai genitori con iPhone di aprire il link in <strong>Safari</strong> (o usare il tasto dedicato "Apri Bacheca Apple"), toccare il tasto di condivisione e selezionare <strong>"Aggiungi alla schermata Home"</strong>. Per aprire facilmente i PDF, si consiglia di installare l'app gratuita <strong>Google Drive</strong> dall'App Store.</p>
+                    <p class="font-black text-xs uppercase tracking-wider text-indigo-700"><i class="fa-solid fa-mobile-screen-button mr-1"></i> Cambio telefono o pulizia cache:</p>
+                    <p>Se cambi telefono o pulisci la memoria, ti basta riaprire il link di invito WhatsApp della tua classe per ritrovare subito tutti i dati sincronizzati.</p>
                 </div>
             </div>
             <button onclick="closeTokenInfoModal()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-2xl text-xs font-bold transition">Ho capito</button>
@@ -642,7 +638,7 @@
         </div>
     </div>
 
-    <!-- Modale Login Admin con Recupero, Avviso Cambio Password e Condivisione App per Nuova Classe -->
+    <!-- Modale Login Admin con Recupero, Invito Genitori e Condivisione per Nuova Classe -->
     <div id="adminModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md hidden z-50 flex items-center justify-center p-4">
         <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl space-y-4 border border-slate-100">
             <div class="flex justify-between items-center">
@@ -675,13 +671,18 @@
                 </div>
 
                 <div class="space-y-2 pt-2">
+                    <!-- Pulsante Invito WhatsApp Genitori -->
+                    <button onclick="shareClassInvite()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3 px-4 rounded-2xl text-xs font-bold transition flex items-center justify-center space-x-2 shadow-sm">
+                        <i class="fa-brands fa-whatsapp"></i>
+                        <span>Invito WhatsApp Genitori</span>
+                    </button>
                     <button onclick="toggleAdminModal(); openConfigModal();" class="w-full bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 py-3 px-4 rounded-2xl text-xs font-bold transition flex items-center justify-center space-x-2">
                         <i class="fa-solid fa-gear"></i>
                         <span>Impostazioni Classe, Sezioni & Password</span>
                     </button>
                     <!-- Pulsante Condividi App per Altra Classe -->
-                    <button onclick="shareAppForNewClass()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3 px-4 rounded-2xl text-xs font-bold transition flex items-center justify-center space-x-2 shadow-sm">
-                        <i class="fa-brands fa-whatsapp"></i>
+                    <button onclick="shareAppForNewClass()" class="w-full bg-slate-900 hover:bg-black text-white py-3 px-4 rounded-2xl text-xs font-bold transition flex items-center justify-center space-x-2 shadow-sm">
+                        <i class="fa-solid fa-share-nodes"></i>
                         <span>Condividi App per Nuova Classe</span>
                     </button>
                 </div>
@@ -833,10 +834,10 @@
         setInterval(updateClock, 1000);
         updateClock();
 
-        // Funzione per condividere l'app pulita a un nuovo rappresentante
+        // Funzione per condividere l'app pulita a un nuovo rappresentante (con istruzioni su cambio telefono)
         function shareAppForNewClass() {
             const cleanBaseUrl = window.location.href.split('?')[0].split('#')[0];
-            const waText = encodeURIComponent(`👋 Ciao! Se vuoi usare anche tu la Bacheca Scolastica Universale per gestire la tua classe in autonomia e senza conflitti con altre classi, clicca su questo link pulito:\n\n👉 ${cleanBaseUrl}\n\n🤖 *Come funziona per te:*\n1. Appena apri il link, l'app genererà in automatico un archivio e un database completamente nuovo e indipendente solo per la tua classe.\n2. Entra nell'*Area Admin* con la password predefinita (*3e*).\n3. Vai su *Impostazioni Classe* per personalizzare il nome della tua classe, impostare la tua password e il codice di recupero.\n4. Da quel momento potrai invitare i genitori della tua classe con il tasto di invito WhatsApp dedicato!`);
+            const waText = encodeURIComponent(`👋 Ciao! Se vuoi usare anche tu la Bacheca Scolastica Universale per gestire la tua classe in autonomia e senza conflitti con altre classi, clicca su questo link pulito:\n\n👉 ${cleanBaseUrl}\n\n🤖 *Come funziona per te:*\n1. Appena apri il link, l'app genererà in automatico un archivio e un database completamente nuovo e indipendente solo per la tua classe.\n2. Entra nell'*Area Admin* con la password predefinita (*3e*).\n3. Vai su *Impostazioni Classe* per personalizzare il nome della tua classe, impostare la tua password e il codice di recupero.\n4. Da quel momento potrai invitare i genitori della tua classe con il tasto di invito WhatsApp dedicato nell'Area Admin!\n\n📱 *Cosa fare se cambi telefono o pulisci la cache?*\nBasta riaprire il link di invito WhatsApp che hai inviato ai genitori della tua classe: l'app si ricollegherà subito al tuo database senza perdere nulla!`);
             window.open(`https://api.whatsapp.com/send?text=${waText}`, '_blank');
         }
 
